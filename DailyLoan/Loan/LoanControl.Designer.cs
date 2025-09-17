@@ -35,6 +35,7 @@
             this._newContractButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._saveContractButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this._paymentPeriodGrid1 = new DailyLoan.Loan._paymentPeriodGrid();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -42,7 +43,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.panel3 = new System.Windows.Forms.Panel();
             this._payButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -50,6 +51,7 @@
             this.splitContainer1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // _loanScreenTop1
@@ -60,7 +62,7 @@
             this._loanScreenTop1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._loanScreenTop1.Location = new System.Drawing.Point(0, 0);
             this._loanScreenTop1.Name = "_loanScreenTop1";
-            this._loanScreenTop1.Size = new System.Drawing.Size(626, 374);
+            this._loanScreenTop1.Size = new System.Drawing.Size(614, 374);
             this._loanScreenTop1.TabIndex = 4;
             // 
             // titlePanel1
@@ -140,6 +142,19 @@
             this._saveContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._saveContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.AutoSize = false;
+            this.toolStripButton1.Image = global::DailyLoan.Properties.Resources.money2_32;
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(97, 97);
+            this.toolStripButton1.Text = "ชำระเงิน";
+            this.toolStripButton1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // _paymentPeriodGrid1
             // 
             this._paymentPeriodGrid1._extraWordShow = true;
@@ -149,29 +164,29 @@
             this._paymentPeriodGrid1.ColumnBackgroundEnd = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(217)))), ((int)(((byte)(227)))));
             this._paymentPeriodGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._paymentPeriodGrid1.Font = new System.Drawing.Font("Tahoma", 9F);
-            this._paymentPeriodGrid1.Location = new System.Drawing.Point(0, 0);
+            this._paymentPeriodGrid1.Location = new System.Drawing.Point(5, 0);
             this._paymentPeriodGrid1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._paymentPeriodGrid1.Name = "_paymentPeriodGrid1";
-            this._paymentPeriodGrid1.Size = new System.Drawing.Size(393, 645);
+            this._paymentPeriodGrid1.Size = new System.Drawing.Size(385, 635);
             this._paymentPeriodGrid1.TabIndex = 5;
             this._paymentPeriodGrid1.TabStop = false;
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(5, 5);
+            this.splitContainer1.Location = new System.Drawing.Point(10, 10);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this._loanScreenTop1);
-            this.splitContainer1.Panel1.Controls.Add(this.panel2);
+            this.splitContainer1.Panel1.Controls.Add(this.panel3);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this._paymentPeriodGrid1);
-            this.splitContainer1.Size = new System.Drawing.Size(1023, 645);
-            this.splitContainer1.SplitterDistance = 626;
+            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.splitContainer1.Size = new System.Drawing.Size(1013, 635);
+            this.splitContainer1.SplitterDistance = 619;
             this.splitContainer1.TabIndex = 6;
             // 
             // panel2
@@ -180,9 +195,9 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 528);
+            this.panel2.Location = new System.Drawing.Point(0, 518);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(626, 117);
+            this.panel2.Size = new System.Drawing.Size(614, 117);
             this.panel2.TabIndex = 6;
             // 
             // label3
@@ -224,22 +239,21 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 48);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5);
+            this.panel1.Padding = new System.Windows.Forms.Padding(10);
             this.panel1.Size = new System.Drawing.Size(1033, 655);
             this.panel1.TabIndex = 9;
             // 
-            // toolStripButton1
+            // panel3
             // 
-            this.toolStripButton1.AutoSize = false;
-            this.toolStripButton1.Image = global::DailyLoan.Properties.Resources.money2_32;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(97, 97);
-            this.toolStripButton1.Text = "ชำระเงิน";
-            this.toolStripButton1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.panel3.Controls.Add(this._loanScreenTop1);
+            this.panel3.Controls.Add(this.panel2);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.panel3.Size = new System.Drawing.Size(619, 635);
+            this.panel3.TabIndex = 7;
             // 
             // LoanControl
             // 
@@ -262,6 +276,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -282,5 +297,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Panel panel3;
     }
 }

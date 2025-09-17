@@ -1,5 +1,6 @@
 ﻿using DailyLoan.Daily;
 using DailyLoan.Loan;
+using DailyLoan.Report;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,13 +18,14 @@ namespace DailyLoan
 
         LoanControl loanControl;
         DailyControl dailyContrl;
+        ReportMenu reportMenu;
 
 
         public MainForm()
         {
             InitializeComponent();
 
-            this._buttonAbout.Focus();
+        
             this.FormClosing += MainForm_FormClosing;
         }
 
@@ -117,6 +119,41 @@ namespace DailyLoan
         }
 
         private void _buttonAbout_Click(object sender, EventArgs e)
+        {
+            DisplayInMainPanel(welcomeControl1);
+
+        }
+
+        private void _loanMenuButton_Click(object sender, EventArgs e)
+        {
+            if (loanControl == null)
+            {
+                this.loanControl = new LoanControl();
+            }
+            DisplayInMainPanel(this.loanControl);
+        }
+
+        private void _dailyMenuButton_Click(object sender, EventArgs e)
+        {
+            if (dailyContrl == null)
+            {
+                this.dailyContrl = new DailyControl();
+            }
+
+            DisplayInMainPanel(dailyContrl);
+        }
+
+        private void _reportMenuButton_Click(object sender, EventArgs e)
+        {
+            if (this.reportMenu == null)
+            {
+                this.reportMenu = new ReportMenu();
+            }
+
+            DisplayInMainPanel(reportMenu);
+        }
+
+        private void _welcomeMenuButton_Click(object sender, EventArgs e)
         {
             DisplayInMainPanel(welcomeControl1);
 

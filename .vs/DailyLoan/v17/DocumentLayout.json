@@ -3,36 +3,64 @@
   "WorkspaceRootPath": "D:\\Source\\DailyLoan\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\daily\\dailycontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\daily\\dailycontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\daily\\dailycontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\daily\\dailycontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\daily\\_dailyscreentop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\daily\\_dailyscreentop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\daily\\_dailygrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\daily\\_dailygrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\report\\reportmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\report\\reportmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\loan\\loancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\loan\\loancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\control\\titlepanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\control\\titlepanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|D:\\Source\\DailyLoan\\dailyloan\\loan\\_paymentperiodgrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\loan\\_paymentperiodgrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|D:\\Source\\DailyLoan\\dailyloan\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\welcomecontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\welcomecontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\report\\reportmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\report\\reportmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|D:\\Source\\DailyLoan\\dailyloan\\loan\\loancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\loan\\loancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C45B2899-0643-4CB4-96F9-2C17BAD5B925}|SMLControl\\SMLControl.csproj|D:\\Source\\DailyLoan\\smlcontrol\\_myscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C45B2899-0643-4CB4-96F9-2C17BAD5B925}|SMLControl\\SMLControl.csproj|solutionrelative:smlcontrol\\_myscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\loan\\_loanscreentop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\loan\\_loanscreentop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\loan\\_paymentperiodgrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\loan\\_paymentperiodgrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|D:\\Source\\DailyLoan\\dailyloan\\welcomecontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\welcomecontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|d:\\source\\dailyloan\\dailyloan\\loan\\loancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\loan\\loancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C45B2899-0643-4CB4-96F9-2C17BAD5B925}|SMLControl\\SMLControl.csproj|d:\\source\\dailyloan\\smlcontrol\\_myscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C45B2899-0643-4CB4-96F9-2C17BAD5B925}|SMLControl\\SMLControl.csproj|solutionrelative:smlcontrol\\_myscreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|D:\\Source\\DailyLoan\\dailyloan\\control\\titlepanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{CFF45E8E-BA50-4914-8685-3D2C9AA7AEF6}|DailyLoan\\DailyLoan.csproj|solutionrelative:dailyloan\\control\\titlepanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -41,8 +69,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 766,
-          "SelectedChildIndex": 8,
+          "DockedWidth": 514,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,57 +86,133 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TitlePanel.cs [Design]",
-              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Control\\TitlePanel.cs",
-              "RelativeDocumentMoniker": "DailyLoan\\Control\\TitlePanel.cs",
-              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Control\\TitlePanel.cs [Design]",
-              "RelativeToolTip": "DailyLoan\\Control\\TitlePanel.cs [Design]",
+              "DocumentIndex": 0,
+              "Title": "DailyControl.cs [Design]",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\DailyControl.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Daily\\DailyControl.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\DailyControl.cs [Design]",
+              "RelativeToolTip": "DailyLoan\\Daily\\DailyControl.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T04:16:11.719Z",
+              "WhenOpened": "2025-09-17T14:26:32.6Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\MainForm.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\MainForm.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\MainForm.cs",
+              "RelativeToolTip": "DailyLoan\\MainForm.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAUwJgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T14:09:32.39Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ReportMenu.cs [Design]",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Report\\ReportMenu.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Report\\ReportMenu.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Report\\ReportMenu.cs [Design]",
+              "RelativeToolTip": "DailyLoan\\Report\\ReportMenu.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T14:08:18.35Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "WelcomeControl.cs [Design]",
-              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\WelcomeControl.cs",
-              "RelativeDocumentMoniker": "DailyLoan\\WelcomeControl.cs",
-              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\WelcomeControl.cs [Design]",
-              "RelativeToolTip": "DailyLoan\\WelcomeControl.cs [Design]",
+              "Title": "_dailyGrid.cs",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\_dailyGrid.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Daily\\_dailyGrid.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\_dailyGrid.cs",
+              "RelativeToolTip": "DailyLoan\\Daily\\_dailyGrid.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T01:55:02.399Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_paymentPeriodGrid.cs",
-              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\_paymentPeriodGrid.cs",
-              "RelativeDocumentMoniker": "DailyLoan\\Loan\\_paymentPeriodGrid.cs",
-              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\_paymentPeriodGrid.cs",
-              "RelativeToolTip": "DailyLoan\\Loan\\_paymentPeriodGrid.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAACDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T14:17:21.363Z",
+              "WhenOpened": "2025-09-17T13:44:33.163Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
+              "Title": "_dailyScreenTop.cs",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\_dailyScreenTop.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Daily\\_dailyScreenTop.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\_dailyScreenTop.cs",
+              "RelativeToolTip": "DailyLoan\\Daily\\_dailyScreenTop.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T13:39:03.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "_myScreen.cs",
               "DocumentMoniker": "D:\\Source\\DailyLoan\\SMLControl\\_myScreen.cs",
               "RelativeDocumentMoniker": "SMLControl\\_myScreen.cs",
               "ToolTip": "D:\\Source\\DailyLoan\\SMLControl\\_myScreen.cs",
               "RelativeToolTip": "SMLControl\\_myScreen.cs",
-              "ViewState": "AgIAANkKAAAAAAAAAAAYwAMLAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAB0LAAAAAAAAAAAcwEoLAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-16T14:10:36.788Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
+              "Title": "MainForm.cs [Design]",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\MainForm.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\MainForm.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\MainForm.cs [Design]",
+              "RelativeToolTip": "DailyLoan\\MainForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T01:53:29.777Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DailyControl.cs",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\DailyControl.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Daily\\DailyControl.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Daily\\DailyControl.cs",
+              "RelativeToolTip": "DailyLoan\\Daily\\DailyControl.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T13:49:14.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoanControl.cs [Design]",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\LoanControl.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Loan\\LoanControl.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\LoanControl.cs [Design]",
+              "RelativeToolTip": "DailyLoan\\Loan\\LoanControl.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T14:04:41.98Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ReportMenu.cs",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Report\\ReportMenu.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Report\\ReportMenu.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Report\\ReportMenu.cs",
+              "RelativeToolTip": "DailyLoan\\Report\\ReportMenu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T14:09:15.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "LoanControl.cs",
               "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\LoanControl.cs",
               "RelativeDocumentMoniker": "DailyLoan\\Loan\\LoanControl.cs",
@@ -121,33 +225,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LoanControl.cs [Design]",
-              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\LoanControl.cs",
-              "RelativeDocumentMoniker": "DailyLoan\\Loan\\LoanControl.cs",
-              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\LoanControl.cs [Design]",
-              "RelativeToolTip": "DailyLoan\\Loan\\LoanControl.cs [Design]",
+              "DocumentIndex": 13,
+              "Title": "WelcomeControl.cs [Design]",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\WelcomeControl.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\WelcomeControl.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\WelcomeControl.cs [Design]",
+              "RelativeToolTip": "DailyLoan\\WelcomeControl.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T14:04:41.98Z",
+              "WhenOpened": "2025-09-17T01:55:02.399Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\MainForm.cs",
-              "RelativeDocumentMoniker": "DailyLoan\\MainForm.cs",
-              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\MainForm.cs [Design]",
-              "RelativeToolTip": "DailyLoan\\MainForm.cs [Design]",
+              "DocumentIndex": 14,
+              "Title": "TitlePanel.cs [Design]",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Control\\TitlePanel.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Control\\TitlePanel.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Control\\TitlePanel.cs [Design]",
+              "RelativeToolTip": "DailyLoan\\Control\\TitlePanel.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T01:53:29.777Z",
+              "WhenOpened": "2025-09-17T04:16:11.719Z",
               "EditorCaption": " [Design]"
             }
           ]
         },
         {
-          "DockedWidth": 400,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 437,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -155,15 +259,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "_loanScreenTop.cs",
               "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\_loanScreenTop.cs",
               "RelativeDocumentMoniker": "DailyLoan\\Loan\\_loanScreenTop.cs",
               "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\_loanScreenTop.cs",
               "RelativeToolTip": "DailyLoan\\Loan\\_loanScreenTop.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAuwBYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwBAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-16T14:15:09.552Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_paymentPeriodGrid.cs",
+              "DocumentMoniker": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\_paymentPeriodGrid.cs",
+              "RelativeDocumentMoniker": "DailyLoan\\Loan\\_paymentPeriodGrid.cs",
+              "ToolTip": "D:\\Source\\DailyLoan\\DailyLoan\\Loan\\_paymentPeriodGrid.cs",
+              "RelativeToolTip": "DailyLoan\\Loan\\_paymentPeriodGrid.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-16T14:17:21.363Z",
               "EditorCaption": ""
             }
           ]

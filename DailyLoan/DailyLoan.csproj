@@ -85,6 +85,12 @@
     <Compile Include="Daily\DailyControl.Designer.cs">
       <DependentUpon>DailyControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Daily\_dailyGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Daily\_dailyScreenTop.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Data\Models\User.cs" />
     <Compile Include="Data\Models\UserRole.cs" />
     <Compile Include="Data\Repository\RepositoryBase.cs" />
@@ -121,6 +127,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ReportMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Report\ReportMenu.Designer.cs">
+      <DependentUpon>ReportMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="WelcomeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -155,6 +167,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Report\ReportMenu.resx">
+      <DependentUpon>ReportMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WelcomeControl.resx">
       <DependentUpon>WelcomeControl.cs</DependentUpon>
     </EmbeddedResource>

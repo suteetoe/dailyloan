@@ -8,7 +8,7 @@ namespace SMLControl
 {
     public class _myResource
     {
-        public static _myResourceType _findResource(string code, string text)
+        public static _myResourceType _findResource(string code, string text, bool autoInsertResult = false)
         {
             _myResourceType fineResult = new _myResourceType
             {
@@ -18,7 +18,6 @@ namespace SMLControl
 
             return fineResult;
         }
-
 
     }
 

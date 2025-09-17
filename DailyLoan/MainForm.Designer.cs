@@ -30,16 +30,14 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this._exitToolStripMenu = new System.Windows.Forms.ToolStripMenuItem();
             this._sidebarPanel = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this._buttonMenuContract = new System.Windows.Forms.Button();
+            this.buttonMenuDailySheet = new System.Windows.Forms.Button();
+            this.buttonMenuReport = new System.Windows.Forms.Button();
+            this._buttonAbout = new System.Windows.Forms.Button();
             this._mainPanel = new System.Windows.Forms.Panel();
             this.welcomeControl1 = new DailyLoan.WelcomeControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -51,6 +49,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.LightBlue;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -62,39 +61,27 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
             this.toolStripSeparator1,
-            this.toolStripMenuItem4});
+            this._exitToolStripMenu});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuItem1.Text = "File";
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem2.Text = "toolStripMenuItem2";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem3.Text = "toolStripMenuItem3";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(89, 6);
             // 
-            // toolStripMenuItem4
+            // _exitToolStripMenu
             // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem4.Text = "&Exit";
+            this._exitToolStripMenu.Name = "_exitToolStripMenu";
+            this._exitToolStripMenu.Size = new System.Drawing.Size(92, 22);
+            this._exitToolStripMenu.Text = "&Exit";
+            this._exitToolStripMenu.Click += new System.EventHandler(this._exitToolStripMenu_Click);
             // 
             // _sidebarPanel
             // 
+            this._sidebarPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this._sidebarPanel.Controls.Add(this.flowLayoutPanel1);
             this._sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this._sidebarPanel.Location = new System.Drawing.Point(0, 24);
@@ -104,60 +91,66 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.button3);
-            this.flowLayoutPanel1.Controls.Add(this.button4);
+            this.flowLayoutPanel1.Controls.Add(this._buttonMenuContract);
+            this.flowLayoutPanel1.Controls.Add(this.buttonMenuDailySheet);
+            this.flowLayoutPanel1.Controls.Add(this.buttonMenuReport);
+            this.flowLayoutPanel1.Controls.Add(this._buttonAbout);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(200, 318);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
-            // button1
+            // _buttonMenuContract
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(194, 50);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this._buttonMenuContract.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this._buttonMenuContract.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._buttonMenuContract.Location = new System.Drawing.Point(3, 3);
+            this._buttonMenuContract.Name = "_buttonMenuContract";
+            this._buttonMenuContract.Size = new System.Drawing.Size(194, 50);
+            this._buttonMenuContract.TabIndex = 0;
+            this._buttonMenuContract.Text = "สัญญาเงินกู้";
+            this._buttonMenuContract.UseVisualStyleBackColor = true;
+            this._buttonMenuContract.Click += new System.EventHandler(this._buttonMenuContract_Click);
             // 
-            // button2
+            // buttonMenuDailySheet
             // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(3, 59);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(194, 50);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonMenuDailySheet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMenuDailySheet.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold);
+            this.buttonMenuDailySheet.Location = new System.Drawing.Point(3, 59);
+            this.buttonMenuDailySheet.Name = "buttonMenuDailySheet";
+            this.buttonMenuDailySheet.Size = new System.Drawing.Size(194, 50);
+            this.buttonMenuDailySheet.TabIndex = 1;
+            this.buttonMenuDailySheet.Text = "ใบรายวัน";
+            this.buttonMenuDailySheet.UseVisualStyleBackColor = true;
+            this.buttonMenuDailySheet.Click += new System.EventHandler(this.buttonMenuDailySheet_Click);
             // 
-            // button3
+            // buttonMenuReport
             // 
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(3, 115);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(194, 50);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonMenuReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMenuReport.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold);
+            this.buttonMenuReport.Location = new System.Drawing.Point(3, 115);
+            this.buttonMenuReport.Name = "buttonMenuReport";
+            this.buttonMenuReport.Size = new System.Drawing.Size(194, 50);
+            this.buttonMenuReport.TabIndex = 2;
+            this.buttonMenuReport.Text = "รายงาน";
+            this.buttonMenuReport.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // _buttonAbout
             // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(3, 171);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(194, 50);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this._buttonAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this._buttonAbout.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold);
+            this._buttonAbout.Location = new System.Drawing.Point(3, 171);
+            this._buttonAbout.Name = "_buttonAbout";
+            this._buttonAbout.Size = new System.Drawing.Size(194, 50);
+            this._buttonAbout.TabIndex = 3;
+            this._buttonAbout.Text = "เกี่ยวกับโปรแกรม";
+            this._buttonAbout.UseVisualStyleBackColor = true;
+            this._buttonAbout.Click += new System.EventHandler(this._buttonAbout_Click);
             // 
             // _mainPanel
             // 
+            this._mainPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this._mainPanel.Controls.Add(this.welcomeControl1);
             this._mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mainPanel.Location = new System.Drawing.Point(200, 24);
@@ -168,6 +161,7 @@
             // welcomeControl1
             // 
             this.welcomeControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.welcomeControl1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.welcomeControl1.Location = new System.Drawing.Point(0, 0);
             this.welcomeControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.welcomeControl1.Name = "welcomeControl1";
@@ -194,10 +188,10 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -213,18 +207,16 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Panel _sidebarPanel;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem _exitToolStripMenu;
         private System.Windows.Forms.Panel _mainPanel;
         private WelcomeControl welcomeControl1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button _buttonMenuContract;
+        private System.Windows.Forms.Button buttonMenuDailySheet;
+        private System.Windows.Forms.Button buttonMenuReport;
+        private System.Windows.Forms.Button _buttonAbout;
     }
 }
 

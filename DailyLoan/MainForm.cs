@@ -14,11 +14,26 @@ namespace DailyLoan
 {
     public partial class MainForm : Form
     {
-       
+
+        LoanControl loanControl;
+        DailyControl dailyContrl;
+
 
         public MainForm()
         {
             InitializeComponent();
+
+            this._buttonAbout.Focus();
+            this.FormClosing += MainForm_FormClosing;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string __confirmExitMessage = "คุณต้องการจบโปรแกรม หรือไม่";
+            if (MessageBox.Show(__confirmExitMessage, "ยืนยัน", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
         }
 
         //private void _loanMenuButton_Click(object sender, EventArgs e)
@@ -66,8 +81,31 @@ namespace DailyLoan
         //}
 
 
-        DailyControl dailyContrl;
-        private void button1_Click(object sender, EventArgs e)
+
+        void DisplayInMainPanel(UserControl control)
+        {
+            control.Dock = DockStyle.Fill;
+
+            this._mainPanel.Controls.Clear();
+            this._mainPanel.Controls.Add(control);
+        }
+
+        private void _exitToolStripMenu_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+        private void _buttonMenuContract_Click(object sender, EventArgs e)
+        {
+            if (loanControl == null)
+            {
+                this.loanControl = new LoanControl();
+            }
+            DisplayInMainPanel(this.loanControl);
+        }
+
+        private void buttonMenuDailySheet_Click(object sender, EventArgs e)
         {
             if (dailyContrl == null)
             {
@@ -78,22 +116,10 @@ namespace DailyLoan
 
         }
 
-        void DisplayInMainPanel(UserControl control)
+        private void _buttonAbout_Click(object sender, EventArgs e)
         {
-            control.Dock = DockStyle.Fill;
+            DisplayInMainPanel(welcomeControl1);
 
-            this._mainPanel.Controls.Clear();
-            this._mainPanel.Controls.Add(control);
-        }
-
-        LoanControl loanControl;
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (loanControl == null)
-            {
-                this.loanControl = new LoanControl();
-            }
-            DisplayInMainPanel(this.loanControl);
         }
     }
 }

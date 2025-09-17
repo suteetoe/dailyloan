@@ -55,6 +55,35 @@ namespace SMLControl
             this.Invalidated += new InvalidateEventHandler(_myScreen_Invalidated);
         }
 
+        #region Operation
+
+        public void AddTextField(TextField field)
+        {
+            this._addTextBox(field.Row, field.Column, field.RowSpan, 0, field.FieldCode, field.ColumnSpan, field.MaxLength, field.IconNumber, field.ShowLabel, field.IsPassword, !field.Required, field.IsQuery, field.IsGetData, field.IsTabStop, field.FieldName, field.SearchScreenName);
+        }
+
+        public void AddDateField(DateField field)
+        {
+            this._addDateBox(field.Row, field.Column, field.RowSpan, 0, field.FieldCode, field.ColumnSpan, field.ShowLabel, !field.Required, field.IsQuery, field.FieldName);
+        }
+
+        public void AddNumberField(NumberField field)
+        {
+            this._addNumberBox(field.Row, field.Column, field.RowSpan, 0, field.FieldCode, field.ColumnSpan, field.Digit, field.ShowLabel, field.NumberFormat, field.IsQuery, field.FieldName);
+        }
+
+        public _myGroupBox AddGroupBoxField(GroupBoxField field)
+        {
+            return this._addGroupBox(field.Row, field.Column, field.RowSpan, field.ColumnCount, field.ColumnSpan, field.FieldName, field.IsQuery, field.FieldName);
+        }
+
+        public void AddRadioButtonField(_myGroupBox groupBox, RadioButtonField field)
+        {
+            this._addRadioButtonOnGroupBox(field.Row, field.Column, groupBox, field.FieldCode, field.Value, field.Checked, field.FieldName);
+        }
+
+        #endregion
+
         public void _enabedControl(string name, Boolean value)
         {
             Control __getControl = this._getControl(name);
@@ -241,15 +270,7 @@ namespace SMLControl
 
         }
 
-        private void _myScreen_Invalidated(object sender, InvalidateEventArgs e)
-        {
-            this._refresh();
-        }
 
-        private void _myScreen_SizeChanged(object sender, EventArgs e)
-        {
-            this._refresh();
-        }
 
         /*void _myScreen_ControlAdded(object sender, ControlEventArgs e)
         {
@@ -2898,6 +2919,20 @@ namespace SMLControl
             this.Controls.Add(__button);
             return __button;
         }
+
+        #region Screen Event Handler 
+
+        private void _myScreen_Invalidated(object sender, InvalidateEventArgs e)
+        {
+            this._refresh();
+        }
+
+        private void _myScreen_SizeChanged(object sender, EventArgs e)
+        {
+            this._refresh();
+        }
+
+        #endregion
     }
 
     public delegate void ButtonClickHandler(object sender, string name);

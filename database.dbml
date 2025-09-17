@@ -1,0 +1,7 @@
+Table "users" {
+  "id" int4 [pk, not null, increment]
+  "name" varchar(255)
+  "user_code" varchar(255)
+  "user_password" varchar(255)
+  "user_role" int2 [default: 0]
+}

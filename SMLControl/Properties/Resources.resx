@@ -133,6 +133,15 @@
   <data name="buttomdown3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttomdown3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pin_blue1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pin_blue1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IconCalendar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="buttomup3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttomup3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -142,23 +151,29 @@
   <data name="buttomdown2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttomdown2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IconSelectedHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IconSelectedHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="buttomup2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttomup2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IconCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IconCalendar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pin_grey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pin_grey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="buttomdown1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttomdown1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pin_grey1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pin_grey1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IconSelectHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IconSelectHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pin_grey" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pin_grey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="folder_view_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder_view_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,10 +187,7 @@
   <data name="view" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pin_grey1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pin_grey1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pin_blue1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pin_blue1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="garbage_empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\garbage_empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

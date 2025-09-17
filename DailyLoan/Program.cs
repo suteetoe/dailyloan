@@ -16,7 +16,19 @@ namespace DailyLoan
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            SMLControl._myGlobal._isDesignMode = false;
+
+            App.AppConfig = new AppConfig();
+            App.AppConfig.LoadConfig();
+
+            Application.Run(new LoginForm());
+
+            if (App.IsUserLoggedIn)
+            {
+                Application.Run(new MainForm());
+            }
+            Application.Exit();
+            // Application.Run(new MainForm());
         }
     }
 }

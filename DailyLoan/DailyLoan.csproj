@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,9 +32,33 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,17 +71,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.cs" />
+    <Compile Include="AppConfig.cs" />
+    <Compile Include="Control\TitlePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\TitlePanel.Designer.cs">
+      <DependentUpon>TitlePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Daily\DailyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Daily\DailyControl.Designer.cs">
       <DependentUpon>DailyControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Models\User.cs" />
+    <Compile Include="Data\Models\UserRole.cs" />
+    <Compile Include="Data\Repository\RepositoryBase.cs" />
+    <Compile Include="Data\Repository\UserRepository.cs" />
+    <Compile Include="DBSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBSettingForm.Designer.cs">
+      <DependentUpon>DBSettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Loan\LoanControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Loan\LoanControl.Designer.cs">
       <DependentUpon>LoanControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loan\_loanScreenTop.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Loan\_paymentPeriodGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -72,11 +127,20 @@
     <Compile Include="WelcomeControl.Designer.cs">
       <DependentUpon>WelcomeControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Control\TitlePanel.resx">
+      <DependentUpon>TitlePanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Daily\DailyControl.resx">
       <DependentUpon>DailyControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DBSettingForm.resx">
+      <DependentUpon>DBSettingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Loan\LoanControl.resx">
       <DependentUpon>LoanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -89,6 +153,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="WelcomeControl.resx">
       <DependentUpon>WelcomeControl.cs</DependentUpon>
@@ -105,6 +170,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BizFlowControl\BizFlowControl.csproj">
+      <Project>{fdc82878-b4ac-4c02-b125-ecfad30c9a0f}</Project>
+      <Name>BizFlowControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SMLControl\SMLControl.csproj">
+      <Project>{c45b2899-0643-4cb4-96f9-2c17bad5b925}</Project>
+      <Name>SMLControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\data_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

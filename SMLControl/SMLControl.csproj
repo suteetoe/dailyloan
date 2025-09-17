@@ -29,6 +29,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -45,14 +63,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GridCellEventArgs.cs" />
-    <Compile Include="GridRowData.cs" />
+    <Compile Include="BaseField.cs" />
+    <Compile Include="DateField.cs" />
+    <Compile Include="Grid\BaseGridColumn.cs" />
+    <Compile Include="Grid\GridCellEventArgs.cs" />
+    <Compile Include="Grid\GridCheckBoxColumn.cs" />
+    <Compile Include="Grid\GridComboBoxColumn.cs" />
+    <Compile Include="Grid\GridDateColumn.cs" />
+    <Compile Include="Grid\GridDecimalColumn.cs" />
+    <Compile Include="Grid\GridIntegerColumn.cs" />
+    <Compile Include="Grid\GridObjectColumn.cs" />
+    <Compile Include="Grid\GridRowData.cs" />
+    <Compile Include="Grid\GridTextColumn.cs" />
+    <Compile Include="GroupBoxField.cs" />
+    <Compile Include="NumberField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RadioButtonField.cs" />
+    <Compile Include="TextField.cs" />
     <Compile Include="Utils\_dataUtil.cs" />
     <Compile Include="Utils\_dateUtil.cs" />
     <Compile Include="Utils\_numberUtils.cs" />
@@ -64,7 +96,7 @@
     <Compile Include="_calendarSelectedForm.Designer.cs">
       <DependentUpon>_calendarSelectedForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="_columnType.cs" />
+    <Compile Include="Grid\_columnType.cs" />
     <Compile Include="_iconList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,13 +118,13 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="_myGlobal.cs" />
-    <Compile Include="_myGrid.cs">
+    <Compile Include="Grid\_myGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="_myGrid.Designer.cs">
+    <Compile Include="Grid\_myGrid.Designer.cs">
       <DependentUpon>_myGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="_myGridCell.cs" />
+    <Compile Include="Grid\_myGridCell.cs" />
     <Compile Include="_myGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -140,7 +172,7 @@
     <EmbeddedResource Include="_iconList.resx">
       <DependentUpon>_iconList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="_myGrid.resx">
+    <EmbeddedResource Include="Grid\_myGrid.resx">
       <DependentUpon>_myGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="_myImage.resx">
@@ -210,6 +242,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pin_blue1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\garbage_empty.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

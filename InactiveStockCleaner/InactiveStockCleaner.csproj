@@ -49,8 +49,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppConfig.cs" />
-    <Compile Include="Data\Models\User.cs" />
-    <Compile Include="Data\Repository\UserRepository.cs" />
     <Compile Include="DBSettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +61,13 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProcessControl.cs" />
+    <Compile Include="ProcessControl.Designer.cs">
+      <DependentUpon>ProcessControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DBSettingForm.resx">
@@ -70,6 +75,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProcessControl.resx">
+      <DependentUpon>ProcessControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

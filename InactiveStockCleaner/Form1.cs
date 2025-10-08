@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace InactiveStockCleaner
 {
     public partial class InactiveStockCleaner_Form : Form
     {
-        private bool isLoggedIn = false;
-
         public InactiveStockCleaner_Form()
         {
             InitializeComponent();
@@ -21,33 +13,33 @@ namespace InactiveStockCleaner
 
         private void InactiveStockCleaner_Form_Load(object sender, EventArgs e)
         {
-            // เริ่มต้นที่ login tab
+            // เริ่มต้นที่ login tab และปิด process tab
             mainTabControl.SelectedIndex = 0;
-            // ปิดการใช้งาน process tab จนกว่าจะ login สำเร็จ
             processTabPage.Enabled = false;
 
-            // เซ็ตค่า default สำหรับ database และ login textboxes
+            // โหลด configuration และเซ็ตค่า default
+            InitializeAppConfig();
             SetDefaultValues();
-            
-            // เน้นที่ host textbox
             dbHostTextBox.Focus();
+        }
+
+        private void InitializeAppConfig()
+        {
+            App.AppConfig = new AppConfig();
+            App.AppConfig.LoadConfig();
         }
 
         private void SetDefaultValues()
         {
-            // เซ็ตค่า default จาก app.config (ไม่ต้องมี default text ตามที่ user ต้องการ)
-            App.AppConfig = new AppConfig();
-            App.AppConfig.LoadConfig();
-
-            // ไม่เซ็ตค่า default ใน textbox ตามที่ user ต้องการ
-            dbHostTextBox.Text = "";
-            dbPortTextBox.Text = "";
-            dbUserTextBox.Text = "";
-            dbPasswordTextBox.Text = "";
-            dbNameTextBox.Text = "";
+            // เซ็ตค่า default ตามที่ user ต้องการ
+            dbHostTextBox.Text = "192.168.2.236";
+            dbPortTextBox.Text = "5432";
+            dbUserTextBox.Text = "postgres";
+            dbPasswordTextBox.Text = "sml";
+            dbNameTextBox.Text = "pichian";
         }
 
-        private void InitDBConnection()
+        private bool CreateDatabaseConnection()
         {
             try
             {
@@ -58,38 +50,69 @@ namespace InactiveStockCleaner
                 string password = dbPasswordTextBox.Text.Trim();
                 string databaseName = dbNameTextBox.Text.Trim();
 
-                // สร้าง connection string จากค่าที่ผู้ใช้ใส่
+                // สร้าง connection string และเชื่อมต่อ
                 if (App.AppConfig == null)
-                    App.AppConfig = new AppConfig();
+                    InitializeAppConfig();
                 
                 string connectionString = App.AppConfig.GetConnectionString(host, port, user, password, databaseName);
-                
                 App.DBConnection = new BizFlowControl.DBConnection(connectionString);
                 App.DBConnection.TestConnect();
                 
-                statusLabel.Text = "เชื่อมต่อ Database สำเร็จ";
-                statusLabel.ForeColor = Color.Green;
+                return true;
             }
             catch (Exception ex)
             {
-                statusLabel.Text = $"ไม่สามารถเชื่อมต่อ Database: {ex.Message}";
-                statusLabel.ForeColor = Color.Red;
-                
+                ShowStatus($"ไม่สามารถเชื่อมต่อ Database: {ex.Message}", Color.Red);
                 App.DBConnection = null;
+                return false;
             }
+        }
+
+        private void ShowStatus(string message, Color color)
+        {
+            statusLabel.Text = message;
+            statusLabel.ForeColor = color;
+        }
+
+        private bool ValidateRequiredFields()
+        {
+            if (string.IsNullOrEmpty(dbHostTextBox.Text.Trim()))
+            {
+                ShowStatus("กรุณาใส่ Database Host", Color.Red);
+                dbHostTextBox.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(dbPortTextBox.Text.Trim()))
+            {
+                ShowStatus("กรุณาใส่ Database Port", Color.Red);
+                dbPortTextBox.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(dbUserTextBox.Text.Trim()))
+            {
+                ShowStatus("กรุณาใส่ Database Username", Color.Red);
+                dbUserTextBox.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(dbNameTextBox.Text.Trim()))
+            {
+                ShowStatus("กรุณาใส่ Database Name", Color.Red);
+                dbNameTextBox.Focus();
+                return false;
+            }
+
+            return true;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.F12)
             {
-                // เปิด database setting form
                 var dbForm = new DBSettingForm();
-                if (dbForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    // อัพเดต textbox ด้วยค่าใหม่
-                    SetDefaultValues();
-                }
+                dbForm.ShowDialog(this);
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -97,133 +120,76 @@ namespace InactiveStockCleaner
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            // เคลียร์ status label
-            statusLabel.Text = "";
+            ShowStatus("", Color.Black);
 
-            // ตรวจสอบ database configuration input
-            if (string.IsNullOrEmpty(dbHostTextBox.Text.Trim()))
-            {
-                statusLabel.Text = "กรุณาใส่ Database Host";
-                statusLabel.ForeColor = Color.Red;
-                dbHostTextBox.Focus();
+            // ตรวจสอบข้อมูลที่จำเป็น
+            if (!ValidateRequiredFields())
                 return;
-            }
 
-            if (string.IsNullOrEmpty(dbPortTextBox.Text.Trim()))
-            {
-                statusLabel.Text = "กรุณาใส่ Database Port";
-                statusLabel.ForeColor = Color.Red;
-                dbPortTextBox.Focus();
-                return;
-            }
-
-            if (string.IsNullOrEmpty(dbUserTextBox.Text.Trim()))
-            {
-                statusLabel.Text = "กรุณาใส่ Database Username";
-                statusLabel.ForeColor = Color.Red;
-                dbUserTextBox.Focus();
-                return;
-            }
-
-            if (string.IsNullOrEmpty(dbNameTextBox.Text.Trim()))
-            {
-                statusLabel.Text = "กรุณาใส่ Database Name";
-                statusLabel.ForeColor = Color.Red;
-                dbNameTextBox.Focus();
-                return;
-            }
-
-            // เชื่อมต่อ database ด้วยค่าที่ผู้ใช้ใส่
-            statusLabel.Text = "กำลังเชื่อมต่อ Database...";
-            statusLabel.ForeColor = Color.Blue;
+            // แสดงสถานะกำลังเชื่อมต่อ
+            ShowStatus("กำลังเชื่อมต่อ Database...", Color.Blue);
             Application.DoEvents();
 
-            InitDBConnection();
-
-            // ตรวจสอบการเชื่อมต่อ database
-            if (App.DBConnection == null)
-            {
-                statusLabel.Text = "ไม่สามารถเชื่อมต่อ Database ได้";
-                statusLabel.ForeColor = Color.Red;
+            // เชื่อมต่อ database
+            if (!CreateDatabaseConnection())
                 return;
-            }
 
-            // เข้าสู่ระบบสำเร็จ (ไม่ต้องมี user authentication)
-            isLoggedIn = true;
+            // เข้าสู่ระบบสำเร็จ
             App.IsUserLoggedIn = true;
+            ShowStatus("เข้าสู่ระบบสำเร็จ!", Color.Green);
             
-            statusLabel.Text = "เข้าสู่ระบบสำเร็จ!";
-            statusLabel.ForeColor = Color.Green;
-            
-            // เปิดใช้งาน process tab
+            // เปิดใช้งาน process tab และไป process tab
             processTabPage.Enabled = true;
-            
-            // เปลี่ยนไปที่ process tab
             mainTabControl.SelectedIndex = 1;
-            
-            // ปิดการใช้งาน login tab หลังจาก login สำเร็จ
             loginTabPage.Enabled = false;
         }
 
         private void testConnectionButton_Click(object sender, EventArgs e)
         {
-            // ตรวจสอบ database configuration input
-            if (string.IsNullOrEmpty(dbHostTextBox.Text.Trim()) ||
-                string.IsNullOrEmpty(dbPortTextBox.Text.Trim()) ||
-                string.IsNullOrEmpty(dbUserTextBox.Text.Trim()) ||
-                string.IsNullOrEmpty(dbNameTextBox.Text.Trim()))
-            {
-                statusLabel.Text = "กรุณาใส่ข้อมูล Database Configuration ให้ครบ";
-                statusLabel.ForeColor = Color.Red;
+            // ตรวจสอบข้อมูลที่จำเป็น
+            if (!ValidateRequiredFields())
                 return;
-            }
 
-            statusLabel.Text = "กำลังทดสอบการเชื่อมต่อ...";
-            statusLabel.ForeColor = Color.Blue;
+            ShowStatus("กำลังทดสอบการเชื่อมต่อ...", Color.Blue);
             Application.DoEvents();
 
             try
             {
-                // อ่านค่าจาก textbox
+                // สร้าง test connection
                 string host = dbHostTextBox.Text.Trim();
                 string port = dbPortTextBox.Text.Trim();
                 string user = dbUserTextBox.Text.Trim();
                 string password = dbPasswordTextBox.Text.Trim();
                 string databaseName = dbNameTextBox.Text.Trim();
 
-                // สร้าง connection string จากค่าที่ผู้ใช้ใส่
                 if (App.AppConfig == null)
-                    App.AppConfig = new AppConfig();
+                    InitializeAppConfig();
                 
                 string connectionString = App.AppConfig.GetConnectionString(host, port, user, password, databaseName);
-                
-                BizFlowControl.DBConnection testConnection = new BizFlowControl.DBConnection(connectionString);
+                var testConnection = new BizFlowControl.DBConnection(connectionString);
                 
                 if (testConnection.TestConnect())
                 {
                     bool isDatabaseExists = testConnection.DatabaseExists(databaseName);
+                    testConnection.Disconnect();
+                    
                     if (isDatabaseExists)
                     {
-                        statusLabel.Text = "ทดสอบการเชื่อมต่อสำเร็จ!";
-                        statusLabel.ForeColor = Color.Green;
+                        ShowStatus("ทดสอบการเชื่อมต่อสำเร็จ!", Color.Green);
                     }
                     else
                     {
-                        statusLabel.Text = $"ไม่พบ Database: {databaseName}";
-                        statusLabel.ForeColor = Color.Orange;
+                        ShowStatus($"ไม่พบ Database: {databaseName}", Color.Orange);
                     }
-                    testConnection.Disconnect();
                 }
                 else
                 {
-                    statusLabel.Text = "ไม่สามารถเชื่อมต่อ Database ได้";
-                    statusLabel.ForeColor = Color.Red;
+                    ShowStatus("ไม่สามารถเชื่อมต่อ Database ได้", Color.Red);
                 }
             }
             catch (Exception ex)
             {
-                statusLabel.Text = $"เกิดข้อผิดพลาด: {ex.Message}";
-                statusLabel.ForeColor = Color.Red;
+                ShowStatus($"เกิดข้อผิดพลาด: {ex.Message}", Color.Red);
             }
         }
     }

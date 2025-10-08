@@ -1,6 +1,6 @@
-﻿namespace InactiveStockCleaner
+namespace InactiveStockCleaner
 {
-    partial class InactiveStockCleaner_Form
+    partial class DBSettingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainTabControl = new System.Windows.Forms.TabControl();
-            this.loginTabPage = new System.Windows.Forms.TabPage();
-            this.statusLabel = new System.Windows.Forms.Label();
-            this.testConnectionButton = new System.Windows.Forms.Button();
-            this.loginButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dbNameTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,68 +39,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dbHostTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.processTabPage = new System.Windows.Forms.TabPage();
-            this.mainTabControl.SuspendLayout();
-            this.loginTabPage.SuspendLayout();
+            this.testButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Controls.Add(this.loginTabPage);
-            this.mainTabControl.Controls.Add(this.processTabPage);
-            this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTabControl.Location = new System.Drawing.Point(0, 0);
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1988, 1291);
-            this.mainTabControl.TabIndex = 0;
-            // 
-            // loginTabPage
-            // 
-            this.loginTabPage.Controls.Add(this.statusLabel);
-            this.loginTabPage.Controls.Add(this.testConnectionButton);
-            this.loginTabPage.Controls.Add(this.loginButton);
-            this.loginTabPage.Controls.Add(this.groupBox1);
-            this.loginTabPage.Location = new System.Drawing.Point(4, 29);
-            this.loginTabPage.Name = "loginTabPage";
-            this.loginTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.loginTabPage.Size = new System.Drawing.Size(1980, 1258);
-            this.loginTabPage.TabIndex = 0;
-            this.loginTabPage.Text = "Login";
-            this.loginTabPage.UseVisualStyleBackColor = true;
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.ForeColor = System.Drawing.Color.Red;
-            this.statusLabel.Location = new System.Drawing.Point(30, 340);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 25);
-            this.statusLabel.TabIndex = 3;
-            // 
-            // testConnectionButton
-            // 
-            this.testConnectionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.testConnectionButton.Location = new System.Drawing.Point(276, 236);
-            this.testConnectionButton.Name = "testConnectionButton";
-            this.testConnectionButton.Size = new System.Drawing.Size(128, 40);
-            this.testConnectionButton.TabIndex = 10;
-            this.testConnectionButton.Text = "Test Connection";
-            this.testConnectionButton.UseVisualStyleBackColor = true;
-            this.testConnectionButton.Click += new System.EventHandler(this.testConnectionButton_Click);
-            // 
-            // loginButton
-            // 
-            this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginButton.Location = new System.Drawing.Point(410, 236);
-            this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(120, 40);
-            this.loginButton.TabIndex = 2;
-            this.loginButton.Text = "Login";
-            this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // groupBox1
             // 
@@ -120,9 +58,9 @@
             this.groupBox1.Controls.Add(this.dbHostTextBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(30, 30);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(500, 200);
+            this.groupBox1.Size = new System.Drawing.Size(460, 200);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Database Configuration";
@@ -131,7 +69,7 @@
             // 
             this.dbNameTextBox.Location = new System.Drawing.Point(150, 160);
             this.dbNameTextBox.Name = "dbNameTextBox";
-            this.dbNameTextBox.Size = new System.Drawing.Size(320, 30);
+            this.dbNameTextBox.Size = new System.Drawing.Size(280, 30);
             this.dbNameTextBox.TabIndex = 9;
             // 
             // label5
@@ -139,7 +77,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(20, 163);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(159, 25);
+            this.label5.Size = new System.Drawing.Size(132, 25);
             this.label5.TabIndex = 8;
             this.label5.Text = "Database Name:";
             // 
@@ -148,7 +86,7 @@
             this.dbPasswordTextBox.Location = new System.Drawing.Point(150, 125);
             this.dbPasswordTextBox.Name = "dbPasswordTextBox";
             this.dbPasswordTextBox.PasswordChar = '*';
-            this.dbPasswordTextBox.Size = new System.Drawing.Size(320, 30);
+            this.dbPasswordTextBox.Size = new System.Drawing.Size(280, 30);
             this.dbPasswordTextBox.TabIndex = 7;
             // 
             // label4
@@ -164,7 +102,7 @@
             // 
             this.dbUserTextBox.Location = new System.Drawing.Point(150, 90);
             this.dbUserTextBox.Name = "dbUserTextBox";
-            this.dbUserTextBox.Size = new System.Drawing.Size(320, 30);
+            this.dbUserTextBox.Size = new System.Drawing.Size(280, 30);
             this.dbUserTextBox.TabIndex = 5;
             // 
             // label3
@@ -180,7 +118,7 @@
             // 
             this.dbPortTextBox.Location = new System.Drawing.Point(150, 55);
             this.dbPortTextBox.Name = "dbPortTextBox";
-            this.dbPortTextBox.Size = new System.Drawing.Size(320, 30);
+            this.dbPortTextBox.Size = new System.Drawing.Size(280, 30);
             this.dbPortTextBox.TabIndex = 3;
             // 
             // label2
@@ -194,42 +132,68 @@
             // 
             // dbHostTextBox
             // 
-            this.dbHostTextBox.Location = new System.Drawing.Point(150, 25);
+            this.dbHostTextBox.Location = new System.Drawing.Point(150, 20);
             this.dbHostTextBox.Name = "dbHostTextBox";
-            this.dbHostTextBox.Size = new System.Drawing.Size(320, 30);
+            this.dbHostTextBox.Size = new System.Drawing.Size(280, 30);
             this.dbHostTextBox.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 28);
+            this.label1.Location = new System.Drawing.Point(20, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 25);
+            this.label1.Size = new System.Drawing.Size(57, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Host:";
             // 
-            // processTabPage
+            // testButton
             // 
-            this.processTabPage.Location = new System.Drawing.Point(4, 29);
-            this.processTabPage.Name = "processTabPage";
-            this.processTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.processTabPage.Size = new System.Drawing.Size(1980, 1258);
-            this.processTabPage.TabIndex = 1;
-            this.processTabPage.Text = "Process";
-            this.processTabPage.UseVisualStyleBackColor = true;
+            this.testButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.testButton.Location = new System.Drawing.Point(162, 230);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(100, 35);
+            this.testButton.TabIndex = 1;
+            this.testButton.Text = "Test";
+            this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
-            // InactiveStockCleaner_Form
+            // saveButton
+            // 
+            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveButton.Location = new System.Drawing.Point(268, 230);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(100, 35);
+            this.saveButton.TabIndex = 2;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cancelButton.Location = new System.Drawing.Point(374, 230);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(100, 35);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // DBSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1988, 1291);
-            this.Controls.Add(this.mainTabControl);
-            this.Name = "InactiveStockCleaner_Form";
-            this.Text = "InactiveStockCleaner";
-            this.Load += new System.EventHandler(this.InactiveStockCleaner_Form_Load);
-            this.mainTabControl.ResumeLayout(false);
-            this.loginTabPage.ResumeLayout(false);
-            this.loginTabPage.PerformLayout();
+            this.ClientSize = new System.Drawing.Size(484, 281);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.saveButton);
+            this.Controls.Add(this.testButton);
+            this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "DBSettingForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Database Settings";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -238,9 +202,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl mainTabControl;
-        private System.Windows.Forms.TabPage loginTabPage;
-        private System.Windows.Forms.TabPage processTabPage;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox dbNameTextBox;
         private System.Windows.Forms.Label label5;
@@ -252,9 +213,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox dbHostTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button testConnectionButton;
-        private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Button testButton;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button cancelButton;
     }
 }
-

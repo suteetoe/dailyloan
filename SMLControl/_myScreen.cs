@@ -452,7 +452,7 @@ namespace SMLControl
                     else
                     {
                         int __calcWidth2 = 8 * __getText.MaxLength;
-                        __getText.Width = (__calcWidth2 > __calcWidth || __getText._iconNumber == 1 || __getText._iconNumber == 4) ? __calcWidth : __calcWidth2;//(this._calcColumnWidth() - (((getText._displayLabel) ? this._maxLabelWidth[getText._column] : 0) + (_margin * 2))) + (this._calcColumnWidth() * (getText._maxColumn - 1));
+                        __getText.Width = (__calcWidth2 > __calcWidth || __getText._iconNumber == 1 || __getText._iconNumber == 4) ? __calcWidth : __calcWidth2;
                     }
                     __getText.Location = new Point(this._calcColumnPosition(__getText._column) + (((__getText._displayLabel) ? this._maxLabelWidth[__getText._column] : 0)), this._calcRowPosition(__getText._row));
                     if (__getControl.Enabled == false)
@@ -1950,60 +1950,6 @@ namespace SMLControl
         }
 
         /// <summary>
-        /// เพิ่ม TextBox Control
-        /// </summary>
-        public void _addTextBox(int row, int column, string fieldName, int maxLength)
-        {
-            _addTextBox(row, column, 1, 0, fieldName, 1, maxLength, 0, true, false);
-        }
-
-        /// <summary>
-        /// เพิ่ม TextBox Control
-        /// </summary>
-        public void _addTextBox(int row, int column, int rowCount, string fieldName, int maxColumn, int maxLength)
-        {
-            _addTextBox(row, column, rowCount, 0, fieldName, maxColumn, maxLength, 0, true, false);
-        }
-
-        /// <summary>
-        /// เพิ่ม TextBox Control
-        /// </summary>
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength)
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, 0, true, false);
-        }
-
-        /// <summary>
-        /// เพิ่ม TextBox Control
-        /// </summary>
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry)
-        /// <summary>
-        /// เพิ่ม TextBox Control
-        /// </summary>
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, iconNumber, displayLabel, isPassword, isEmtry, true, true);
-        }
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry, Boolean isQuery)
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, iconNumber, displayLabel, isPassword, isEmtry, isQuery, true);
-        }
-
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry, Boolean isQuery, bool tabStop)
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, iconNumber, displayLabel, isPassword, isEmtry, isQuery, tabStop, fieldName);
-        }
-
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry, Boolean isQuery, bool tabStop, string resourceFieldName)
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, iconNumber, displayLabel, isPassword, isEmtry, isQuery, tabStop, resourceFieldName, "");
-        }
-
-
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry, Boolean isQuery, bool tabStop, string resourceFieldName, string searchFormat)
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, iconNumber, displayLabel, isPassword, isEmtry, isQuery, false, tabStop, resourceFieldName, searchFormat);
-        }
-        /// <summary>
         /// เพิ่มช่องแบบ Text
         /// </summary>
         /// <param name="row">row เริ่มจาก 0</param>
@@ -2030,7 +1976,7 @@ namespace SMLControl
             {
                 _addLabelReturn __getLabel = this._addLabel(row, column, ":", resourceFieldName, resourceFieldName);
                 __newTextBox._label = __getLabel._label;
-                __getLength = __getLabel._length;
+                // __getLength = __getLabel._length;
                 __label_name = __getLabel._label_name;
                 __newTextBox._displayLabel = true;
             }
@@ -2232,19 +2178,20 @@ namespace SMLControl
 
         void newTextBox__cellSearch(object sender, string e)
         {
+            string fieldName = "";
+            if (sender != null)
+            {
+                if (sender.GetType() == typeof(_myTextBox))
+                {
+                    _myTextBox __result = (_myTextBox)sender;
+                    fieldName = __result._name;
+                }
+            }
             if (_textBoxSearch != null)
             {
-                _textBoxSearch(sender);
+                _textBoxSearch(sender, fieldName);
             }
-        }
-
-        /// <summary>
-        /// เพิ่ม TextBox Control
-        /// </summary>
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword)
-        {
-            _addTextBox(row, column, rowCount, subColumn, fieldName, maxColumn, maxLength, iconNumber, displayLabel, isPassword, true);
-        }
+        }    
 
         //public void _setTextboxSearchSceen(string fieldName, string searchName, string dataFilter, bool multiSelected = false, int selectedGridWidth = 0)
         //{
@@ -2422,33 +2369,17 @@ namespace SMLControl
         public event AfterRefreshHandler _afterRefresh;
         public event AfterClearHandler _afterClear;
 
-        public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel)
-        {
-            _addNumberBox(row, column, rowCount, subColumn, fieldName, maxColumn, point, displayLabel, Utils._numberUtils._getFormatNumber("m02"), true, fieldName);
-        }
 
         /// <summary>
         /// เพิ่ม Input Number Control
         /// </summary>
-        public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format)
+        public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName, Boolean isEmtry = true)
         {
-            _addNumberBox(row, column, rowCount, subColumn, fieldName, maxColumn, point, displayLabel, format, true, fieldName);
-        }
-
-        public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery)
-        {
-            _addNumberBox(row, column, rowCount, subColumn, fieldName, maxColumn, point, displayLabel, format, isQuery, fieldName);
-        }
-
-        public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName)
-        {
-            _addNumberBox(row, column, rowCount, subColumn, fieldName, maxColumn, point, displayLabel, format, isQuery, resourceFieldName, "", true);
-        }
-        /// <summary>
-        /// เพิ่ม Input Number Control
-        /// </summary>
-        public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName, string searchFormat, Boolean isEmtry)
-        {
+            //_addNumberBox(row, column, rowCount, subColumn, fieldName, maxColumn, point, displayLabel, format, isQuery, resourceFieldName, "", true);
+        //}
+       
+        //public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName, string searchFormat, Boolean isEmtry)
+        //{
             string __label_name = "";
             _setHeight(row, rowCount);
             _myNumberBox __newTextBox = new _myNumberBox();
@@ -2458,7 +2389,7 @@ namespace SMLControl
                 __newTextBox._label = __getLabel._label;
                 __label_name = __getLabel._label_name;
             }
-            __newTextBox._searchFormat = searchFormat;
+            // __newTextBox._searchFormat = searchFormat;
             __newTextBox._row = row;
             __newTextBox._column = column;
             __newTextBox._name = fieldName;
@@ -2479,17 +2410,7 @@ namespace SMLControl
             this.Controls.Add(__newTextBox);
         }
 
-        /// <summary>
-        /// เพิ่ม Input Date Control
-        /// </summary>
-        public void _addDateBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, Boolean displayLabel, Boolean isEmtry)
-        {
-            _addDateBox(row, column, rowCount, subColumn, fieldName, maxColumn, displayLabel, isEmtry, true, fieldName);
-        }
-        public void _addDateBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, Boolean displayLabel, Boolean isEmtry, Boolean isQuery)
-        {
-            _addDateBox(row, column, rowCount, subColumn, fieldName, maxColumn, displayLabel, isEmtry, isQuery, fieldName);
-        }
+
         public void _addDateBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, Boolean displayLabel, Boolean isEmtry, Boolean isQuery, string resourceFieldName)
         {
             string __label_name = "";
@@ -2518,13 +2439,7 @@ namespace SMLControl
             __newTextBox._cellMoveUp += new CellMoveUpHandler(__newTextBox__cellMoveUp);
             this.Controls.Add(__newTextBox);
         }
-        /// <summary>
-        /// เพิ่ม Input Date Control
-        /// </summary>
-        public void _addDateBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, Boolean displayLabel)
-        {
-            _addDateBox(row, column, rowCount, subColumn, fieldName, maxColumn, displayLabel, true, true, fieldName);
-        }
+      
 
         /// <summary>
         /// เมื่อกดปุ่ม Save
@@ -2550,30 +2465,7 @@ namespace SMLControl
         }
 
         public event ComboBoxSelectIndexChangedHandler _comboBoxSelectIndexChanged;
-        /// <summary>
-        /// เพิ่ม ComboBox Control
-        /// </summary>
-        public void _addComboBox(int row, int column, string fieldName, Boolean displayLabel, string[] listName, Boolean addCounter)
-        {
-            _addComboBox(row, column, fieldName, displayLabel, listName, addCounter, fieldName);
-        }
-
-        public void _addComboBox(int row, int column, string fieldName, Boolean displayLabel, string[] listName, Boolean addCounter, string resourceFieldName)
-        {
-            _addComboBox(row, column, fieldName, displayLabel, listName, addCounter, resourceFieldName, true);
-        }
-
-        public void _addComboBox(int row, int column, string fieldName, Boolean displayLabel, string[] listName, Boolean addCounter, string resourceFieldName, bool getResourceList)
-        {
-            _addComboBox(row, column, fieldName, 1, displayLabel, listName, addCounter, resourceFieldName, getResourceList);
-        }
-
-        public void _addComboBox(int row, int column, string fieldName, int maxColumn, Boolean displayLabel, string[] listName, Boolean addCounter, string resourceFieldName, bool getResourceList)
-        {
-            _addComboBox(row, column, fieldName, maxColumn, displayLabel, listName, addCounter, resourceFieldName, getResourceList, true);
-
-        }
-
+    
         // toe override เพื่อ ไม่ให้ get resource ของ list ใน combobox
         public void _addComboBox(int row, int column, string fieldName, int maxColumn, Boolean displayLabel, string[] listName, Boolean addCounter, string resourceFieldName, bool getResourceList, bool isQuery)
         {
@@ -2677,28 +2569,7 @@ namespace SMLControl
             SendKeys.Send("{TAB}");
         }
 
-        /// <summary>
-        /// เพิ่ม CheckBox Control
-        /// </summary>
-        public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName)
-        {
-            _addCheckBox(row, column, fieldName, displayLabel, checkBoxName, false);
-        }
-        public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName, Boolean isCheck)
-        {
-            _addCheckBox(row, column, fieldName, displayLabel, checkBoxName, isCheck, fieldName);
-        }
-        public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName, Boolean isCheck, string resourceFieldName)
-        {
-            _addCheckBox(row, column, fieldName, displayLabel, checkBoxName, isCheck, true, resourceFieldName);
-        }
-
-        public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName, Boolean isCheck, Boolean _isQuery, string resourceFieldName)
-        {
-            _addCheckBox(row, column, fieldName, displayLabel, checkBoxName, isCheck, _isQuery, resourceFieldName, false);
-        }
-
-        //public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName, Boolean isCheck, Boolean defaultValue, Boolean _isQuery, string resourceFieldName)
+       
         public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName, Boolean isCheck, Boolean _isQuery, string resourceFieldName, Boolean defaultValue)
         {
             _setHeight(row, 1);
@@ -2773,47 +2644,6 @@ namespace SMLControl
             }
         }
 
-        /// <summary>
-        /// เพิ่ม Group Box ใน Screen
-        /// </summary>
-        /// <param name="row">บรรทัด</param>
-        /// <param name="column">ตำแหน่งของ Column เริ่มต้น</param>
-        /// <param name="rowCount">ความสูง</param>
-        /// <param name="maxColumnForGroupBox">จำนวน Column (ใน GroupBox)</param>
-        /// <param name="maxColumn">จำนวน Column (กว้าง)</param>
-        /// <param name="fieldName">ชื่อ Field ของ GroupBox</param>
-        /// <returns></returns>
-        public _myGroupBox _addGroupBox(int row, int column, int rowCount, int maxColumnForGroupBox, int maxColumn, string fieldName, bool query)
-        {
-            _setHeight(row, rowCount + 1);
-            _myGroupBox __newGroupBox = new _myGroupBox();
-            __newGroupBox.__row = row;
-            __newGroupBox.__column = column;
-            __newGroupBox.__rowCount = rowCount;
-            __newGroupBox.Name = fieldName;
-            __newGroupBox.__name = fieldName;
-            __newGroupBox.__tableName = this._table_name;
-            __newGroupBox.__maxColumn = maxColumnForGroupBox;
-            __newGroupBox.__maxColumnPanel = maxColumn;
-            __newGroupBox.Font = new Font(this.Font.FontFamily, this.Font.Size); // toe   new Font(MyLib._myGlobal._myFont.FontFamily, MyLib._myGlobal._myFont.Size);
-            __newGroupBox.__resource_name = (this._table_name.Length > 0) ? (string.Concat(this._table_name, ".", fieldName)) : fieldName;
-            __newGroupBox.__query = query;
-            if (_myGlobal._isDesignMode == false)
-            {
-                _myResourceType __getResource = _myResource._findResource(__newGroupBox.__resource_name, __newGroupBox.__resource_name);
-                if (__getResource._str.Length == 0)
-                {
-                    __getResource._str = fieldName;
-                }
-                __newGroupBox.Text = __getResource._str;
-            }
-            else
-            {
-                __newGroupBox.Text = fieldName;
-            }
-            this.Controls.Add(__newGroupBox);
-            return (__newGroupBox);
-        }
 
         public _myGroupBox _addGroupBox(int row, int column, int rowCount, int maxColumnForGroupBox, int maxColumn, string fieldName, bool query, string resourceFieldName)
         {
@@ -2847,6 +2677,7 @@ namespace SMLControl
             return (__newGroupBox);
         }
 
+
         /// <summary>
         /// เพิ่มปุ่ม RatiobBotton เข้าใน GroupBox
         /// </summary>
@@ -2854,11 +2685,6 @@ namespace SMLControl
         /// <param name="column"></param>
         /// <param name="groupBox"></param>
         /// <param name="fieldName"></param>
-        public _myRadioButton _addRadioButtonOnGroupBox(int row, int column, _myGroupBox groupBox, string fieldName, object value, bool isChecked)
-        {
-            return _addRadioButtonOnGroupBox(row, column, groupBox, fieldName, value, isChecked, fieldName);
-        }
-
         public _myRadioButton _addRadioButtonOnGroupBox(int row, int column, _myGroupBox groupBox, string fieldName, object value, bool isChecked, string resourceFieldName)
         {
             _myRadioButton __radioButton = new _myRadioButton();
@@ -2938,7 +2764,7 @@ namespace SMLControl
     public delegate void ButtonClickHandler(object sender, string name);
     public delegate void SaveKeyDownHandler(object sender);
     public delegate void ExitKeyDownHandler(object sender);
-    public delegate void TextBoxSearchHandler(object sender);
+    public delegate void TextBoxSearchHandler(object sender, string name);
     public delegate void TextBoxChangedHandler(object sender, string name);
     public delegate void TextBoxSavedHandler(object sender, string name);
     public delegate void CheckBoxChangedHandler(object sender, string name);

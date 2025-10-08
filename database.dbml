@@ -5,3 +5,12 @@ Table "users" {
   "user_password" varchar(255)
   "user_role" int2 [default: 0]
 }
+
+Table "mst_customer" {
+  "id" int4 [not null, increment]
+  "code" varchar(50) [pk, not null]
+  "name" varchar(500)
+  "telephone" varchar(50)
+  "address" text
+  "remark" text
+}

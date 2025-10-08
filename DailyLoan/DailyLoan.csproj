@@ -73,11 +73,29 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppConfig.cs" />
+    <Compile Include="Control\SearchDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\SearchDataControl.Designer.cs">
+      <DependentUpon>SearchDataControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Control\TitlePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Control\TitlePanel.Designer.cs">
       <DependentUpon>TitlePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\SearchCustomerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Customer\SearchCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Customer\SearchCustomerForm.Designer.cs">
+      <DependentUpon>SearchCustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customer\_customerDataScreen.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Daily\DailyControl.cs">
       <SubType>UserControl</SubType>
@@ -101,6 +119,7 @@
     <Compile Include="DBSettingForm.Designer.cs">
       <DependentUpon>DBSettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Domain\LoanPeriod.cs" />
     <Compile Include="Loan\LoanControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -139,8 +158,14 @@
     <Compile Include="WelcomeControl.Designer.cs">
       <DependentUpon>WelcomeControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Control\SearchDataControl.resx">
+      <DependentUpon>SearchDataControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Control\TitlePanel.resx">
       <DependentUpon>TitlePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customer\SearchCustomerForm.resx">
+      <DependentUpon>SearchCustomerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Daily\DailyControl.resx">
       <DependentUpon>DailyControl.cs</DependentUpon>

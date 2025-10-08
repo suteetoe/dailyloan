@@ -1119,65 +1119,70 @@ namespace SMLControl
             }
         }
 
-        public void _addRow()
+        public int _addRow()
         {
-            this._addRow(-1);
+            return this._addRow(-1);
         }
 
         /// <summary>
         /// เพิ่มบรรทัด (แบบแทรก) พร้อม clear ตัวแปรทุก Column
         /// </summary>
-        public void _addRow(int rowNumber)
+        public int _addRow(int rowNumber)
         {
-            if (rowNumber >= 0)
+            ArrayList __data = new ArrayList();
+            _columnType __getColumn = new _columnType();
+            for (int __loop = 0; __loop < _columnList.Count; __loop++)
             {
-                ArrayList __data = new ArrayList();
-                _columnType __getColumn = new _columnType();
-                for (int __loop = 0; __loop < _columnList.Count; __loop++)
+                __getColumn = (_columnType)_columnList[__loop];
+                string __datastring = "";
+                decimal __dataDouble = 0;
+                int __dataInt = 0;
+                object __dataObjcet = __datastring;
+                switch (__getColumn._type)
                 {
-                    __getColumn = (_columnType)_columnList[__loop];
-                    string __datastring = "";
-                    decimal __dataDouble = 0;
-                    int __dataInt = 0;
-                    object __dataObjcet = __datastring;
-                    switch (__getColumn._type)
-                    {
-                        case 2:
-                            __dataObjcet = __dataInt;
-                            break;
-                        case 3:
-                        case 5:
-                            __dataObjcet = __dataDouble;
-                            break;
-                        case 4:
-                            __dataObjcet = new DateTime(1000, 1, 1); // Date
-                            break;
-                        case 10:
-                            __dataObjcet = __dataInt;// ComboBox
-                            break;
-                        case 11:
-                            __dataObjcet = __dataInt;// CheckBox
-                            break;
-                        case 12:
-                            __dataObjcet = null;// Object
-                            break;
-                    }
-                    if (_beforeAddRow != null)
-                    {
-                        __dataObjcet = _beforeAddRow(this, __dataObjcet, _rowData.Count - 1, __loop, __getColumn._originalName);
-                    }
-                    __data.Add(__dataObjcet);
-                } // for
-                __data.Add(false); // Change
+                    case 2:
+                        __dataObjcet = __dataInt;
+                        break;
+                    case 3:
+                    case 5:
+                        __dataObjcet = __dataDouble;
+                        break;
+                    case 4:
+                        __dataObjcet = new DateTime(1000, 1, 1); // Date
+                        break;
+                    case 10:
+                        __dataObjcet = __dataInt;// ComboBox
+                        break;
+                    case 11:
+                        __dataObjcet = __dataInt;// CheckBox
+                        break;
+                    case 12:
+                        __dataObjcet = null;// Object
+                        break;
+                }
+                if (_beforeAddRow != null)
+                {
+                    __dataObjcet = _beforeAddRow(this, __dataObjcet, _rowData.Count - 1, __loop, __getColumn._originalName);
+                }
+                __data.Add(__dataObjcet);
+            } // for
+            __data.Add(false); // Change
 
-                if (rowNumber != -1)
-                    _rowData.Insert(rowNumber, __data);
-                else
-                    _rowData.Add(__data);
-                if (_afterAddRow != null)
-                    _afterAddRow(this, rowNumber);
-                this.Invalidate();
+            if (rowNumber > -1)
+                _rowData.Insert(rowNumber, __data);
+            else
+            {
+                _rowData.Add(__data);
             }
+
+            if (_afterAddRow != null)
+                _afterAddRow(this, rowNumber);
+            this.Invalidate();
+
+
+            int rowIndex = (rowNumber > -1) ? rowNumber : (_rowData.Count - 1);
+            return rowIndex;
+
         }
 
         #endregion
@@ -1208,7 +1213,7 @@ namespace SMLControl
             return __found;
         }
 
-      
+
 
         public void _reset()
         {
@@ -1272,7 +1277,7 @@ namespace SMLControl
             //
             this._calcHeightCalc();
         }
-                   
+
 
         /// <summary>
         /// ดึงข้อมูลจาก DataSet ที่ Query มาได้ เข้า DataGrid แบบอัตโนมัติ
@@ -1664,7 +1669,7 @@ namespace SMLControl
             _inputTextBox.textBox.LostFocus += new EventHandler(textBox_LostFocus);
             this._inputNumberBox.textBox.LostFocus += new EventHandler(textBox_LostFocus);
         }
-       
+
 
         /// <summary>
         /// นำข้อมูลเข้าไปใน Cell
@@ -2002,7 +2007,7 @@ namespace SMLControl
             }
         }
 
-       
+
 
         /// <summary>
         /// นำข้อมูลเข้าไปใน Cell
@@ -2100,7 +2105,7 @@ namespace SMLControl
         void _inputTextBox__cellMoveRight(object sender)
         {
             cellFlowNextColumn();
-        }  
+        }
 
         void _inputTextBox__cellSearch(object sender, string e)
         {
@@ -2739,7 +2744,7 @@ namespace SMLControl
             }
         }
 
-  
+
 
         void _myGrid_Invalidated(object sender, InvalidateEventArgs e)
         {
@@ -3922,7 +3927,7 @@ namespace SMLControl
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-      
+
         #endregion
     }
 

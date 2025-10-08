@@ -10,7 +10,7 @@ namespace SMLControl
     {
         public int Digit { get; set; } = 2;
         public Boolean IsQuery { get; set; } = true;
-
+        public Boolean Required { get; set; }
         public string NumberFormat { get; set; } = "";
     }
 }

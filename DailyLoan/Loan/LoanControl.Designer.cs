@@ -38,20 +38,23 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this._paymentPeriodGrid1 = new DailyLoan.Loan._paymentPeriodGrid();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this._labelTotalBalance = new System.Windows.Forms.Label();
+            this._labelTotalPaid = new System.Windows.Forms.Label();
+            this._labelTotalLoan = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this._payButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // _loanScreenTop1
@@ -62,7 +65,7 @@
             this._loanScreenTop1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._loanScreenTop1.Location = new System.Drawing.Point(0, 0);
             this._loanScreenTop1.Name = "_loanScreenTop1";
-            this._loanScreenTop1.Size = new System.Drawing.Size(614, 374);
+            this._loanScreenTop1.Size = new System.Drawing.Size(614, 400);
             this._loanScreenTop1.TabIndex = 4;
             // 
             // titlePanel1
@@ -141,6 +144,7 @@
             this._saveContractButton.Text = "บันทึก";
             this._saveContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._saveContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._saveContractButton.Click += new System.EventHandler(this._saveContractButton_Click);
             // 
             // toolStripButton1
             // 
@@ -167,6 +171,7 @@
             this._paymentPeriodGrid1.Location = new System.Drawing.Point(5, 0);
             this._paymentPeriodGrid1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._paymentPeriodGrid1.Name = "_paymentPeriodGrid1";
+            this._paymentPeriodGrid1.ShowTotal = true;
             this._paymentPeriodGrid1.Size = new System.Drawing.Size(385, 635);
             this._paymentPeriodGrid1.TabIndex = 5;
             this._paymentPeriodGrid1.TabStop = false;
@@ -189,8 +194,23 @@
             this.splitContainer1.SplitterDistance = 619;
             this.splitContainer1.TabIndex = 6;
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this._loanScreenTop1);
+            this.panel3.Controls.Add(this.panel2);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.panel3.Size = new System.Drawing.Size(619, 635);
+            this.panel3.TabIndex = 7;
+            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this._labelTotalBalance);
+            this.panel2.Controls.Add(this._labelTotalPaid);
+            this.panel2.Controls.Add(this._labelTotalLoan);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
@@ -199,6 +219,42 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(614, 117);
             this.panel2.TabIndex = 6;
+            // 
+            // _labelTotalBalance
+            // 
+            this._labelTotalBalance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._labelTotalBalance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._labelTotalBalance.ForeColor = System.Drawing.Color.Red;
+            this._labelTotalBalance.Location = new System.Drawing.Point(410, 80);
+            this._labelTotalBalance.Name = "_labelTotalBalance";
+            this._labelTotalBalance.Size = new System.Drawing.Size(182, 19);
+            this._labelTotalBalance.TabIndex = 5;
+            this._labelTotalBalance.Text = "0.00";
+            this._labelTotalBalance.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // _labelTotalPaid
+            // 
+            this._labelTotalPaid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._labelTotalPaid.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._labelTotalPaid.ForeColor = System.Drawing.Color.Green;
+            this._labelTotalPaid.Location = new System.Drawing.Point(410, 47);
+            this._labelTotalPaid.Name = "_labelTotalPaid";
+            this._labelTotalPaid.Size = new System.Drawing.Size(182, 19);
+            this._labelTotalPaid.TabIndex = 4;
+            this._labelTotalPaid.Text = "0.00";
+            this._labelTotalPaid.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // _labelTotalLoan
+            // 
+            this._labelTotalLoan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._labelTotalLoan.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._labelTotalLoan.ForeColor = System.Drawing.Color.Blue;
+            this._labelTotalLoan.Location = new System.Drawing.Point(410, 18);
+            this._labelTotalLoan.Name = "_labelTotalLoan";
+            this._labelTotalLoan.Size = new System.Drawing.Size(182, 19);
+            this._labelTotalLoan.TabIndex = 3;
+            this._labelTotalLoan.Text = "9,999,999,999.00";
+            this._labelTotalLoan.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label3
             // 
@@ -243,18 +299,6 @@
             this.panel1.Size = new System.Drawing.Size(1033, 655);
             this.panel1.TabIndex = 9;
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this._loanScreenTop1);
-            this.panel3.Controls.Add(this.panel2);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.panel3.Size = new System.Drawing.Size(619, 635);
-            this.panel3.TabIndex = 7;
-            // 
             // LoanControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -273,10 +317,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -298,5 +342,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label _labelTotalLoan;
+        private System.Windows.Forms.Label _labelTotalBalance;
+        private System.Windows.Forms.Label _labelTotalPaid;
     }
 }

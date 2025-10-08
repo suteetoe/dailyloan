@@ -51,5 +51,18 @@ namespace SMLControl.Utils
         {
             return format;
         }
+
+        public static string BuildNumberFormat(int decimalPoint)
+        {
+            string result = "N" + decimalPoint.ToString();
+            return "{0:" + result + "}";
+        }
+
+        public static string FormatNumber(decimal number, int decimalPoint)
+        {
+            string format = BuildNumberFormat(decimalPoint);
+
+            return string.Format(format, number);
+        }
     }
 }

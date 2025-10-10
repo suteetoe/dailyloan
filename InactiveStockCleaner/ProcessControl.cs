@@ -335,6 +335,126 @@ namespace InactiveStockCleaner
             // ถ้า password เป็น null หรือ empty แปลว่า user กด Cancel
         }
 
+        private void exportButton_Click(object sender, EventArgs e)
+        {
+            // ตรวจสอบว่ามีข้อมูลใน grid หรือไม่
+            if (productGrid == null || productGrid._rowData.Count == 0)
+            {
+                MessageBox.Show("ไม่มีข้อมูลให้ Export", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                // สร้าง SaveFileDialog
+                using (SaveFileDialog saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Filter = "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|Text files (*.txt)|*.txt";
+                    saveDialog.FilterIndex = 1; // Default เป็น CSV
+                    saveDialog.DefaultExt = "csv";
+                    saveDialog.FileName = $"InactiveStock_Export_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+                    if (saveDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        ExportGridData(saveDialog.FileName);
+                        
+                        statusLabel.Text = $"Export สำเร็จ: {productGrid._rowData.Count} รายการ → {Path.GetFileName(saveDialog.FileName)}";
+                        statusLabel.ForeColor = Color.Green;
+                        
+                        MessageBox.Show($"Export ข้อมูลสำเร็จ!\n\nไฟล์: {saveDialog.FileName}\nจำนวน: {productGrid._rowData.Count} รายการ", 
+                            "Export สำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                statusLabel.Text = "Export ล้มเหลว: " + ex.Message;
+                statusLabel.ForeColor = Color.Red;
+                MessageBox.Show("เกิดข้อผิดพลาดในการ Export ข้อมูล:\n" + ex.Message, 
+                    "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ExportGridData(string fileName)
+        {
+            string extension = Path.GetExtension(fileName).ToLower();
+            
+            switch (extension)
+            {
+                case ".csv":
+                case ".txt":
+                    ExportToCsv(fileName);
+                    break;
+                case ".xlsx":
+                    ExportToExcel(fileName);
+                    break;
+                default:
+                    ExportToCsv(fileName); // Default เป็น CSV
+                    break;
+            }
+        }
+
+        private void ExportToCsv(string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
+            {
+                // เขียน Header
+                writer.WriteLine("รหัสสินค้า,ชื่อสินค้า,หน่วยนับ,มีเคลื่อนไหว,สต็อกคงเหลือ,สถานะ");
+                
+                // เขียนข้อมูลแต่ละแถว
+                for (int row = 0; row < productGrid._rowData.Count; row++)
+                {
+                    List<string> values = new List<string>();
+                    
+                    for (int col = 0; col < 6; col++) // 6 คอลัมน์
+                    {
+                        object cellValue = productGrid._cellGet(row, col);
+                        string value = cellValue?.ToString() ?? "";
+                        
+                        // Escape comma และ quotes สำหรับ CSV
+                        if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+                        {
+                            value = "\"" + value.Replace("\"", "\"\"") + "\"";
+                        }
+                        
+                        values.Add(value);
+                    }
+                    
+                    writer.WriteLine(string.Join(",", values));
+                }
+            }
+        }
+
+        private void ExportToExcel(string fileName)
+        {
+            // สำหรับ Excel export แบบง่าย (ไม่ใช้ library พิเศษ)
+            // จะใช้ CSV format แต่บันทึกเป็น .xlsx
+            // ในการใช้งานจริงควรใช้ library เช่น EPPlus หรือ ClosedXML
+            using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
+            {
+                // BOM สำหรับ UTF-8
+                writer.Write('\uFEFF');
+                
+                // เขียน Header
+                writer.WriteLine("รหัสสินค้า\tชื่อสินค้า\tหน่วยนับ\tมีเคลื่อนไหว\tสต็อกคงเหลือ\tสถานะ");
+                
+                // เขียนข้อมูลแต่ละแถว (ใช้ Tab เป็น delimiter)
+                for (int row = 0; row < productGrid._rowData.Count; row++)
+                {
+                    List<string> values = new List<string>();
+                    
+                    for (int col = 0; col < 6; col++)
+                    {
+                        object cellValue = productGrid._cellGet(row, col);
+                        string value = cellValue?.ToString() ?? "";
+                        values.Add(value);
+                    }
+                    
+                    writer.WriteLine(string.Join("\t", values));
+                }
+            }
+        }
+
         private void ProcessData()
         {
             try

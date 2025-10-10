@@ -35,6 +35,7 @@ namespace InactiveStockCleaner
             this.gridPanel = new System.Windows.Forms.Panel();
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.deleteButton = new System.Windows.Forms.Button();
+            this.exportButton = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -122,6 +123,7 @@ namespace InactiveStockCleaner
             // bottomPanel
             // 
             this.bottomPanel.Controls.Add(this.deleteButton);
+            this.bottomPanel.Controls.Add(this.exportButton);
             this.bottomPanel.Controls.Add(this.statusLabel);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bottomPanel.Location = new System.Drawing.Point(0, 0);
@@ -135,7 +137,7 @@ namespace InactiveStockCleaner
             this.deleteButton.Dock = System.Windows.Forms.DockStyle.Right;
             this.deleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deleteButton.ForeColor = System.Drawing.Color.White;
-            this.deleteButton.Location = new System.Drawing.Point(830, 0);
+            this.deleteButton.Location = new System.Drawing.Point(680, 0);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(150, 72);
             this.deleteButton.TabIndex = 1;
@@ -143,6 +145,21 @@ namespace InactiveStockCleaner
             this.deleteButton.UseVisualStyleBackColor = false;
             this.deleteButton.Visible = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
+            // exportButton
+            // 
+            this.exportButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.exportButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.exportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exportButton.ForeColor = System.Drawing.Color.White;
+            this.exportButton.Location = new System.Drawing.Point(830, 0);
+            this.exportButton.Name = "exportButton";
+            this.exportButton.Size = new System.Drawing.Size(150, 72);
+            this.exportButton.TabIndex = 2;
+            this.exportButton.Text = "📊 Export\nข้อมูล";
+            this.exportButton.UseVisualStyleBackColor = false;
+            this.exportButton.Visible = true;
+            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
             // statusLabel
             // 
@@ -186,6 +203,7 @@ namespace InactiveStockCleaner
         private System.Windows.Forms.Panel gridPanel;
         private System.Windows.Forms.Panel bottomPanel;
         private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.Label statusLabel;
     }
 }

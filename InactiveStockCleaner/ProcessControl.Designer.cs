@@ -131,7 +131,7 @@ namespace InactiveStockCleaner
             // 
             // deleteButton
             // 
-            this.deleteButton.BackColor = System.Drawing.Color.IndianRed;
+            this.deleteButton.BackColor = System.Drawing.Color.ForestGreen;
             this.deleteButton.Dock = System.Windows.Forms.DockStyle.Right;
             this.deleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deleteButton.ForeColor = System.Drawing.Color.White;
@@ -139,7 +139,7 @@ namespace InactiveStockCleaner
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(150, 72);
             this.deleteButton.TabIndex = 1;
-            this.deleteButton.Text = "🗑️ ลบข้อมูลทั้งหมด";
+            this.deleteButton.Text = "⚡ ดำเนินการ\nProcess";
             this.deleteButton.UseVisualStyleBackColor = false;
             this.deleteButton.Visible = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);

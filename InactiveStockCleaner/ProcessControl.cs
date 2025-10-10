@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace InactiveStockCleaner
 {
     public class ProductInfo
@@ -16,6 +17,33 @@ namespace InactiveStockCleaner
         public string Name { get; set; }
         public string UnitCost { get; set; }
         public string HasMovement { get; set; }
+        public string BalanceAmount { get; set; }
+        
+        public string GetStatus()
+        {
+            // แปลง HasMovement เป็น boolean
+            bool hasMovement = HasMovement == "มีเคลื่อนไหว";
+            
+            // แปลง BalanceAmount เป็น decimal
+            decimal balance = SMLControl.Utils._numberUtils._decimalPhase(BalanceAmount);
+            
+            // Debug: ดูค่าที่ได้
+            // MessageBox.Show($"HasMovement: '{HasMovement}', hasMovement: {hasMovement}, Balance: {balance}");
+            
+            // ตรวจสอบเงื่อนไข
+            if (!hasMovement) // ไม่เคลื่อนไหว
+            {
+                return "ลบ";
+            }
+            else if (hasMovement && balance != 0) // มีเคลื่อนไหว และ สต็อกไม่เป็น 0
+            {
+                return "หยุดซื้อ";
+            }
+            else // มีเคลื่อนไหว และ สต็อก = 0
+            {
+                return "หยุดซื้อ, หยุดขาย";
+            }
+        }
     }
 
     public partial class ProcessControl : UserControl
@@ -132,12 +160,16 @@ namespace InactiveStockCleaner
                     productGrid._cellUpdate(newRow, "product_name", info.Name, false);
                     productGrid._cellUpdate(newRow, "unit_cost", info.UnitCost, false);
                     productGrid._cellUpdate(newRow, "has_movement", info.HasMovement, false);
+                    productGrid._cellUpdate(newRow, "balance_amount", SMLControl.Utils._numberUtils._decimalPhase(info.BalanceAmount), false);
+                    productGrid._cellUpdate(newRow, "status", info.GetStatus(), false);
                 }
                 else
                 {
                     productGrid._cellUpdate(newRow, "product_name", "", false);
                     productGrid._cellUpdate(newRow, "unit_cost", "", false);
                     productGrid._cellUpdate(newRow, "has_movement", "", false);
+                    productGrid._cellUpdate(newRow, "balance_amount", SMLControl.Utils._numberUtils._decimalPhase("0"), false);
+                    productGrid._cellUpdate(newRow, "status", "", false);
                 }
             }
 
@@ -171,7 +203,59 @@ namespace InactiveStockCleaner
                                 WHEN (SELECT COUNT(*) FROM ic_trans_detail t WHERE t.item_code = i.code) > 0 
                                 THEN 'มีเคลื่อนไหว' 
                                 ELSE 'ไม่เคลื่อนไหว' 
-                            END as has_movement
+                            END as has_movement,
+                            COALESCE(
+                                (SELECT SUM(
+                                    (
+                                        calc_flag * (
+                                            CASE
+                                                WHEN (
+                                                    (
+                                                        trans_flag IN (70, 54, 60, 58, 310, 12)
+                                                        OR (
+                                                            trans_flag = 66
+                                                            AND (
+                                                                qty > 0
+                                                                OR sum_of_cost > 0
+                                                            )
+                                                        )
+                                                        OR (trans_flag = 14)
+                                                        OR (
+                                                            trans_flag = 48
+                                                            AND inquiry_type < 2
+                                                        )
+                                                    )
+                                                    OR (
+                                                        trans_flag IN (56, 68, 72, 44)
+                                                        OR (
+                                                            trans_flag = 66
+                                                            AND (
+                                                                qty < 0
+                                                                OR sum_of_cost < 0
+                                                            )
+                                                        )
+                                                        OR (trans_flag = 46)
+                                                        OR (trans_flag = 16)
+                                                        OR (trans_flag = 311)
+                                                    )
+                                                    AND NOT (
+                                                        ic_trans_detail.doc_ref <> ''
+                                                        AND ic_trans_detail.is_pos = 1
+                                                    )
+                                                ) THEN(
+                                                    CASE
+                                                        WHEN trans_flag = 66
+                                                        AND qty < 0 THEN(-1 * sum_of_cost) + COALESCE(profit_lost_cost_amount, 0)
+                                                        ELSE (sum_of_cost + COALESCE(profit_lost_cost_amount, 0))
+                                                    END
+                                                )
+                                                ELSE 0
+                                            END
+                                        )
+                                    )
+                                ) FROM ic_trans_detail WHERE item_code = i.code),
+                                0
+                            ) AS balance_amount
                         FROM ic_inventory i 
                         WHERE i.code IN ({inClause})";
                     
@@ -185,6 +269,7 @@ namespace InactiveStockCleaner
                             string name = row["name_1"]?.ToString() ?? "";
                             string unitCost = row["unit_cost"]?.ToString() ?? "";
                             string hasMovement = row["has_movement"]?.ToString() ?? "";
+                            string balanceAmount = row["balance_amount"]?.ToString() ?? "0";
                             
                             if (!string.IsNullOrEmpty(code))
                             {
@@ -192,7 +277,8 @@ namespace InactiveStockCleaner
                                 {
                                     Name = name,
                                     UnitCost = unitCost,
-                                    HasMovement = hasMovement
+                                    HasMovement = hasMovement,
+                                    BalanceAmount = balanceAmount
                                 };
                             }
                         }
@@ -218,7 +304,7 @@ namespace InactiveStockCleaner
             // ตรวจสอบว่ามีข้อมูลใน grid หรือไม่
             if (productGrid == null || productGrid._rowData.Count == 0)
             {
-                MessageBox.Show("ไม่มีข้อมูลให้ลบ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("ไม่มีข้อมูลให้ดำเนินการ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -227,34 +313,203 @@ namespace InactiveStockCleaner
             
             if (password == "123")
             {
-                // รหัสผ่านถูกต้อง - ลบข้อมูล
+                // รหัสผ่านถูกต้อง - ดำเนินการ Process
                 DialogResult result = MessageBox.Show(
-                    $"ต้องการลบข้อมูลทั้งหมด {productGrid._rowData.Count} รายการใช่หรือไม่?",
-                    "ยืนยันการลบข้อมูล",
+                    $"ต้องการดำเนินการ Process ข้อมูลทั้งหมด {productGrid._rowData.Count} รายการใช่หรือไม่?\n\n" +
+                    "การดำเนินการจะแก้ไขข้อมูลในฐานข้อมูลตามสถานะของแต่ละรายการ",
+                    "ยืนยันการ Process ข้อมูล",
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning
+                    MessageBoxIcon.Question
                 );
 
                 if (result == DialogResult.Yes)
                 {
-                    productGrid._clear();
-                    statusLabel.Text = "ลบข้อมูลทั้งหมดเรียบร้อยแล้ว";
-                    statusLabel.ForeColor = Color.Green;
+                    ProcessData();
                 }
             }
             else if (!string.IsNullOrEmpty(password))
             {
                 // รหัสผ่านผิด
-                MessageBox.Show("รหัสผ่านไม่ถูกต้อง ไม่สามารถลบข้อมูลได้", "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("รหัสผ่านไม่ถูกต้อง ไม่สามารถดำเนินการได้", "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             // ถ้า password เป็น null หรือ empty แปลว่า user กด Cancel
+        }
+
+        private void ProcessData()
+        {
+            try
+            {
+                int deleteCount = 0;
+                int holdPurchaseCount = 0;
+                int holdSaleCount = 0;
+                int errorCount = 0;
+
+                statusLabel.Text = "กำลังดำเนินการ...";
+                statusLabel.ForeColor = Color.Blue;
+
+                // ดึงข้อมูลทั้งหมดจาก grid
+                for (int row = 0; row < productGrid._rowData.Count; row++)
+                {
+                    try
+                    {
+                        // ใช้ column index แทน column name เพื่อหลีกเลี่ยง StackOverflow
+                        // Column 0: product_code, Column 5: status
+                        string productCode = productGrid._cellGet(row, 0).ToString();
+                        string status = productGrid._cellGet(row, 5).ToString();
+
+                        if (string.IsNullOrEmpty(productCode) || string.IsNullOrEmpty(status))
+                            continue;
+
+                        // ดำเนินการตามสถานะ
+                        switch (status)
+                        {
+                            case "ลบ":
+                                if (DeleteProduct(productCode))
+                                    deleteCount++;
+                                else
+                                    errorCount++;
+                                break;
+
+                            case "หยุดซื้อ":
+                                if (UpdateHoldPurchase(productCode))
+                                    holdPurchaseCount++;
+                                else
+                                    errorCount++;
+                                break;
+
+                            case "หยุดซื้อ, หยุดขาย":
+                                if (UpdateHoldSale(productCode))
+                                    holdSaleCount++;
+                                else
+                                    errorCount++;
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        errorCount++;
+                        System.Diagnostics.Debug.WriteLine($"Error processing row {row}: {ex.Message}");
+                    }
+                }
+
+                // แสดงผลลัพธ์
+                string resultMessage = $"ดำเนินการเสร็จสิ้น:\n" +
+                                     $"ลบสินค้า: {deleteCount} รายการ\n" +
+                                     $"หยุดซื้อ: {holdPurchaseCount} รายการ\n" +
+                                     $"หยุดซื้อ+ขาย: {holdSaleCount} รายการ";
+
+                if (errorCount > 0)
+                    resultMessage += $"\nข้อผิดพลาด: {errorCount} รายการ";
+
+                statusLabel.Text = resultMessage.Replace("\n", " | ");
+                statusLabel.ForeColor = errorCount > 0 ? Color.Orange : Color.Green;
+
+                MessageBox.Show(resultMessage, "ผลการดำเนินการ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                statusLabel.Text = "เกิดข้อผิดพลาด: " + ex.Message;
+                statusLabel.ForeColor = Color.Red;
+                MessageBox.Show("เกิดข้อผิดพลาดในการดำเนินการ: " + ex.Message, "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool DeleteProduct(string productCode)
+        {
+            try
+            {
+                // ใช้ connection ที่ login เข้ามาแล้ว
+                if (InactiveStockCleaner.App.DBConnection == null || !InactiveStockCleaner.App.DBConnection.Connected)
+                {
+                    throw new Exception("Database not connected");
+                }
+
+                // Escape single quotes in product code
+                string escapedProductCode = productCode.Replace("'", "''");
+                
+                string query = $@"
+                    DELETE FROM ic_inventory_detail WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_inventory_barcode WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_inventory_level WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_inventory_price WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_inventory_price_formula WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_unit_use WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_wh_shelf WHERE ic_code = '{escapedProductCode}';
+                    DELETE FROM ic_inventory WHERE code = '{escapedProductCode}';
+                    DELETE FROM ic_inventory_purchase_price WHERE code = '{escapedProductCode}'; ";
+
+
+                InactiveStockCleaner.App.DBConnection.ExecuteCommand(query);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error deleting product {productCode}: {ex.Message}");
+                return false;
+            }
+        }
+
+        private bool UpdateHoldPurchase(string productCode)
+        {
+            try
+            {
+                // ใช้ connection ที่ login เข้ามาแล้ว
+                if (InactiveStockCleaner.App.DBConnection == null || !InactiveStockCleaner.App.DBConnection.Connected)
+                {
+                    throw new Exception("Database not connected");
+                }
+
+                // Escape single quotes in product code
+                string escapedProductCode = productCode.Replace("'", "''");
+                
+                string query = $@"
+                    UPDATE ic_inventory_detail 
+                    SET is_hold_purchase = 1 
+                    WHERE ic_code = '{escapedProductCode}'";
+                
+                InactiveStockCleaner.App.DBConnection.ExecuteCommand(query);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error updating hold purchase for {productCode}: {ex.Message}");
+                return false;
+            }
+        }
+
+        private bool UpdateHoldSale(string productCode)
+        {
+            try
+            {
+                // ใช้ connection ที่ login เข้ามาแล้ว
+                if (InactiveStockCleaner.App.DBConnection == null || !InactiveStockCleaner.App.DBConnection.Connected)
+                {
+                    throw new Exception("Database not connected");
+                }
+
+                // Escape single quotes in product code
+                string escapedProductCode = productCode.Replace("'", "''");
+                
+                string query = $@"
+                    UPDATE ic_inventory_detail 
+                    SET is_hold_sale = 1 ,is_hold_purchase = 1 
+                    WHERE ic_code = '{escapedProductCode}'";
+                
+                InactiveStockCleaner.App.DBConnection.ExecuteCommand(query);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error updating hold sale for {productCode}: {ex.Message}");
+                return false;
+            }
         }
 
         private string PromptForPassword()
         {
             using (Form passwordForm = new Form())
             {
-                passwordForm.Text = "ยืนยันการลบข้อมูล";
+                passwordForm.Text = "ยืนยันการดำเนินการ";
                 passwordForm.Size = new Size(350, 200);
                 passwordForm.StartPosition = FormStartPosition.CenterParent;
                 passwordForm.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -263,7 +518,7 @@ namespace InactiveStockCleaner
 
                 Label messageLabel = new Label()
                 {
-                    Text = "กรุณาใส่รหัสผ่านเพื่อยืนยันการลบข้อมูล:",
+                    Text = "กรุณาใส่รหัสผ่านเพื่อยืนยันการดำเนินการ:",
                     Location = new Point(20, 20),
                     Size = new Size(300, 40),
                     Font = new Font("Microsoft Sans Serif", 10F)

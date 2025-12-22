@@ -15,6 +15,10 @@ namespace DailyLoan.Setup.Holiday
         public HolidayControl()
         {
             InitializeComponent();
+
+            this._searchResultGrid.AddGridColumn(new SMLControl.GridDateColumn() { WidthPercent = 20, ColumnCode = "date_holiday", ColumnName = "วันที่" });
+            this._searchResultGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 80, ColumnCode = "remark", ColumnName = "รายละเอียด" });
+            this._searchResultGrid.Invalidate();
         }
     }
 }

@@ -152,6 +152,12 @@
       <DependentUpon>DBSettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\LoanPeriod.cs" />
+    <Compile Include="Expenses\ExpenseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Expenses\ExpenseDetailScreeen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Loan\LoanControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -191,10 +197,7 @@
     <Compile Include="Setup\Employee\EmployeeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\Employee\EmployeeControl.Designer.cs">
-      <DependentUpon>EmployeeControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\Employee\EmployeeManageDataList.cs">
+    <Compile Include="Setup\Employee\EmployeeDetailScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Setup\Holiday\HolidayControl.cs">
@@ -202,6 +205,15 @@
     </Compile>
     <Compile Include="Setup\Holiday\HolidayControl.Designer.cs">
       <DependentUpon>HolidayControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\Holiday\HolidayDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Setup\Route\RouteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Setup\Route\RouteDetailScreen.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Setup\SetupUserControl.cs">
       <SubType>UserControl</SubType>
@@ -242,6 +254,9 @@
     <EmbeddedResource Include="DBSettingForm.resx">
       <DependentUpon>DBSettingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Expenses\ExpenseControl.resx">
+      <DependentUpon>ExpenseControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Loan\LoanControl.resx">
       <DependentUpon>LoanControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setup\Holiday\HolidayControl.resx">
       <DependentUpon>HolidayControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setup\Route\RouteControl.resx">
+      <DependentUpon>RouteControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setup\SetupUserControl.resx">
       <DependentUpon>SetupUserControl.cs</DependentUpon>
@@ -314,8 +332,6 @@
   <ItemGroup>
     <None Include="Resources\disk_blue.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Setup\Route\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

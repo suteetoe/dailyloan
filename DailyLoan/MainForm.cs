@@ -132,6 +132,7 @@ namespace DailyLoan
 
         private void _expenseMenuButton_Click(object sender, EventArgs e)
         {
+            Router.OpenMenu(MenuScreen.MENU_EXPENSE);
 
         }
     }

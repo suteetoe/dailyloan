@@ -58,6 +58,7 @@
             this._routeMenuButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._routeMenuButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._routeMenuButton.UseVisualStyleBackColor = true;
+            this._routeMenuButton.Click += new System.EventHandler(this._routeMenuButton_Click);
             // 
             // _employeeMenuButton
             // 
@@ -71,6 +72,7 @@
             this._employeeMenuButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._employeeMenuButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._employeeMenuButton.UseVisualStyleBackColor = true;
+            this._employeeMenuButton.Click += new System.EventHandler(this._employeeMenuButton_Click);
             // 
             // _holidayMenuButton
             // 
@@ -99,7 +101,7 @@
             // 
             // SetupUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.titlePanel1);

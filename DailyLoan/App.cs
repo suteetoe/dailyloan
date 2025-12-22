@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyLoan.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,7 @@ namespace DailyLoan
         public static BizFlowControl.DBConnection DBConnection = null;
         public static bool IsUserLoggedIn = false;
         public static int UserId = -1;
+        public static User LoggedUser = null;
         public static AppConfig AppConfig;
 
         public static void InitDBConnection()

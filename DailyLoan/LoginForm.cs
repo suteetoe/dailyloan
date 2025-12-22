@@ -41,6 +41,7 @@ namespace DailyLoan
 
             App.UserId = user.Id;
             App.IsUserLoggedIn = true;
+            App.LoggedUser = user;
 
             MessageBox.Show("ยินดีต้อนรับ " + user.Name + " เข้าสู่ระบบ\r\nระดับพนักงาน : " + user.Role.ToString(), "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

@@ -30,6 +30,18 @@ namespace DailyLoan
                     case MenuScreen.MENU_WELCOME:
                         openScreen = new WelcomeControl();
                         break;
+                    case MenuScreen.MENU_EMPLOYEE:
+                        openScreen = new Setup.Employee.EmployeeControl();
+                        break;
+                    case MenuScreen.MENU_ROUTE:
+                        openScreen = new Setup.Route.RouteControl();
+                        break;
+                    case MenuScreen.MENU_HOLIDAY:
+                        openScreen = new Setup.Holiday.HolidayControl();
+                        break;
+                    case MenuScreen.MENU_EXPENSE:
+                        openScreen = new Expenses.ExpenseControl();
+                        break;
                     case MenuScreen.MENU_LOAN:
                         openScreen = new Loan.LoanControl();
                         break;
@@ -44,9 +56,6 @@ namespace DailyLoan
                         break;
                     case MenuScreen.MENU_DAILY:
                         openScreen = new Daily.DailyControl();
-                        break;
-                    case MenuScreen.MENU_HOLIDAY:
-                        openScreen = new Setup.Holiday.HolidayControl();
                         break;
                 }
 
@@ -68,12 +77,15 @@ namespace DailyLoan
     public enum MenuScreen
     {
         MENU_WELCOME,
+        MENU_SETUP,
+        MENU_EMPLOYEE,
+        MENU_ROUTE,
+        MENU_HOLIDAY,
+        MENU_EXPENSE,
         MENU_LOAN,
         MENU_REPORT,
-        MENU_SETUP,
         MENU_CUSTOMER,
         MENU_DAILY,
-        MENU_HOLIDAY,
     }
 
 }

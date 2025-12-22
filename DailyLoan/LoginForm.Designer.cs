@@ -75,9 +75,11 @@
             // 
             // passwordTextbox
             // 
+            this.passwordTextbox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.passwordTextbox.Location = new System.Drawing.Point(244, 68);
             this.passwordTextbox.Name = "passwordTextbox";
-            this.passwordTextbox.Size = new System.Drawing.Size(143, 22);
+            this.passwordTextbox.PasswordChar = '●';
+            this.passwordTextbox.Size = new System.Drawing.Size(143, 23);
             this.passwordTextbox.TabIndex = 4;
             // 
             // _loginButton

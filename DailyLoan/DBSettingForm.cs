@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DailyLoan.Data.Models;
+using DailyLoan.Data.Repository;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -41,7 +43,7 @@ namespace DailyLoan
                 {
                     bool isDatabaseExists = testConnection.DatabaseExists(databaseName);
                     if (isDatabaseExists)
-                    {                        
+                    {
                         MessageBox.Show("Test connection success", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -88,11 +90,22 @@ namespace DailyLoan
 
                     }
                     testConnection.Disconnect();
+                    checkAdminUser();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Cannot connection database : " + host + "\r\n" + ex.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        void checkAdminUser()
+        {
+            UserRepository userRepo = new UserRepository();
+            var adminUser = userRepo.FindUserByUserCode("admin");
+            if (adminUser == null)
+            {
+                userRepo.CreateDefaultAdminUser();
             }
         }
     }

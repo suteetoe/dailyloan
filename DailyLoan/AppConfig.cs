@@ -64,5 +64,7 @@ namespace DailyLoan
             this._dbPassword = dbPassword;
             this._dbName = dbName;
         }
+
+    
     }
 }

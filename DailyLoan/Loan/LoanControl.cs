@@ -14,6 +14,8 @@ namespace DailyLoan.Loan
 {
     public partial class LoanControl : UserControl
     {
+        public static string MENU_NAME = "MENU_LOAN";
+
         bool onLoad = false;
         public LoanControl()
         {
@@ -99,9 +101,10 @@ namespace DailyLoan.Loan
             decimal totalLoan = principle + totalInterest;
             int totalPeriod = (int)this._loanScreenTop1._getDataNumber("num_of_period");
             decimal amountPerPeriod = this._loanScreenTop1._getDataNumber("amount_per_period");
+            DateTime firstPayDue = this._loanScreenTop1._getDataDate("first_period_date");
 
 
-            LoanPeriod loanPeriod = new LoanPeriod(totalLoan, totalPeriod, amountPerPeriod);
+            LoanPeriod loanPeriod = new LoanPeriod(totalLoan, totalPeriod, amountPerPeriod, firstPayDue, 0);
             List<PayPeriod> payPeriods = loanPeriod.PayPeriods.ToList();
 
             this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);

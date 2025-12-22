@@ -3,6 +3,7 @@ using DailyLoan.Loan;
 using DailyLoan.Report;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -16,17 +17,20 @@ namespace DailyLoan
     public partial class MainForm : Form
     {
 
-        LoanControl loanControl;
-        DailyControl dailyContrl;
-        ReportMenu reportMenu;
-
-
         public MainForm()
         {
+            Router.ScreenOpening += Router_ScreenOpening;
             InitializeComponent();
 
-        
+            Router.OpenMenu(MenuScreen.MENU_WELCOME);
+
+            this.Text = "โปรแกรมบริหารจัดการเงินกู้รายวัน v1.0";
             this.FormClosing += MainForm_FormClosing;
+        }
+
+        private void Router_ScreenOpening(UserControl screen)
+        {
+            DisplayInMainPanel(screen);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -84,12 +88,11 @@ namespace DailyLoan
 
 
 
-        void DisplayInMainPanel(UserControl control)
+        void DisplayInMainPanel(UserControl screen)
         {
-            control.Dock = DockStyle.Fill;
-
+            screen.Dock = DockStyle.Fill;
             this._mainPanel.Controls.Clear();
-            this._mainPanel.Controls.Add(control);
+            this._mainPanel.Controls.Add(screen);
         }
 
         private void _exitToolStripMenu_Click(object sender, EventArgs e)
@@ -97,65 +100,38 @@ namespace DailyLoan
             this.Close();
         }
 
-
-        private void _buttonMenuContract_Click(object sender, EventArgs e)
-        {
-            if (loanControl == null)
-            {
-                this.loanControl = new LoanControl();
-            }
-            DisplayInMainPanel(this.loanControl);
-        }
-
-        private void buttonMenuDailySheet_Click(object sender, EventArgs e)
-        {
-            if (dailyContrl == null)
-            {
-                this.dailyContrl = new DailyControl();
-            }
-
-            DisplayInMainPanel(dailyContrl);
-
-        }
-
-        private void _buttonAbout_Click(object sender, EventArgs e)
-        {
-            DisplayInMainPanel(welcomeControl1);
-
-        }
-
         private void _loanMenuButton_Click(object sender, EventArgs e)
         {
-            if (loanControl == null)
-            {
-                this.loanControl = new LoanControl();
-            }
-            DisplayInMainPanel(this.loanControl);
+            Router.OpenMenu(MenuScreen.MENU_LOAN);
         }
 
         private void _dailyMenuButton_Click(object sender, EventArgs e)
         {
-            if (dailyContrl == null)
-            {
-                this.dailyContrl = new DailyControl();
-            }
-
-            DisplayInMainPanel(dailyContrl);
+            Router.OpenMenu(MenuScreen.MENU_DAILY);
         }
 
         private void _reportMenuButton_Click(object sender, EventArgs e)
         {
-            if (this.reportMenu == null)
-            {
-                this.reportMenu = new ReportMenu();
-            }
-
-            DisplayInMainPanel(reportMenu);
+            Router.OpenMenu(MenuScreen.MENU_REPORT);
         }
 
         private void _welcomeMenuButton_Click(object sender, EventArgs e)
         {
-            DisplayInMainPanel(welcomeControl1);
+            Router.OpenMenu(MenuScreen.MENU_WELCOME);
+        }
+
+        private void _customerMenuButton_Click(object sender, EventArgs e)
+        {
+            Router.OpenMenu(MenuScreen.MENU_CUSTOMER);
+        }
+
+        private void _setupMenuButton_Click(object sender, EventArgs e)
+        {
+            Router.OpenMenu(MenuScreen.MENU_SETUP);
+        }
+
+        private void _expenseMenuButton_Click(object sender, EventArgs e)
+        {
 
         }
     }

@@ -1,6 +1,6 @@
-﻿namespace DailyLoan.Report
+﻿namespace DailyLoan.Setup.Employee
 {
-    partial class ReportMenu
+    partial class EmployeeControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,36 +29,25 @@
         private void InitializeComponent()
         {
             this.titlePanel1 = new DailyLoan.Control.TitlePanel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // titlePanel1
             // 
             this.titlePanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlePanel1.Location = new System.Drawing.Point(0, 0);
+            this.titlePanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.titlePanel1.Name = "titlePanel1";
-            this.titlePanel1.Size = new System.Drawing.Size(618, 48);
+            this.titlePanel1.Size = new System.Drawing.Size(1103, 71);
             this.titlePanel1.TabIndex = 0;
-            this.titlePanel1.Title = "รายงาน";
+            this.titlePanel1.Title = "กำหนดพนักงาน";
             // 
-            // panel1
+            // EmployeeControl
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 48);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(618, 476);
-            this.panel1.TabIndex = 1;
-            // 
-            // ReportMenu
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel1);
-            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.Name = "ReportMenu";
-            this.Size = new System.Drawing.Size(618, 524);
+            this.Name = "EmployeeControl";
+            this.Size = new System.Drawing.Size(1103, 1010);
             this.ResumeLayout(false);
 
         }
@@ -66,6 +55,5 @@
         #endregion
 
         private Control.TitlePanel titlePanel1;
-        private System.Windows.Forms.Panel panel1;
     }
 }

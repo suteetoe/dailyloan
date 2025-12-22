@@ -32,6 +32,7 @@ namespace DailyLoan.Loan
             {
                 int addRowIdx = this._addRow();
                 this._cellUpdate(addRowIdx, "period_no", period.PeriodNumber, false);
+                this._cellUpdate(addRowIdx, "due_date", period.PayDueDate, true);
                 this._cellUpdate(addRowIdx, "amount", period.PayAmount, false);
             }
             this.Invalidate();

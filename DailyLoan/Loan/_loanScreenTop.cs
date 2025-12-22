@@ -33,8 +33,8 @@ namespace DailyLoan.Loan
             this.AddRadioButtonField(groupBox, new SMLControl.RadioButtonField() { Row = 0, Column = 1, FieldCode = "asses_finance", FieldName = "จำนำ", Value = "1" });
             row += 2;
 
-            this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 0, ColumnSpan = 1, FieldCode = "principle", FieldName = "เงินต้น", Required = true });
-            this.AddNumberField(new SMLControl.NumberField() { Row = row, Column = 0, FieldCode = "interest", FieldName = "ดอกเบี้ย (%)" });
+            this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 0, ColumnSpan = 1, FieldCode = "principle_amount", FieldName = "เงินต้น", Required = true });
+            this.AddNumberField(new SMLControl.NumberField() { Row = row, Column = 0, FieldCode = "interest_rate", FieldName = "ดอกเบี้ย (%)" });
             this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 1, FieldCode = "total_interest", FieldName = "ดอกเบี้ยรวม", Required = true });
 
             this.AddNumberField(new SMLControl.NumberField() { Row = row, Column = 0, FieldCode = "num_of_period", FieldName = "จำนวนวัน/งวด", Required = true });

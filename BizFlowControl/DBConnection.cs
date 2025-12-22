@@ -173,6 +173,15 @@ namespace BizFlowControl
             }
         }
 
-        
+     public TransactionConnection CreateTransactionConnection()
+        {
+            if (!this.Connected)
+            {
+                throw new Exception("Database not connected.");
+            }
+
+            return new TransactionConnection(this.connection);
+        }
+
     }
 }

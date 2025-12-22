@@ -20,6 +20,10 @@ namespace DailyLoan
 
             App.AppConfig = new AppConfig();
             App.AppConfig.LoadConfig();
+            App.InitDBConnection();
+
+            Migration.DataMigration dataMigration = new Migration.DataMigration(App.DBConnection);
+            dataMigration.StartMigration();
 
             Application.Run(new LoginForm());
 

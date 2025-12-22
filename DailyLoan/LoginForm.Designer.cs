@@ -34,21 +34,24 @@
             this.userCodeTextbox = new System.Windows.Forms.TextBox();
             this.passwordTextbox = new System.Windows.Forms.TextBox();
             this._loginButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(23, 24);
+            this.pictureBox1.Image = global::DailyLoan.Properties.Resources.desktop;
+            this.pictureBox1.Location = new System.Drawing.Point(59, 40);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(107, 88);
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(168, 41);
+            this.label1.Location = new System.Drawing.Point(183, 43);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 14);
             this.label1.TabIndex = 1;
@@ -57,7 +60,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(168, 69);
+            this.label2.Location = new System.Drawing.Point(183, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 14);
             this.label2.TabIndex = 2;
@@ -65,21 +68,21 @@
             // 
             // userCodeTextbox
             // 
-            this.userCodeTextbox.Location = new System.Drawing.Point(229, 38);
+            this.userCodeTextbox.Location = new System.Drawing.Point(244, 40);
             this.userCodeTextbox.Name = "userCodeTextbox";
             this.userCodeTextbox.Size = new System.Drawing.Size(143, 22);
             this.userCodeTextbox.TabIndex = 3;
             // 
             // passwordTextbox
             // 
-            this.passwordTextbox.Location = new System.Drawing.Point(229, 66);
+            this.passwordTextbox.Location = new System.Drawing.Point(244, 68);
             this.passwordTextbox.Name = "passwordTextbox";
             this.passwordTextbox.Size = new System.Drawing.Size(143, 22);
             this.passwordTextbox.TabIndex = 4;
             // 
             // _loginButton
             // 
-            this._loginButton.Location = new System.Drawing.Point(297, 94);
+            this._loginButton.Location = new System.Drawing.Point(312, 96);
             this._loginButton.Name = "_loginButton";
             this._loginButton.Size = new System.Drawing.Size(75, 23);
             this._loginButton.TabIndex = 6;
@@ -87,11 +90,23 @@
             this._loginButton.UseVisualStyleBackColor = true;
             this._loginButton.Click += new System.EventHandler(this._loginButton_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label3.ForeColor = System.Drawing.Color.DarkOrange;
+            this.label3.Location = new System.Drawing.Point(265, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 25);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Daily Loan";
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(399, 141);
+            this.ClientSize = new System.Drawing.Size(399, 131);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this._loginButton);
             this.Controls.Add(this.passwordTextbox);
             this.Controls.Add(this.userCodeTextbox);
@@ -104,7 +119,7 @@
             this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LoginForm";
+            this.Text = "เข้าสู่ระบบ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -119,5 +134,6 @@
         private System.Windows.Forms.TextBox userCodeTextbox;
         private System.Windows.Forms.TextBox passwordTextbox;
         private System.Windows.Forms.Button _loginButton;
+        private System.Windows.Forms.Label label3;
     }
 }

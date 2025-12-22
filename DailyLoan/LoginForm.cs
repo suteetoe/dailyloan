@@ -16,7 +16,6 @@ namespace DailyLoan
         public LoginForm()
         {
             InitializeComponent();
-            InitDBConnection();
         }
 
         private void _loginButton_Click(object sender, EventArgs e)
@@ -54,23 +53,13 @@ namespace DailyLoan
             {
                 DBSettingForm dbForm = new DBSettingForm();
                 dbForm.ShowDialog(this);
-                InitDBConnection();
+                App.InitDBConnection();
 
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        void InitDBConnection()
-        {
-            try
-            {
-                App.DBConnection = new BizFlowControl.DBConnection(App.AppConfig.GetConnectionString());
-                App.DBConnection.TestConnect();
-            }
-            catch
-            {
-            }
-        }
+       
     }
 }

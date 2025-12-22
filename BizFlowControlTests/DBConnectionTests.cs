@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace BizFlowControl.Tests
 {
 
-    
+
 
     [TestClass()]
     public class DBConnectionTests
@@ -21,7 +21,7 @@ namespace BizFlowControl.Tests
 
             DBConnection dbConnection = new DBConnection(String.Format(connectionString, "template1"));
 
-           bool testConnectResult =  dbConnection.TestConnect();
+            bool testConnectResult = dbConnection.TestConnect();
 
             Assert.IsTrue(testConnectResult);
 
@@ -68,6 +68,59 @@ namespace BizFlowControl.Tests
             dbConnection.Disconnect();
         }
 
+        [TestMethod()]
+        public void DatabaseQueryTransactionTest()
+        {
+            string connectionString = "Host=192.168.2.212;Port=5432;Database={0};Username=postgres;Password=sml;";
+
+            DBConnection dbConnection = new DBConnection(String.Format(connectionString, "dailyloan"));
+
+            bool testConnectResult = dbConnection.TestConnect();
+            Assert.IsTrue(testConnectResult);
+            Assert.IsTrue(dbConnection.Connected);
+
+            // create table txn_demo if not exists
+
+            dbConnection.ExecuteCommand(@"CREATE TABLE IF NOT EXISTS txn_demo (
+                  id SERIAL,
+                  doc_no varchar(100) PRIMARY KEY NOT NULL,
+                  doc_date date,
+                  remark text
+                );");
+
+
+            // clear txn_demo table
+            dbConnection.ExecuteCommand("TRUNCATE TABLE txn_demo;");
+
+
+            TransactionConnection transactionConnection = dbConnection.CreateTransactionConnection();
+
+            try
+            {
+                transactionConnection.ExecuteCommand("INSERT INTO txn_demo (doc_no, doc_date, remark) VALUES ('DOCNO001', '2025-12-01', '') ");
+                transactionConnection.ExecuteCommand("INSERT INTO txn_demo (doc_no, doc_date, remark) VALUES ('DOCNO002', '2025-12-01', '') ");
+
+                transactionConnection.CommitTransaction();
+            }
+            catch (DBException ex)
+            {
+                throw ex;
+            }
+
+            // try insert duplicate primary key
+
+            try
+            {
+                transactionConnection.ExecuteCommand("INSERT INTO txn_demo (doc_no, doc_date, remark) VALUES ('DOCNO001', '2025-12-01', '') ");
+                Assert.Fail("Expected DBException was not thrown.");
+            }
+            catch (DBException ex)
+            {
+                Assert.AreEqual("23505", ex.ErrorCode);
+            }
+
+            dbConnection.Disconnect();
+        }
 
     }
 }

@@ -24,6 +24,8 @@ namespace SMLControl
 
         public String SearchScreenName { get; set; } = "";
 
+        public bool IsAutoUpper { get; set; } = false;
+
         public int IconNumber
         {
             get

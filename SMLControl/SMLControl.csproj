@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseField.cs" />
+    <Compile Include="ComboBoxField.cs" />
     <Compile Include="DateField.cs" />
     <Compile Include="Grid\BaseGridColumn.cs" />
     <Compile Include="Grid\GridCellEventArgs.cs" />

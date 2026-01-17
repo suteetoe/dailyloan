@@ -30,14 +30,17 @@ namespace DailyLoan
                     case MenuScreen.MENU_WELCOME:
                         openScreen = new WelcomeControl();
                         break;
+                    case MenuScreen.MENU_LOAN_TYPE:
+                        openScreen = new Screen.LoanType.LoanTypeControl();
+                        break;
                     case MenuScreen.MENU_EMPLOYEE:
-                        openScreen = new Setup.Employee.EmployeeControl();
+                        openScreen = new Screen.Employee.EmployeeControl();
                         break;
                     case MenuScreen.MENU_ROUTE:
-                        openScreen = new Setup.Route.RouteControl();
+                        openScreen = new Screen.Route.RouteControl();
                         break;
                     case MenuScreen.MENU_HOLIDAY:
-                        openScreen = new Setup.Holiday.HolidayControl();
+                        openScreen = new Screen.Holiday.HolidayControl();
                         break;
                     case MenuScreen.MENU_EXPENSE:
                         openScreen = new Expenses.ExpenseControl();
@@ -52,7 +55,7 @@ namespace DailyLoan
                         openScreen = new Setup.SetupUserControl();
                         break;
                     case MenuScreen.MENU_CUSTOMER:
-                        openScreen = new Customer.CustomerControl();
+                        openScreen = new Screen.Customer.CustomerControl();
                         break;
                     case MenuScreen.MENU_DAILY:
                         openScreen = new Daily.DailyControl();
@@ -78,6 +81,7 @@ namespace DailyLoan
     {
         MENU_WELCOME,
         MENU_SETUP,
+        MENU_LOAN_TYPE,
         MENU_EMPLOYEE,
         MENU_ROUTE,
         MENU_HOLIDAY,

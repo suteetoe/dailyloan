@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizFlowControlTests", "BizF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InactiveStockCleaner", "InactiveStockCleaner\InactiveStockCleaner.csproj", "{FF9BA19C-2182-4DA3-9CD6-90796366FC47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMLWebService", "SMLWebService\SMLWebService.csproj", "{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{FF9BA19C-2182-4DA3-9CD6-90796366FC47}.Release|x64.Build.0 = Release|x64
 		{FF9BA19C-2182-4DA3-9CD6-90796366FC47}.Release|x86.ActiveCfg = Release|Any CPU
 		{FF9BA19C-2182-4DA3-9CD6-90796366FC47}.Release|x86.Build.0 = Release|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Debug|x64.Build.0 = Debug|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Debug|x86.Build.0 = Debug|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Release|x64.ActiveCfg = Release|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Release|x64.Build.0 = Release|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E55CF8E-F06F-4112-8F49-80D3F68BB75C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

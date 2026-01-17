@@ -14,8 +14,10 @@ namespace DailyLoan.Expenses
         {
             InitializeComponent();
 
-            this._dataListGrid.AddGridColumn(new SMLControl.GridDateColumn() { WidthPercent = 20, ColumnCode = "doc_date" });
-            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 80, ColumnCode = "doc_no" });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridDateColumn() { WidthPercent = 20, ColumnCode = "doc_date", ColumnName = "วันที่เอกสาร" });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "doc_no", ColumnName = "เลขที่เอกสาร" });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 40, ColumnCode = "remark", ColumnName = "หมายเหตุ" });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "amount", ColumnName = "จำนวนเงิน" });
         }
 
         private void InitializeComponent()
@@ -37,6 +39,7 @@ namespace DailyLoan.Expenses
             this.expenseDetailScreeen1.Name = "expenseDetailScreeen1";
             this.expenseDetailScreeen1.Size = new System.Drawing.Size(359, 116);
             this.expenseDetailScreeen1.TabIndex = 0;
+            this.titlePanel.Title = "ค่าใช้จ่าย";
             // 
             // ExpenseControl
             // 

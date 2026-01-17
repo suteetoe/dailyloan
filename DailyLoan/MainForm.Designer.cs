@@ -58,7 +58,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1506, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1506, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -68,18 +68,18 @@
             this.toolStripSeparator1,
             this._exitToolStripMenu});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(50, 29);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuItem1.Text = "File";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(108, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(89, 6);
             // 
             // _exitToolStripMenu
             // 
             this._exitToolStripMenu.Name = "_exitToolStripMenu";
-            this._exitToolStripMenu.Size = new System.Drawing.Size(111, 30);
+            this._exitToolStripMenu.Size = new System.Drawing.Size(92, 22);
             this._exitToolStripMenu.Text = "&Exit";
             this._exitToolStripMenu.Click += new System.EventHandler(this._exitToolStripMenu_Click);
             // 
@@ -88,9 +88,9 @@
             this._sidebarPanel.BackColor = System.Drawing.Color.AliceBlue;
             this._sidebarPanel.Controls.Add(this.toolStrip2);
             this._sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this._sidebarPanel.Location = new System.Drawing.Point(0, 33);
+            this._sidebarPanel.Location = new System.Drawing.Point(0, 24);
             this._sidebarPanel.Name = "_sidebarPanel";
-            this._sidebarPanel.Size = new System.Drawing.Size(200, 775);
+            this._sidebarPanel.Size = new System.Drawing.Size(200, 784);
             this._sidebarPanel.TabIndex = 4;
             // 
             // toolStrip2
@@ -111,7 +111,7 @@
             this.toolStripSeparator2});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(200, 775);
+            this.toolStrip2.Size = new System.Drawing.Size(200, 784);
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -124,7 +124,7 @@
             this._loanMenuButton.Margin = new System.Windows.Forms.Padding(10);
             this._loanMenuButton.Name = "_loanMenuButton";
             this._loanMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._loanMenuButton.Size = new System.Drawing.Size(178, 53);
+            this._loanMenuButton.Size = new System.Drawing.Size(178, 48);
             this._loanMenuButton.Text = "สัญญาเงินกู้";
             this._loanMenuButton.Click += new System.EventHandler(this._loanMenuButton_Click);
             // 
@@ -137,7 +137,7 @@
             this._dailyMenuButton.Margin = new System.Windows.Forms.Padding(10);
             this._dailyMenuButton.Name = "_dailyMenuButton";
             this._dailyMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._dailyMenuButton.Size = new System.Drawing.Size(178, 53);
+            this._dailyMenuButton.Size = new System.Drawing.Size(178, 48);
             this._dailyMenuButton.Text = "ใบรายวัน";
             this._dailyMenuButton.Click += new System.EventHandler(this._dailyMenuButton_Click);
             // 
@@ -150,7 +150,7 @@
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(10);
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.toolStripButton1.Size = new System.Drawing.Size(178, 53);
+            this.toolStripButton1.Size = new System.Drawing.Size(178, 48);
             this.toolStripButton1.Text = "ลูกค้า";
             this.toolStripButton1.Click += new System.EventHandler(this._customerMenuButton_Click);
             // 
@@ -163,7 +163,7 @@
             this._expenseMenuButton.Margin = new System.Windows.Forms.Padding(10);
             this._expenseMenuButton.Name = "_expenseMenuButton";
             this._expenseMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._expenseMenuButton.Size = new System.Drawing.Size(178, 53);
+            this._expenseMenuButton.Size = new System.Drawing.Size(178, 48);
             this._expenseMenuButton.Text = "ค่าใช้จ่าย";
             this._expenseMenuButton.Click += new System.EventHandler(this._expenseMenuButton_Click);
             // 
@@ -176,7 +176,7 @@
             this._reportMenuButton.Margin = new System.Windows.Forms.Padding(10);
             this._reportMenuButton.Name = "_reportMenuButton";
             this._reportMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._reportMenuButton.Size = new System.Drawing.Size(178, 53);
+            this._reportMenuButton.Size = new System.Drawing.Size(178, 48);
             this._reportMenuButton.Text = "รายงาน";
             this._reportMenuButton.Click += new System.EventHandler(this._reportMenuButton_Click);
             // 
@@ -189,7 +189,7 @@
             this._setupMenuButton.Margin = new System.Windows.Forms.Padding(10);
             this._setupMenuButton.Name = "_setupMenuButton";
             this._setupMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._setupMenuButton.Size = new System.Drawing.Size(178, 53);
+            this._setupMenuButton.Size = new System.Drawing.Size(178, 48);
             this._setupMenuButton.Text = "ตั้งค่า";
             this._setupMenuButton.ToolTipText = "ตั้งค่า";
             this._setupMenuButton.Click += new System.EventHandler(this._setupMenuButton_Click);
@@ -204,7 +204,7 @@
             this._welcomeMenuButton.Margin = new System.Windows.Forms.Padding(10);
             this._welcomeMenuButton.Name = "_welcomeMenuButton";
             this._welcomeMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._welcomeMenuButton.Size = new System.Drawing.Size(178, 46);
+            this._welcomeMenuButton.Size = new System.Drawing.Size(178, 38);
             this._welcomeMenuButton.Text = "เกี่ยวกับโปรแกรม";
             this._welcomeMenuButton.Click += new System.EventHandler(this._welcomeMenuButton_Click);
             // 
@@ -218,9 +218,9 @@
             // 
             this._mainPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this._mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._mainPanel.Location = new System.Drawing.Point(200, 33);
+            this._mainPanel.Location = new System.Drawing.Point(200, 24);
             this._mainPanel.Name = "_mainPanel";
-            this._mainPanel.Size = new System.Drawing.Size(1306, 775);
+            this._mainPanel.Size = new System.Drawing.Size(1306, 784);
             this._mainPanel.TabIndex = 5;
             // 
             // toolStrip1
@@ -243,7 +243,7 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1506, 830);
             this.Controls.Add(this._mainPanel);
@@ -252,6 +252,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainForm";

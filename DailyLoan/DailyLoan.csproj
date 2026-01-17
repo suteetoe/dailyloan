@@ -76,6 +76,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>money.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -105,28 +108,33 @@
     <Compile Include="Control\SearchDataControl.Designer.cs">
       <DependentUpon>SearchDataControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Control\SearchDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Control\SearchDataForm.Designer.cs">
+      <DependentUpon>SearchDataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Control\TitlePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Control\TitlePanel.Designer.cs">
       <DependentUpon>TitlePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Customer\CustomerControl.cs">
+    <Compile Include="Data\Models\Customer.cs" />
+    <Compile Include="Data\Repository\CustomerRepository.cs" />
+    <Compile Include="Screen\Customer\CustomerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Customer\CustomerControl.Designer.cs">
-      <DependentUpon>CustomerControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Customer\SearchCustomerControl.cs">
+    <Compile Include="Screen\Customer\SearchCustomerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Customer\SearchCustomerForm.cs">
+    <Compile Include="Screen\Customer\SearchCustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Customer\SearchCustomerForm.Designer.cs">
+    <Compile Include="Screen\Customer\SearchCustomerForm.Designer.cs">
       <DependentUpon>SearchCustomerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Customer\_customerDataScreen.cs">
+    <Compile Include="Screen\Customer\_customerDataScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Daily\DailyControl.cs">
@@ -141,9 +149,18 @@
     <Compile Include="Daily\_dailyScreenTop.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Data\Models\Employee.cs" />
+    <Compile Include="Data\Models\Holiday.cs" />
+    <Compile Include="Data\Models\LoanType.cs" />
+    <Compile Include="Data\Models\Route.cs" />
     <Compile Include="Data\Models\User.cs" />
     <Compile Include="Data\Models\UserRole.cs" />
+    <Compile Include="Data\Paginator.cs" />
+    <Compile Include="Data\Repository\EmployeeRepository.cs" />
+    <Compile Include="Data\Repository\HolidayRepository.cs" />
+    <Compile Include="Data\Repository\LoanTypeRepository.cs" />
     <Compile Include="Data\Repository\RepositoryBase.cs" />
+    <Compile Include="Data\Repository\RouteRepository.cs" />
     <Compile Include="Data\Repository\UserRepository.cs" />
     <Compile Include="DBSettingForm.cs">
       <SubType>Form</SubType>
@@ -194,26 +211,59 @@
     <Compile Include="Report\ReportMenu.Designer.cs">
       <DependentUpon>ReportMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Setup\Employee\EmployeeControl.cs">
+    <Compile Include="Screen\CompanyProfile\CompanyProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screen\CompanyProfile\CompanyProfileForm.Designer.cs">
+      <DependentUpon>CompanyProfileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\CompanyProfile\_companyProfileDetailScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\Employee\EmployeeDetailScreen.cs">
+    <Compile Include="Screen\Employee\EmployeeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\Holiday\HolidayControl.cs">
+    <Compile Include="Screen\Employee\EmployeeDetailScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\Holiday\HolidayControl.Designer.cs">
-      <DependentUpon>HolidayControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Setup\Holiday\HolidayDetailScreen.cs">
+    <Compile Include="Screen\Holiday\HolidayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\Route\RouteControl.cs">
+    <Compile Include="Screen\Holiday\HolidayControl_old.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Setup\Route\RouteDetailScreen.cs">
+    <Compile Include="Screen\Holiday\HolidayControl_old.Designer.cs">
+      <DependentUpon>HolidayControl_old.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Holiday\HolidayDetailScreen.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\LoanType\LoanTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\LoanType\LoanTypeDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\LoanType\SearchLoanTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screen\Options\OptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screen\Options\OptionForm.Designer.cs">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\Options\_optionDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\Route\RouteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\Route\RouteDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\Route\SearchRouteForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Setup\SetupUserControl.cs">
       <SubType>UserControl</SubType>
@@ -233,19 +283,22 @@
     <EmbeddedResource Include="Control\SearchDataControl.resx">
       <DependentUpon>SearchDataControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Control\SearchDataForm.resx">
+      <DependentUpon>SearchDataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Control\TitlePanel.resx">
       <DependentUpon>TitlePanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Customer\CustomerControl.resx">
+    <EmbeddedResource Include="Screen\Customer\CustomerControl.resx">
       <DependentUpon>CustomerControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Customer\SearchCustomerControl.resx">
+    <EmbeddedResource Include="Screen\Customer\SearchCustomerControl.resx">
       <DependentUpon>SearchCustomerControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Customer\SearchCustomerForm.resx">
+    <EmbeddedResource Include="Screen\Customer\SearchCustomerForm.resx">
       <DependentUpon>SearchCustomerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Customer\_customerDataScreen.resx">
+    <EmbeddedResource Include="Screen\Customer\_customerDataScreen.resx">
       <DependentUpon>_customerDataScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Daily\DailyControl.resx">
@@ -259,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Loan\LoanControl.resx">
       <DependentUpon>LoanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loan\_loanScreenTop.resx">
+      <DependentUpon>_loanScreenTop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -279,14 +335,29 @@
     <EmbeddedResource Include="Report\ReportMenu.resx">
       <DependentUpon>ReportMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setup\Employee\EmployeeControl.resx">
+    <EmbeddedResource Include="Screen\CompanyProfile\CompanyProfileForm.resx">
+      <DependentUpon>CompanyProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\Employee\EmployeeControl.resx">
       <DependentUpon>EmployeeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setup\Holiday\HolidayControl.resx">
+    <EmbeddedResource Include="Screen\Holiday\HolidayControl.resx">
       <DependentUpon>HolidayControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setup\Route\RouteControl.resx">
+    <EmbeddedResource Include="Screen\Holiday\HolidayControl_old.resx">
+      <DependentUpon>HolidayControl_old.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\LoanType\LoanTypeControl.resx">
+      <DependentUpon>LoanTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\Options\OptionForm.resx">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\Route\RouteControl.resx">
       <DependentUpon>RouteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\Route\RouteDetailScreen.resx">
+      <DependentUpon>RouteDetailScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setup\SetupUserControl.resx">
       <DependentUpon>SetupUserControl.cs</DependentUpon>
@@ -332,6 +403,8 @@
   <ItemGroup>
     <None Include="Resources\disk_blue.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="money.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

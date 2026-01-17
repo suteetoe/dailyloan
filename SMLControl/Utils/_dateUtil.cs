@@ -53,5 +53,20 @@ namespace SMLControl.Utils
             return __result.ToString();
         }
 
+        public static DateTime PhaseDateFromQuery(string dateStr)
+        {
+
+            DateTime __result;
+            try
+            {
+                __result = DateTime.ParseExact(dateStr, "yyyy-MM-dd", new CultureInfo("en-US"));
+            }
+            catch
+            {
+                __result = new DateTime(1900, 1, 1);
+            }
+            return __result;
+        }
+
     }
 }

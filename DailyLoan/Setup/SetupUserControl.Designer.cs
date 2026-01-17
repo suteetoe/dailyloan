@@ -33,6 +33,9 @@
             this._employeeMenuButton = new System.Windows.Forms.Button();
             this._holidayMenuButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this._companySetup = new System.Windows.Forms.Button();
+            this._optionSettingButton = new System.Windows.Forms.Button();
+            this._loanTypeMenuButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,8 +52,8 @@
             // _routeMenuButton
             // 
             this._routeMenuButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this._routeMenuButton.Image = global::DailyLoan.Properties.Resources.books_48;
-            this._routeMenuButton.Location = new System.Drawing.Point(144, 3);
+            this._routeMenuButton.Image = global::DailyLoan.Properties.Resources.target;
+            this._routeMenuButton.Location = new System.Drawing.Point(3, 135);
             this._routeMenuButton.Name = "_routeMenuButton";
             this._routeMenuButton.Size = new System.Drawing.Size(143, 126);
             this._routeMenuButton.TabIndex = 1;
@@ -64,7 +67,7 @@
             // 
             this._employeeMenuButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._employeeMenuButton.Image = global::DailyLoan.Properties.Resources.user3_48;
-            this._employeeMenuButton.Location = new System.Drawing.Point(3, 3);
+            this._employeeMenuButton.Location = new System.Drawing.Point(450, 3);
             this._employeeMenuButton.Name = "_employeeMenuButton";
             this._employeeMenuButton.Size = new System.Drawing.Size(135, 126);
             this._employeeMenuButton.TabIndex = 0;
@@ -78,7 +81,7 @@
             // 
             this._holidayMenuButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._holidayMenuButton.Image = global::DailyLoan.Properties.Resources.calendar_48;
-            this._holidayMenuButton.Location = new System.Drawing.Point(293, 3);
+            this._holidayMenuButton.Location = new System.Drawing.Point(152, 135);
             this._holidayMenuButton.Name = "_holidayMenuButton";
             this._holidayMenuButton.Size = new System.Drawing.Size(143, 126);
             this._holidayMenuButton.TabIndex = 2;
@@ -90,6 +93,9 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Controls.Add(this._companySetup);
+            this.flowLayoutPanel1.Controls.Add(this._optionSettingButton);
+            this.flowLayoutPanel1.Controls.Add(this._loanTypeMenuButton);
             this.flowLayoutPanel1.Controls.Add(this._employeeMenuButton);
             this.flowLayoutPanel1.Controls.Add(this._routeMenuButton);
             this.flowLayoutPanel1.Controls.Add(this._holidayMenuButton);
@@ -98,6 +104,48 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(700, 610);
             this.flowLayoutPanel1.TabIndex = 3;
+            // 
+            // _companySetup
+            // 
+            this._companySetup.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._companySetup.Image = global::DailyLoan.Properties.Resources.office_building;
+            this._companySetup.Location = new System.Drawing.Point(3, 3);
+            this._companySetup.Name = "_companySetup";
+            this._companySetup.Size = new System.Drawing.Size(143, 126);
+            this._companySetup.TabIndex = 4;
+            this._companySetup.Text = "รายละเอียดบริษัท";
+            this._companySetup.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._companySetup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._companySetup.UseVisualStyleBackColor = true;
+            this._companySetup.Click += new System.EventHandler(this._companySetup_Click);
+            // 
+            // _optionSettingButton
+            // 
+            this._optionSettingButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._optionSettingButton.Image = global::DailyLoan.Properties.Resources.gear_ok;
+            this._optionSettingButton.Location = new System.Drawing.Point(152, 3);
+            this._optionSettingButton.Name = "_optionSettingButton";
+            this._optionSettingButton.Size = new System.Drawing.Size(143, 126);
+            this._optionSettingButton.TabIndex = 5;
+            this._optionSettingButton.Text = "ตั้งค่าระบบ";
+            this._optionSettingButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._optionSettingButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._optionSettingButton.UseVisualStyleBackColor = true;
+            this._optionSettingButton.Click += new System.EventHandler(this._optionSettingButton_Click);
+            // 
+            // _loanTypeMenuButton
+            // 
+            this._loanTypeMenuButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._loanTypeMenuButton.Image = global::DailyLoan.Properties.Resources.books_48;
+            this._loanTypeMenuButton.Location = new System.Drawing.Point(301, 3);
+            this._loanTypeMenuButton.Name = "_loanTypeMenuButton";
+            this._loanTypeMenuButton.Size = new System.Drawing.Size(143, 126);
+            this._loanTypeMenuButton.TabIndex = 3;
+            this._loanTypeMenuButton.Text = "ประเภทเงินกู้";
+            this._loanTypeMenuButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._loanTypeMenuButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._loanTypeMenuButton.UseVisualStyleBackColor = true;
+            this._loanTypeMenuButton.Click += new System.EventHandler(this._loanTypeMenuButton_Click);
             // 
             // SetupUserControl
             // 
@@ -120,5 +168,8 @@
         private System.Windows.Forms.Button _employeeMenuButton;
         private System.Windows.Forms.Button _holidayMenuButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Button _loanTypeMenuButton;
+        private System.Windows.Forms.Button _companySetup;
+        private System.Windows.Forms.Button _optionSettingButton;
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DailyLoan.Screen.CompanyProfile;
+using DailyLoan.Screen.Options;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -32,6 +34,24 @@ namespace DailyLoan.Setup
         {
             Router.OpenMenu(MenuScreen.MENU_EMPLOYEE);
 
+        }
+
+        private void _loanTypeMenuButton_Click(object sender, EventArgs e)
+        {
+            Router.OpenMenu(MenuScreen.MENU_LOAN_TYPE);
+
+        }
+
+        private void _companySetup_Click(object sender, EventArgs e)
+        {
+            CompanyProfileForm companyProfileForm = new CompanyProfileForm();
+            companyProfileForm.ShowDialog();
+        }
+
+        private void _optionSettingButton_Click(object sender, EventArgs e)
+        {
+            OptionForm optionForm = new OptionForm();
+            optionForm.ShowDialog();
         }
     }
 }

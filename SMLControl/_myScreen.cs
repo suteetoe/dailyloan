@@ -59,7 +59,8 @@ namespace SMLControl
 
         public void AddTextField(TextField field)
         {
-            this._addTextBox(field.Row, field.Column, field.RowSpan, 0, field.FieldCode, field.ColumnSpan, field.MaxLength, field.IconNumber, field.ShowLabel, field.IsPassword, !field.Required, field.IsQuery, field.IsGetData, field.IsTabStop, field.FieldName, field.SearchScreenName);
+            this._addTextBox(field.Row, field.Column, field.RowSpan, 0, field.FieldCode, field.ColumnSpan, field.MaxLength, field.IconNumber, field.ShowLabel, field.IsPassword, !field.Required, field.IsQuery, field.IsGetData, field.IsTabStop, field.FieldName, field.SearchScreenName, field.IsAutoUpper);
+          
         }
 
         public void AddDateField(DateField field)
@@ -74,7 +75,7 @@ namespace SMLControl
 
         public _myGroupBox AddGroupBoxField(GroupBoxField field)
         {
-            return this._addGroupBox(field.Row, field.Column, field.RowSpan, field.ColumnCount, field.ColumnSpan, field.FieldName, field.IsQuery, field.FieldName);
+            return this._addGroupBox(field.Row, field.Column, field.RowSpan, field.ColumnCount, field.ColumnSpan, field.FieldCode, field.IsQuery, field.FieldName);
         }
 
         public void AddRadioButtonField(_myGroupBox groupBox, RadioButtonField field)
@@ -646,6 +647,18 @@ namespace SMLControl
                 {
                     _myImage __getImage = (_myImage)__getControl;
                     __getImage._pictureBox.Image = null;
+                }
+                else if (__getControl.GetType() == typeof(_myGroupBox))
+                {
+                    _myGroupBox __getGroupBox = (_myGroupBox)__getControl;
+                    foreach (Control __getControlInGroupBox in __getGroupBox.Controls)
+                    {
+                        if (__getControlInGroupBox.GetType() == typeof(_myRadioButton))
+                        {
+                            _myRadioButton __getRadioButton = (_myRadioButton)__getControlInGroupBox;
+                            __getRadioButton.Checked = false;
+                        }
+                    }
                 }
             } // foreach
             if (this._afterClear != null)
@@ -1966,7 +1979,7 @@ namespace SMLControl
         /// <param name="isQuery">ประกอบใน Query หรือไม่</param>
         /// <param name="tabStop">ให้กด Tab แล้วเข้ามาได้หรือไม่</param>
         /// <param name="resourceFieldName">ชื่อ Resource ในกรณีไม่ตรงกับชื่อ Field</param>
-        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry, Boolean isQuery, Boolean isGetData, bool tabStop, string resourceFieldName, string searchFormat)
+        public void _addTextBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int maxLength, int iconNumber, Boolean displayLabel, Boolean isPassword, Boolean isEmtry, Boolean isQuery, Boolean isGetData, bool tabStop, string resourceFieldName, string searchFormat, bool isAutoUpper = false)
         {
             string __label_name = "";
             //setHeight(row, rowCount);
@@ -2015,7 +2028,7 @@ namespace SMLControl
             {
                 __newTextBox.textBox.Multiline = true;
             }
-            if (__newTextBox._isSearch)
+            if (__newTextBox._isSearch || isAutoUpper)
             {
                 __newTextBox.IsUpperCase = true;
             }
@@ -2481,7 +2494,7 @@ namespace SMLControl
             __newComboBox._column = column;
             __newComboBox._maxColumn = maxColumn;
             __newComboBox._name = fieldName;
-            __newComboBox._listName = listName;
+            __newComboBox._listName = listName; //
             __newComboBox._addCounter = addCounter;
             __newComboBox._tableName = this._table_name;
             __newComboBox.Font = new Font(this.Font.FontFamily, this.Font.Size); // toe   new Font(MyLib._myGlobal._myFont.FontFamily, MyLib._myGlobal._myFont.Size);
@@ -2493,17 +2506,26 @@ namespace SMLControl
             //newComboBox.KeyDown += new KeyEventHandler(newComboBox_KeyDown);
             for (int __loop = 0; __loop < listName.Length; __loop++)
             {
-                string __fieldname_2 = (this._table_name.Length > 0) ? (string.Concat(this._table_name, ".", listName[__loop])) : listName[__loop];
-                int __loopStr = __loop + 1;
-                string __getStr = ((addCounter) ? (__loopStr + ".") : "") + ((getResourceList) ? ((this._getResource && _myGlobal._isDesignMode == false) ? _myResource._findResource(__fieldname_2, __fieldname_2)._str : __fieldname_2) : listName[__loop]);
-                __newComboBox.Items.Add(__getStr);
-                __newComboBox.SelectedIndex = 0;
-                Graphics __myGraphics = this.CreateGraphics();
-                __myGraphics.SmoothingMode = SmoothingMode.HighQuality;
-                SizeF __stringSize = __myGraphics.MeasureString(__getStr, _myGlobal._myFont);
-                if (__stringSize.Width + 5 > __newComboBox.DropDownWidth)
+                if (listName[__loop] is string)
                 {
-                    __newComboBox.DropDownWidth = (int)__stringSize.Width + 5;
+                    string listNameString = listName[__loop].ToString();
+
+                    string __fieldname_2 = (this._table_name.Length > 0) ? (string.Concat(this._table_name, ".", listNameString)) : listNameString;
+                    int __loopStr = __loop + 1;
+                    string __getStr = ((addCounter) ? (__loopStr + ".") : "") + ((getResourceList) ? ((this._getResource && _myGlobal._isDesignMode == false) ? _myResource._findResource(__fieldname_2, __fieldname_2)._str : __fieldname_2) : listName[__loop]);
+                    __newComboBox.Items.Add(__getStr);
+                    __newComboBox.SelectedIndex = 0;
+                    Graphics __myGraphics = this.CreateGraphics();
+                    __myGraphics.SmoothingMode = SmoothingMode.HighQuality;
+                    SizeF __stringSize = __myGraphics.MeasureString(__getStr, _myGlobal._myFont);
+                    if (__stringSize.Width + 5 > __newComboBox.DropDownWidth)
+                    {
+                        __newComboBox.DropDownWidth = (int)__stringSize.Width + 5;
+                    }
+                }
+                else if (listName[__loop] is ComboBoxItem)
+                {
+
                 }
             }
             __newComboBox.MaxDropDownItems = (listName.Length == 0) ? 1 : listName.Length;
@@ -2512,6 +2534,13 @@ namespace SMLControl
             __newComboBox.SelectedIndexChanged += new EventHandler(__newComboBox_SelectedIndexChanged);
             this.Controls.Add(__newComboBox);
         }
+
+        public void AddComboBoxField(ComboBoxField field)
+        {
+            this._addComboBox(field.Row, field.Column, field.FieldCode, field.ColumnSpan, field.ShowLabel, field.LabelOptionsList.ToArray(), field.ShowLaabelCoutner, field.FieldName, false, field.IsQuery);
+        }
+
+
         void __newComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (((_myComboBox)sender)._oldValue != ((_myComboBox)sender).SelectedIndex)

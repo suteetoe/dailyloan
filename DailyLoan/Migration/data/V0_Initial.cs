@@ -52,6 +52,7 @@ namespace DailyLoan.Migration.data
                       year int4 NOT NULL,
                       date_holiday date NOT NULL,
                       remark text DEFAULT '',
+                      is_on_edit smallint DEFAULT 0,
                       PRIMARY KEY (year, date_holiday)
                     );
                     ";
@@ -61,7 +62,8 @@ namespace DailyLoan.Migration.data
                     @"CREATE TABLE IF NOT EXISTS mst_employee (
                       id SERIAL,
                       code varchar(100) PRIMARY KEY,
-                      name_1 varchar(255) NOT NULL
+                      name_1 varchar(255) NOT NULL,
+                      is_on_edit smallint DEFAULT 0
                     );
                     ";
                 transactionConnection.ExecuteCommand(create_table_mst_employee);
@@ -72,7 +74,8 @@ namespace DailyLoan.Migration.data
                       code varchar(100) PRIMARY KEY,
                       name_1 varchar(255) NOT NULL,
                       address text DEFAULT '',
-                      telephone varchar(100) DEFAULT ''
+                      telephone varchar(100) DEFAULT '',
+                      is_on_edit smallint DEFAULT 0
                     );";
                 transactionConnection.ExecuteCommand(create_table_mst_customer);
 
@@ -81,7 +84,8 @@ namespace DailyLoan.Migration.data
                       id SERIAL,
                       code varchar(100) PRIMARY KEY,
                       name_1 varchar(500) NOT NULL,
-                      remark text DEFAULT ''
+                      remark text DEFAULT '',
+                      is_on_edit smallint DEFAULT 0
                     );";
                 transactionConnection.ExecuteCommand(create_table_mst_route);
 
@@ -90,7 +94,9 @@ namespace DailyLoan.Migration.data
                       id SERIAL,
                       code varchar(100) PRIMARY KEY,
                       name_1 varchar(500) NOT NULL,
-                      working_day varchar(500)
+                      working_day varchar(500),
+                      working_holiday_type smallint DEFAULT 0,
+                      is_on_edit smallint DEFAULT 0
                     );";
                 transactionConnection.ExecuteCommand(create_table_mst_loan_type);
 

@@ -30,6 +30,9 @@ namespace BizFlowControl
 
         public Boolean TestConnect()
         {
+            if (this.connection.State == ConnectionState.Open)
+                return true;
+
             try
             {
                 connection.Open();
@@ -58,7 +61,7 @@ namespace BizFlowControl
         {
             if (!this.Connected)
             {
-                throw new Exception("Database not connected.");
+                throw new DBException(DBException.ERROR_CODE_NOT_CONNECTED, "Database not connected.");
             }
 
             DataSet result = new DataSet();
@@ -88,6 +91,35 @@ namespace BizFlowControl
             {
                 using (var cmd = new NpgsqlCommand(query, this.connection))
                 {
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ExecuteCommand(string query, ExecuteParams dataParams = null)
+        {
+            if (!this.Connected)
+            {
+                throw new Exception("Database not connected.");
+            }
+
+            try
+            {
+                using (var cmd = new NpgsqlCommand(query, this.connection))
+                {
+
+                    if (dataParams != null)
+                    {
+                        foreach (var param in dataParams)
+                        {
+                            cmd.Parameters.AddWithValue(param.Key, param.Value);
+                        }
+                    }
+
                     int rowsAffected = cmd.ExecuteNonQuery();
                 }
             }
@@ -173,7 +205,7 @@ namespace BizFlowControl
             }
         }
 
-     public TransactionConnection CreateTransactionConnection()
+        public TransactionConnection CreateTransactionConnection()
         {
             if (!this.Connected)
             {
@@ -182,6 +214,11 @@ namespace BizFlowControl
 
             return new TransactionConnection(this.connection);
         }
+
+    }
+
+    public class ExecuteParams : Dictionary<string, object>
+    {
 
     }
 }

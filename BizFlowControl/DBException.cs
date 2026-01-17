@@ -14,5 +14,7 @@ namespace BizFlowControl
         {
             this.ErrorCode = code;
         }
+
+        public const string ERROR_CODE_NOT_CONNECTED = "DB001";
     }
 }

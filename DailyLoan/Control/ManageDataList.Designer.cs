@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this._goFirstPageButton = new System.Windows.Forms.ToolStripButton();
             this._nextPageButton = new System.Windows.Forms.ToolStripButton();
             this._dataListGrid = new SMLControl._myGrid();
@@ -36,6 +37,7 @@
             this._goLastPageButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this._recordCountLabel = new System.Windows.Forms.ToolStripLabel();
             this._textSearchTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,11 +45,13 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this._addButton = new System.Windows.Forms.ToolStripButton();
+            this._deleteButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this._saveButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this._cancelButton = new System.Windows.Forms.ToolStripButton();
             this.titlePanel = new DailyLoan.Control.TitlePanel();
+            this._dataLoadingTimer = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -65,7 +69,8 @@
             this._goFirstPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._goFirstPageButton.Name = "_goFirstPageButton";
             this._goFirstPageButton.Size = new System.Drawing.Size(23, 33);
-            this._goFirstPageButton.Text = "toolStripButton1";
+            this._goFirstPageButton.Text = "หน้าแรก";
+            this._goFirstPageButton.Click += new System.EventHandler(this._goFirstPageButton_Click);
             // 
             // _nextPageButton
             // 
@@ -74,7 +79,8 @@
             this._nextPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._nextPageButton.Name = "_nextPageButton";
             this._nextPageButton.Size = new System.Drawing.Size(23, 33);
-            this._nextPageButton.Text = "toolStripButton3";
+            this._nextPageButton.Text = "หน้าถัดไป";
+            this._nextPageButton.Click += new System.EventHandler(this._nextPageButton_Click);
             // 
             // _dataListGrid
             // 
@@ -85,6 +91,7 @@
             this._dataListGrid.ColumnBackgroundEnd = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(217)))), ((int)(((byte)(227)))));
             this._dataListGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this._dataListGrid.Font = new System.Drawing.Font("Tahoma", 9F);
+            this._dataListGrid.IsEdit = false;
             this._dataListGrid.Location = new System.Drawing.Point(0, 0);
             this._dataListGrid.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             this._dataListGrid.Name = "_dataListGrid";
@@ -99,7 +106,8 @@
             this._prevPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._prevPageButton.Name = "_prevPageButton";
             this._prevPageButton.Size = new System.Drawing.Size(23, 33);
-            this._prevPageButton.Text = "toolStripButton2";
+            this._prevPageButton.Text = "หน้าก่อนหน้า";
+            this._prevPageButton.Click += new System.EventHandler(this._prevPageButton_Click);
             // 
             // _buttonSearch
             // 
@@ -111,6 +119,7 @@
             this._buttonSearch.TabIndex = 2;
             this._buttonSearch.Text = "ค้นหา";
             this._buttonSearch.UseVisualStyleBackColor = true;
+            this._buttonSearch.Click += new System.EventHandler(this._buttonSearch_Click);
             // 
             // _goLastPageButton
             // 
@@ -119,7 +128,8 @@
             this._goLastPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._goLastPageButton.Name = "_goLastPageButton";
             this._goLastPageButton.Size = new System.Drawing.Size(23, 33);
-            this._goLastPageButton.Text = "toolStripButton4";
+            this._goLastPageButton.Text = "หน้าสุดท้าย";
+            this._goLastPageButton.Click += new System.EventHandler(this._goLastPageButton_Click);
             // 
             // toolStrip1
             // 
@@ -132,7 +142,8 @@
             this._prevPageButton,
             this._nextPageButton,
             this._goLastPageButton,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this._recordCountLabel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 493);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(407, 36);
@@ -143,6 +154,13 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 36);
+            // 
+            // _recordCountLabel
+            // 
+            this._recordCountLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._recordCountLabel.Name = "_recordCountLabel";
+            this._recordCountLabel.Size = new System.Drawing.Size(41, 33);
+            this._recordCountLabel.Text = "0 (0/0)";
             // 
             // _textSearchTextbox
             // 
@@ -220,24 +238,35 @@
             this.toolStrip2.AutoSize = false;
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
+            this._addButton,
+            this._deleteButton,
             this.toolStripSeparator2,
             this._saveButton,
-            this.toolStripButton2});
+            this._cancelButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Padding = new System.Windows.Forms.Padding(10, 0, 1, 0);
+            this.toolStrip2.Padding = new System.Windows.Forms.Padding(0);
             this.toolStrip2.Size = new System.Drawing.Size(359, 39);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
-            // toolStripButton1
+            // _addButton
             // 
-            this.toolStripButton1.Image = global::DailyLoan.Properties.Resources.add;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(45, 36);
-            this.toolStripButton1.Text = "เพิ่ม";
+            this._addButton.Image = global::DailyLoan.Properties.Resources.add;
+            this._addButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._addButton.Name = "_addButton";
+            this._addButton.Size = new System.Drawing.Size(45, 36);
+            this._addButton.Text = "เพิ่ม";
+            this._addButton.Click += new System.EventHandler(this._addButton_Click);
+            // 
+            // _deleteButton
+            // 
+            this._deleteButton.Image = global::DailyLoan.Properties.Resources.delete;
+            this._deleteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._deleteButton.Name = "_deleteButton";
+            this._deleteButton.Size = new System.Drawing.Size(40, 36);
+            this._deleteButton.Text = "ลบ";
+            this._deleteButton.Click += new System.EventHandler(this._deleteButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -251,23 +280,31 @@
             this._saveButton.Name = "_saveButton";
             this._saveButton.Size = new System.Drawing.Size(55, 36);
             this._saveButton.Text = "บันทึก";
+            this._saveButton.Click += new System.EventHandler(this._saveButton_Click);
             // 
-            // toolStripButton2
+            // _cancelButton
             // 
-            this.toolStripButton2.Image = global::DailyLoan.Properties.Resources.delete;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(56, 36);
-            this.toolStripButton2.Text = "ยกเลิก";
+            this._cancelButton.Image = global::DailyLoan.Properties.Resources.delete2;
+            this._cancelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._cancelButton.Name = "_cancelButton";
+            this._cancelButton.Size = new System.Drawing.Size(56, 36);
+            this._cancelButton.Text = "ยกเลิก";
+            this._cancelButton.Click += new System.EventHandler(this._cancelButton_Click);
             // 
             // titlePanel
             // 
             this.titlePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlePanel.Location = new System.Drawing.Point(0, 0);
+            this.titlePanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.titlePanel.Name = "titlePanel";
             this.titlePanel.Size = new System.Drawing.Size(787, 46);
             this.titlePanel.TabIndex = 0;
             this.titlePanel.Title = "Title";
+            // 
+            // _dataLoadingTimer
+            // 
+            this._dataLoadingTimer.Interval = 1000;
+            this._dataLoadingTimer.Tick += new System.EventHandler(this._dataLoadingTimer_Tick);
             // 
             // ManageDataList
             // 
@@ -314,7 +351,10 @@
         protected TitlePanel titlePanel;
         public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton _addButton;
+        private System.Windows.Forms.ToolStripLabel _recordCountLabel;
+        protected System.Windows.Forms.Timer _dataLoadingTimer;
+        private System.Windows.Forms.ToolStripButton _cancelButton;
+        private System.Windows.Forms.ToolStripButton _deleteButton;
     }
 }

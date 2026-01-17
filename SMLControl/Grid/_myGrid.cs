@@ -1349,6 +1349,11 @@ namespace SMLControl
                                 __data.Add((decimal)Utils._numberUtils._decimalPhase(__dataStr));
                                 break;
                             case 4:
+
+                                if (myDataRow[__row][__dataColumn] is DateTime)
+                                {
+                                    __dataStr = ((DateTime)myDataRow[__row][__dataColumn]).ToString("yyyy-MM-dd");
+                                }
                                 string[] __getDate = __dataStr.Split(' ');
                                 DateTime __getDateResult = new DateTime(1000, 1, 1);
                                 try
@@ -2073,7 +2078,8 @@ namespace SMLControl
         /// <returns>Object มีสามแบบคือ string,Integer,DateTime</returns>
         public object _cellGet(int row, string columnName)
         {
-            return this._cellGet(row, columnName);
+            int columeIndex = this._findColumnByName(columnName);
+            return this._cellGet(row, columeIndex);
         }
 
         #endregion

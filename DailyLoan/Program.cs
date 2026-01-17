@@ -21,9 +21,22 @@ namespace DailyLoan
             App.AppConfig = new AppConfig();
             App.AppConfig.LoadConfig();
             App.InitDBConnection();
+            bool isDBConnected = false;
 
-            Migration.DataMigration dataMigration = new Migration.DataMigration(App.DBConnection);
-            dataMigration.StartMigration();
+            try
+            {
+                isDBConnected = App.DBConnection != null && App.DBConnection.TestConnect();
+            }
+            catch
+            {
+                isDBConnected = false;
+            }
+
+            if (isDBConnected == true)
+            {
+                Migration.DataMigration dataMigration = new Migration.DataMigration(App.DBConnection);
+                dataMigration.StartMigration();
+            }
 
             Application.Run(new LoginForm());
 

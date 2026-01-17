@@ -14,20 +14,19 @@ namespace DailyLoan.Loan
 {
     public partial class LoanControl : UserControl
     {
-        public static string MENU_NAME = "MENU_LOAN";
-
         bool onLoad = false;
         public LoanControl()
         {
             InitializeComponent();
 
+            this.ChangeFormMode(false);
             this._loanScreenTop1._textBoxChanged += _loanScreenTop1__textBoxChanged;
             this.showSummaryLabel(0, 0, 0);
         }
 
         private void _loanScreenTop1__textBoxChanged(object sender, string name)
         {
-            if (name == "principle" || name == "interest" || name == "total_interest")
+            if (name == "principle_amount" || name == "interest_rate" || name == "total_interest")
             {
                 this.calcLoanRate();
             }
@@ -40,8 +39,8 @@ namespace DailyLoan.Loan
 
         void calcLoanRate()
         {
-            decimal principle = this._loanScreenTop1._getDataNumber("principle");
-            decimal interestRate = this._loanScreenTop1._getDataNumber("interest");
+            decimal principle = this._loanScreenTop1._getDataNumber("principle_amount");
+            decimal interestRate = this._loanScreenTop1._getDataNumber("interest_rate");
             decimal totalInterest = this._loanScreenTop1._getDataNumber("total_interest");
 
             if (principle > 0 && totalInterest == 0 && interestRate > 0)
@@ -59,7 +58,7 @@ namespace DailyLoan.Loan
 
         void calcPayPeriod()
         {
-            decimal principle = this._loanScreenTop1._getDataNumber("principle");
+            decimal principle = this._loanScreenTop1._getDataNumber("principle_amount");
             decimal totalInterest = this._loanScreenTop1._getDataNumber("total_interest");
 
             decimal totalLoan = principle + totalInterest;
@@ -108,6 +107,36 @@ namespace DailyLoan.Loan
             List<PayPeriod> payPeriods = loanPeriod.PayPeriods.ToList();
 
             this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
+        }
+
+
+        void ClearData()
+        {
+            this._loanScreenTop1._clear();
+        }
+
+
+        private void _newContractButton_Click(object sender, EventArgs e)
+        {
+            this.ChangeFormMode(true);
+        }
+
+        void ChangeFormMode(bool isEdit)
+        {
+            this._saveContractButton.Enabled = isEdit;
+            this._discardButton.Enabled = isEdit;
+
+            this._loanScreenTop1.LockScreen = !isEdit;
+            this._searchContractButton.Enabled = !isEdit;
+            this._newContractButton.Enabled = !isEdit;
+            this._payButton.Enabled = false;
+
+        }
+
+        private void _discardButton_Click(object sender, EventArgs e)
+        {
+            this.ChangeFormMode(false);
+            this.ClearData();
         }
     }
 }

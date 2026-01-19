@@ -34,9 +34,9 @@
             this._searchContractButton = new System.Windows.Forms.ToolStripButton();
             this._newContractButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this._payButton = new System.Windows.Forms.ToolStripButton();
             this._saveContractButton = new System.Windows.Forms.ToolStripButton();
             this._discardButton = new System.Windows.Forms.ToolStripButton();
-            this._payButton = new System.Windows.Forms.ToolStripButton();
             this._paymentPeriodGrid1 = new DailyLoan.Loan._paymentPeriodGrid();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -116,6 +116,7 @@
             this._searchContractButton.Text = "ค้นหา";
             this._searchContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._searchContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._searchContractButton.Click += new System.EventHandler(this._searchContractButton_Click);
             // 
             // _newContractButton
             // 
@@ -135,6 +136,19 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 89);
+            // 
+            // _payButton
+            // 
+            this._payButton.AutoSize = false;
+            this._payButton.Image = global::DailyLoan.Properties.Resources.money2_32;
+            this._payButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._payButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._payButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._payButton.Name = "_payButton";
+            this._payButton.Size = new System.Drawing.Size(97, 97);
+            this._payButton.Text = "ชำระเงิน";
+            this._payButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._payButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // _saveContractButton
             // 
@@ -165,19 +179,6 @@
             this._discardButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._discardButton.ToolTipText = "ยกเลิก";
             this._discardButton.Click += new System.EventHandler(this._discardButton_Click);
-            // 
-            // _payButton
-            // 
-            this._payButton.AutoSize = false;
-            this._payButton.Image = global::DailyLoan.Properties.Resources.money2_32;
-            this._payButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this._payButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._payButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
-            this._payButton.Name = "_payButton";
-            this._payButton.Size = new System.Drawing.Size(97, 97);
-            this._payButton.Text = "ชำระเงิน";
-            this._payButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this._payButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // _paymentPeriodGrid1
             // 

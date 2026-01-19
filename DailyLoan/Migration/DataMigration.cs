@@ -22,6 +22,7 @@ namespace DailyLoan.Migration
         {
             // create table
             this.migrations.Add(new data.V0_Initial(this.connection));
+            this.migrations.Add(new data.V1_loan_data(this.connection));
         }
 
         public void StartMigration()

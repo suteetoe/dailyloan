@@ -83,5 +83,26 @@ namespace DailyLoan.Data.Repository
 
             connecton.ExecuteCommand(deleteQuery, parameters);
         }
+
+        public List<Holiday> ListHoliday(DateTime startDate)
+        {
+            String startDateStr = SMLControl.Utils._dateUtil._convertDateToQuery(startDate);
+
+            string query = "SELECT date_holiday, remark FROM " + Holiday.TABLE_NAME + " WHERE date_holiday >= \'" + startDateStr + "\' ORDER BY date_holiday ASC";
+            var ds = connecton.QueryData(query);
+            List<Holiday> holidays = new List<Holiday>();
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable result = ds.Tables[0];
+                foreach (DataRow row in result.Rows)
+                {
+                    Holiday holiday = new Holiday();
+                    holiday.holiday_date = Convert.ToDateTime(row["date_holiday"]);
+                    holiday.remark = row["remark"].ToString();
+                    holidays.Add(holiday);
+                }
+            }
+            return holidays;
+        }
     }
 }

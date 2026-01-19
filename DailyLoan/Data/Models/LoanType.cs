@@ -16,6 +16,9 @@ namespace DailyLoan.Data.Models
 
         public String working_days { get; set; }
 
+        /// <summary>
+        /// 1=จันทร์-ศุกร์, 2=จันทร์-เสาร์
+        /// </summary>
         public int working_holiday_type { get; set; }
     }
 }

@@ -39,13 +39,21 @@ namespace BizFlowControl
             }
         }
 
-        public void ExecuteCommand(string query)
+        public void ExecuteCommand(string query, ExecuteParams dataParams = null)
         {
 
             try
             {
                 using (var cmd = new NpgsqlCommand(query, this.connection, this.transaction))
                 {
+                    if (dataParams != null)
+                    {
+                        foreach (var param in dataParams)
+                        {
+                            cmd.Parameters.AddWithValue(param.Key, param.Value);
+                        }
+                    }
+
                     int rowsAffected = cmd.ExecuteNonQuery();
                 }
             }

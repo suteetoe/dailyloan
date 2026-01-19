@@ -34,8 +34,15 @@ namespace DailyLoan
 
             if (isDBConnected == true)
             {
-                Migration.DataMigration dataMigration = new Migration.DataMigration(App.DBConnection);
-                dataMigration.StartMigration();
+                try
+                {
+                    Migration.DataMigration dataMigration = new Migration.DataMigration(App.DBConnection);
+                    dataMigration.StartMigration();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Data migration error: " + ex.Message.ToString());
+                }
             }
 
             Application.Run(new LoginForm());

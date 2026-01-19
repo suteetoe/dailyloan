@@ -1,4 +1,6 @@
-﻿using DailyLoan.Domain;
+﻿using DailyLoan.Data.Models;
+using DailyLoan.Data.Repository;
+using DailyLoan.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +17,9 @@ namespace DailyLoan.Loan
     public partial class LoanControl : UserControl
     {
         bool onLoad = false;
+        HolidayRepository holidayRepository = new HolidayRepository();
+        ContractRepository contractRepository = new ContractRepository();
+
         public LoanControl()
         {
             InitializeComponent();
@@ -33,7 +38,10 @@ namespace DailyLoan.Loan
             else if (name == "num_of_period" || name == "amount_per_period")
             {
                 calcPayPeriod();
-
+            }
+            else if (name == "first_period_date")
+            {
+                GenerateContractPaymentPeriod();
             }
         }
 
@@ -93,32 +101,115 @@ namespace DailyLoan.Loan
             this._labelTotalBalance.Text = SMLControl.Utils._numberUtils.FormatNumber(totalBalance, 2);
         }
 
-        private void _saveContractButton_Click(object sender, EventArgs e)
+        void GenerateContractPaymentPeriod()
         {
-            decimal principle = this._loanScreenTop1._getDataNumber("principle");
+            this._paymentPeriodGrid1._clear();
+
+            decimal principle = this._loanScreenTop1._getDataNumber("principle_amount");
             decimal totalInterest = this._loanScreenTop1._getDataNumber("total_interest");
             decimal totalLoan = principle + totalInterest;
             int totalPeriod = (int)this._loanScreenTop1._getDataNumber("num_of_period");
             decimal amountPerPeriod = this._loanScreenTop1._getDataNumber("amount_per_period");
             DateTime firstPayDue = this._loanScreenTop1._getDataDate("first_period_date");
 
+            LoanType loanType = this._loanScreenTop1.getLoanType();
 
-            LoanPeriod loanPeriod = new LoanPeriod(totalLoan, totalPeriod, amountPerPeriod, firstPayDue, 0);
-            List<PayPeriod> payPeriods = loanPeriod.PayPeriods.ToList();
+            if (loanType == null)
+            {
+                MessageBox.Show("กรุณาเลือกประเภทสินเชื่อก่อน");
+                return;
+            }
 
-            this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
+            if (totalPeriod > 0)
+            {
+                var holidays = holidayRepository.ListHoliday(firstPayDue);
+
+                var holidayDayList = new List<DateTime>();
+                foreach (var holiday in holidays)
+                {
+                    holidayDayList.Add(holiday.holiday_date);
+                }
+
+                LoanPeriod loanPeriod = new LoanPeriod(totalLoan, totalPeriod, amountPerPeriod, firstPayDue, 0);
+                loanPeriod.ProcessDay = (ProcessDay)loanType.working_holiday_type;
+                if (holidayDayList.Count > 0)
+                {
+                    loanPeriod.AddHolidays(holidayDayList.ToArray());
+                }
+
+                loanPeriod.CalcPeriodAmount();
+                List<PayPeriod> payPeriods = loanPeriod.PayPeriods.ToList();
+
+                this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
+            }
+        }
+
+        private void _saveContractButton_Click(object sender, EventArgs e)
+        {
+            string checkInputRequiredMsg = this._loanScreenTop1._checkEmtryField();
+            if (checkInputRequiredMsg != "")
+            {
+                MessageBox.Show("กรุณาระบุข้อมูลให้ครบถ้วน\r\n" + checkInputRequiredMsg, "ข้อมูลไม่ครบถ้วน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            List<PayPeriod> payPeriods = this._paymentPeriodGrid1.PayPeriods;
+            if (payPeriods == null || payPeriods.Count == 0)
+            {
+                MessageBox.Show("กรุณาสร้างงวดการชำระเงินก่อนทำการบันทึกข้อมูล", "ไม่มีงวดการชำระเงิน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string confirmSaveMsg = "คุณต้องการบันทึกข้อมูลสัญญาสินเชื่อ ใช่หรือไม่?";
+            var result = MessageBox.Show(confirmSaveMsg, "ยืนยันการบันทึกข้อมูล", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    Contract contract = this._loanScreenTop1.GetContractModel();
+                    contract.ContractPeriods = new List<ContractPeriod>();
+
+                    if (payPeriods != null)
+                    {
+                        foreach (var payPeriod in payPeriods)
+                        {
+                            ContractPeriod contractPeriod = new ContractPeriod()
+                            {
+                                period_no = payPeriod.PeriodNumber,
+                                due_date = payPeriod.PayDueDate,
+                                amount = payPeriod.PayAmount
+                            };
+                            contract.ContractPeriods.Add(contractPeriod);
+                        }
+                    }
+
+
+                    contractRepository.CreateContract(contract);
+
+                    MessageBox.Show("บันทึกข้อมูลสัญญาสินเชื่อเรียบร้อยแล้ว", "บันทึกข้อมูลสำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.ClearData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("เกิดข้อผิดพลาดในการบันทึกข้อมูล \r\n" + ex.Message, "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
         }
 
 
         void ClearData()
         {
             this._loanScreenTop1._clear();
+            this._paymentPeriodGrid1._clear();
         }
 
 
         private void _newContractButton_Click(object sender, EventArgs e)
         {
+            this.ClearData();
             this.ChangeFormMode(true);
+
         }
 
         void ChangeFormMode(bool isEdit)
@@ -137,6 +228,38 @@ namespace DailyLoan.Loan
         {
             this.ChangeFormMode(false);
             this.ClearData();
+        }
+
+        private void _searchContractButton_Click(object sender, EventArgs e)
+        {
+            SearchContractForm searchContractForm = new SearchContractForm();
+            searchContractForm.Size = new Size(600, 400);
+            searchContractForm.StartPosition = FormStartPosition.CenterParent;
+            searchContractForm.AfterSelectData += (data) =>
+            {
+                string contractNo = data["contract_no"].ToString();
+                this.LoadContract(contractNo);
+                searchContractForm.Close();
+            };
+            searchContractForm.ShowDialog(this);
+        }
+
+        void LoadContract(string contractNo)
+        {
+            Contract contract = contractRepository.FindContractByContractNo(contractNo);
+            this._loanScreenTop1.LoadContractData(contract);
+
+            List<PayPeriod> payPeriods = new List<PayPeriod>();
+            foreach (var cp in contract.ContractPeriods)
+            {
+                payPeriods.Add(new PayPeriod(cp.period_no, cp.due_date, cp.amount));
+            }
+
+            this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
+            decimal totalLoan = contract.principle_amount + contract.total_interest;
+            decimal totalPaid = 0M;
+            decimal totalBalance = totalLoan - totalPaid;
+            this.showSummaryLabel(totalLoan, totalPaid, totalBalance);
         }
     }
 }

@@ -120,8 +120,15 @@
     <Compile Include="Control\TitlePanel.Designer.cs">
       <DependentUpon>TitlePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Models\ContractPeriod.cs" />
     <Compile Include="Data\Models\Customer.cs" />
+    <Compile Include="Data\Models\Contract.cs" />
+    <Compile Include="Data\Repository\ContractRepository.cs" />
     <Compile Include="Data\Repository\CustomerRepository.cs" />
+    <Compile Include="Loan\SearchContractForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Migration\data\V1_loan_data.cs" />
     <Compile Include="Screen\Customer\CustomerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

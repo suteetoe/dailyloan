@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DailyLoan.Data.Repository;
@@ -21,10 +22,10 @@ namespace DailyLoan.Loan
             this._maxColumn = 2;
             int row = 0;
             this.AddDateField(new SMLControl.DateField() { Row = row, Column = 0, FieldCode = "contract_date", FieldName = "วันที่", Required = true });
-            this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 1, FieldCode = "contract_number", FieldName = "เลขที่สัญญา", Required = true });
+            this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 1, FieldCode = "contract_no", FieldName = "เลขที่สัญญา", Required = true, IsAutoUpper = true });
 
             this.AddTextField(new SMLControl.TextField() { Row = row, Column = 0, FieldCode = "loan_type", FieldName = "ประเภทเงินกู้", IsSearch = true, ColumnSpan = 1, Required = true });
-            this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 1, FieldCode = "route", FieldName = "สาย", MaxLength = 50, IsSearch = true, Required = true });
+            this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 1, FieldCode = "route_code", FieldName = "สาย", MaxLength = 50, IsSearch = true, Required = true });
             row++;
 
             this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 0, FieldCode = "customer_name", FieldName = "ลูกค้า", IsSearch = true, ColumnSpan = 2 });
@@ -34,7 +35,8 @@ namespace DailyLoan.Loan
             row += 2;
 
             this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 0, FieldCode = "customer_telephone", FieldName = "โทรศัพท์", MaxLength = 100 });
-            this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 0, FieldCode = "product_group", FieldName = "กลุ่มสินค้า", ColumnSpan = 2 });
+            // this.AddTextField(new SMLControl.TextField() { Row = row++, Column = 0, FieldCode = "product_group", FieldName = "กลุ่มสินค้า", ColumnSpan = 2 });
+
             this.AddTextField(new SMLControl.TextField() { Row = row, Column = 0, FieldCode = "description", FieldName = "รายละเอียด", ColumnSpan = 2, RowSpan = 3 });
             row += 3;
 
@@ -96,13 +98,13 @@ namespace DailyLoan.Loan
 
                 }
             }
-            else if (name.Equals("route"))
+            else if (name.Equals("route_code"))
             {
-                string routeCode = this._getDataStr("route");
+                string routeCode = this._getDataStr("route_code");
                 var route = RouteRepository.GetRouteByCode(routeCode);
                 if (route != null)
                 {
-                    this._setDataStr("route", route.code, route.name_1, true);
+                    this._setDataStr("route_code", route.code, route.name_1, true);
 
                 }
             }
@@ -134,12 +136,12 @@ namespace DailyLoan.Loan
                 };
                 searchLoanTypeForm.ShowDialog();
             }
-            else if (name.Equals("route"))
+            else if (name.Equals("route_code"))
             {
                 SearchRouteForm searchRouteForm = new SearchRouteForm();
                 searchRouteForm.AfterSelectData += (rowData) =>
                 {
-                    this._setDataStr("route", rowData["code"].ToString());
+                    this._setDataStr("route_code", rowData["code"].ToString());
                     searchRouteForm.Close();
                 };
                 searchRouteForm.ShowDialog();
@@ -168,5 +170,53 @@ namespace DailyLoan.Loan
             }
         }
 
+        public Data.Models.LoanType getLoanType()
+        {
+
+            string loanTypeCode = this._getDataStr("loan_type");
+            var loanType = LoanTypeRepository.GetLoanTypeByCode(loanTypeCode);
+            if (loanType != null)
+            {
+                return loanType;
+            }
+            return null;
+        }
+
+        public Data.Models.Contract GetContractModel()
+        {
+            Data.Models.Contract contract = new Data.Models.Contract();
+            contract.contract_date = this._getDataDate("contract_date");
+            contract.contract_no = this._getDataStr("contract_no");
+
+            contract.loan_type = this._getDataStr("loan_type");
+            contract.route_code = this._getDataStr("route_code");
+
+            contract.customer_code = this._getDataStr("customer_code");
+            contract.description = this._getDataStr("description");
+            contract.principle_amount = this._getDataNumber("principle_amount");
+            contract.interest_rate = this._getDataNumber("interest_rate");
+            contract.total_interest = this._getDataNumber("total_interest");
+            contract.num_of_period = (int)this._getDataNumber("num_of_period");
+            contract.amount_per_period = this._getDataNumber("amount_per_period");
+            contract.first_period_date = this._getDataDate("first_period_date");
+
+            return contract;
+        }
+
+        public void LoadContractData(Data.Models.Contract contract)
+        {
+            this._setDataDate("contract_date", contract.contract_date);
+            this._setDataStr("contract_no", contract.contract_no);
+            this._setDataStr("description", contract.description);
+            this._setDataNumber("principle_amount", contract.principle_amount);
+            this._setDataNumber("interest_rate", contract.interest_rate);
+            this._setDataNumber("total_interest", contract.total_interest);
+            this._setDataNumber("num_of_period", contract.num_of_period);
+            this._setDataNumber("amount_per_period", contract.amount_per_period);
+            this._setDataDate("first_period_date", contract.first_period_date);
+            this._setDataStr("loan_type", contract.loan_type);
+            this._setDataStr("route_code", contract.route_code);
+            this._setDataStr("customer_code", contract.customer_code);
+        }
     }
 }

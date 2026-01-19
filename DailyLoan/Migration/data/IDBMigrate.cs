@@ -12,4 +12,28 @@ namespace DailyLoan.Migration.data
     {
         void Start();
     }
+
+    public class MigrationDBHelper
+    {
+        public static string DoAddForeintKeyIfNotExists(string tableName, string keyName, string addKeyScript)
+        {
+            string sql =
+                @"DO $$
+                BEGIN
+
+                    IF NOT EXISTS (
+                        SELECT 1
+                        FROM pg_constraint
+                        WHERE conname = '{0}'
+                        AND conrelid = '{1}'::regclass 
+                    ) THEN	
+                        {2}
+                    END IF;
+                END $$; ";
+
+            string result = string.Format(sql, keyName, tableName, addKeyScript);
+            return result;
+
+        }
+    }
 }

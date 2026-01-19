@@ -17,7 +17,20 @@ namespace DailyLoan.Control
         {
             InitializeComponent();
             this._searchResultGrid._isEdit = false;
-            this._searchResultGrid._mouseDoubleClick += _searchResultGrid__mouseDoubleClick;
+            this._searchResultGrid._mouseClick += _searchResultGrid__mouseClick;
+            // this._searchResultGrid._mouseDoubleClick += _searchResultGrid__mouseDoubleClick;
+        }
+
+        private void _searchResultGrid__mouseClick(object sender, SMLControl.GridCellEventArgs e)
+        {
+            if (e._row > -1 && e._row < this._searchResultGrid._rowData.Count)
+            {
+                SMLControl.GridRowData rowData = this._searchResultGrid._getRowData(e._row);
+                if (this.AfterSelectData != null)
+                {
+                    this.AfterSelectData(rowData);
+                }
+            }
         }
 
         private void _searchResultGrid__mouseDoubleClick(object sender, SMLControl.GridCellEventArgs e)

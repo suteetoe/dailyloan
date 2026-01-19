@@ -24,8 +24,10 @@ namespace DailyLoan.Loan
             this.Invalidate();
         }
 
+        private List<PayPeriod> _payPeriods;
         public void LoadListPayPeriod(List<PayPeriod> payPeriods)
         {
+            this._payPeriods = payPeriods;
             this._clear();
 
             foreach (var period in payPeriods)
@@ -37,5 +39,14 @@ namespace DailyLoan.Loan
             }
             this.Invalidate();
         }
+
+        public List<PayPeriod> PayPeriods
+        {
+            get
+            {
+                return this._payPeriods;
+            }
+        }
+        
     }
 }

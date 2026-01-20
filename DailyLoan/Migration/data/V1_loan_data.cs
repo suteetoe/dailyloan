@@ -1,4 +1,7 @@
 ﻿using BizFlowControl;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +61,7 @@ namespace DailyLoan.Migration.data
                       id SERIAL,
                       doc_no varchar(100) PRIMARY KEY,
                       doc_date date NOT NULL,
-                      cust_code varchar(100),
+                      doc_time varchar(10),
                       contract_no varchar(100) NOT NULL,
                       total_amount numeric,
                       create_by int NOT NULL
@@ -68,15 +71,27 @@ namespace DailyLoan.Migration.data
                 string create_table_txn_route_payment =
                     @"CREATE TABLE IF NOT EXISTS txn_route_payment(
                       id SERIAL,
+                      doc_date date NOT NULL,
+                      doc_time varchar(10),
                       doc_no varchar(100) PRIMARY KEY,
                       route_code varchar(100),
-                      doc_date date NOT NULL,
-                      contract_no varchar(100) NOT NULL,
-                      total_amount numeric,
+                      total_route_amount numeric,
                       create_by int NOT NULL
                     );";
                 transactionConnection.ExecuteCommand(create_table_txn_route_payment);
 
+                string create_unique_index_txn_route_payment_doc_date_route_code = "CREATE UNIQUE INDEX IF NOT EXISTS txn_route_payment_doc_date_route_idx ON txn_route_payment (doc_date, route_code);";
+                transactionConnection.ExecuteCommand(create_unique_index_txn_route_payment_doc_date_route_code);
+
+                string create_table_txn_route_payment_detail =
+                    @"CREATE TABLE IF NOT EXISTS txn_route_payment_detail(
+                      id SERIAL PRIMARY KEY NOT NULL,
+                      doc_no varchar(100),
+                      contract_no varchar(100) NOT NULL,
+                      total_amount numeric,
+                      line_number int
+                    );";
+                transactionConnection.ExecuteCommand(create_table_txn_route_payment_detail);
 
                 string create_table_txn_contract_period_payment =
                     @"CREATE TABLE IF NOT EXISTS txn_contract_period_payment (
@@ -114,18 +129,17 @@ namespace DailyLoan.Migration.data
                     "ALTER TABLE txn_payment ADD CONSTRAINT fk_txn_payment_contract_no FOREIGN KEY(contract_no) REFERENCES txn_contract(contract_no);");
                 transactionConnection.ExecuteCommand(create_foreign_key_txn_payment_contract_no);
 
-                string create_foreign_key_txn_payment_customer_code = MigrationDBHelper.DoAddForeintKeyIfNotExists(
-                    "txn_payment",
-                    "fk_txn_payment_cust_code",
-                    "ALTER TABLE txn_payment ADD CONSTRAINT fk_txn_payment_cust_code FOREIGN KEY(cust_code) REFERENCES mst_customer(code);");
-                transactionConnection.ExecuteCommand(create_foreign_key_txn_payment_customer_code);
+                string create_foreign_key_txn_route_payment_detail_doc_no = MigrationDBHelper.DoAddForeintKeyIfNotExists(
+                    "txn_route_payment_detail",
+                    "fk_txn_route_payment_detail_doc_no",
+                    "ALTER TABLE txn_route_payment_detail ADD CONSTRAINT fk_txn_route_payment_detail_doc_no FOREIGN KEY(doc_no) REFERENCES txn_route_payment(doc_no);");
+                transactionConnection.ExecuteCommand(create_foreign_key_txn_route_payment_detail_doc_no);
 
-
-                string create_foreign_key_txn_route_payment_contract_no = MigrationDBHelper.DoAddForeintKeyIfNotExists(
-                    "txn_route_payment",
-                    "fk_txn_route_payment_contract_no",
-                    "ALTER TABLE txn_route_payment ADD CONSTRAINT fk_txn_route_payment_contract_no FOREIGN KEY(contract_no) REFERENCES txn_contract(contract_no);");
-                transactionConnection.ExecuteCommand(create_foreign_key_txn_route_payment_contract_no);
+                string create_foreign_key_txn_route_payment_detail_contract_no = MigrationDBHelper.DoAddForeintKeyIfNotExists(
+                    "txn_route_payment_detail",
+                    "fk_txn_route_payment_detail_contract_no",
+                    "ALTER TABLE txn_route_payment_detail ADD CONSTRAINT fk_txn_route_payment_detail_contract_no FOREIGN KEY(contract_no) REFERENCES txn_contract(contract_no);");
+                transactionConnection.ExecuteCommand(create_foreign_key_txn_route_payment_detail_contract_no);
 
                 string create_foreign_key_txn_contract_period_payment_contract_no = MigrationDBHelper.DoAddForeintKeyIfNotExists(
                     "txn_contract_period_payment",

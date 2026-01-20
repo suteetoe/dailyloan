@@ -80,6 +80,34 @@ namespace BizFlowControl
             return result;
         }
 
+        public T ExecuteScalar<T>(string query)
+        {
+            if (!this.Connected)
+            {
+                throw new Exception("Database not connected.");
+            }
+
+            try
+            {
+                using (var cmd = new NpgsqlCommand(query, this.connection))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return (T)Convert.ChangeType(result, typeof(T));
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void ExecuteCommand(string query)
         {
             if (!this.Connected)

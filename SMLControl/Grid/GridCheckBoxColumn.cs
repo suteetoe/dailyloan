@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SMLControl
 {
-    internal class GridCheckBoxColumn
+    public class GridCheckBoxColumn : BaseGridColumn
     {
+        public GridCheckBoxColumn()
+        {
+            this._columnTypeNumber = 11;
+        }
     }
 }

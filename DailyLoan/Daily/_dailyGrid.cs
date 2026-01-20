@@ -12,10 +12,19 @@ namespace DailyLoan.Daily
         public _dailyGrid()
         {
             this.ShowTotal = true;
+            this.IsEdit = false;
+
+            string numberFormat = SMLControl.Utils._numberUtils.BuildNumberFormat(2);
+
             this.AddGridColumn(new GridTextColumn() { ColumnCode = "contract_no", ColumnName = "สัญญา", WidthPercent = 15 });
             this.AddGridColumn(new GridTextColumn() { ColumnCode = "customer", ColumnName = "ลูกค้า", WidthPercent = 45 });
-            this.AddGridColumn(new GridDecimalColumn() { ColumnCode = "amount", ColumnName = "จำนวนเงิน", WidthPercent = 20, Format = "m02" });
-            this.AddGridColumn(new GridDecimalColumn() { ColumnCode = "over_due_amount", ColumnName = "ค้างชำระ", WidthPercent = 20, Format = "m02" });
+            this.AddGridColumn(new GridDecimalColumn() { ColumnCode = "amount", ColumnName = "จำนวนเงิน", WidthPercent = 20, Format = numberFormat });
+            this.AddGridColumn(new GridDecimalColumn() { ColumnCode = "pay_amount", ColumnName = "ยอดชำระ", WidthPercent = 20, Format = numberFormat });
+
+            // hide
+            this.AddGridColumn(new GridDateColumn() { ColumnCode = "due_date", ColumnName = "due_date", WidthPercent = 0, IsHide = true });
+
+
             this._calcPersentWidthToScatter();
             this.Invalidate();
         }

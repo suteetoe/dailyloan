@@ -223,6 +223,16 @@ namespace DailyLoan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap document_into_32 {
+            get {
+                object obj = ResourceManager.GetObject("document_into_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap document_view {
             get {
                 object obj = ResourceManager.GetObject("document_view", resourceCulture);
@@ -246,6 +256,26 @@ namespace DailyLoan.Properties {
         internal static System.Drawing.Bitmap document_view_48 {
             get {
                 object obj = ResourceManager.GetObject("document_view_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flash {
+            get {
+                object obj = ResourceManager.GetObject("flash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flash_32 {
+            get {
+                object obj = ResourceManager.GetObject("flash_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

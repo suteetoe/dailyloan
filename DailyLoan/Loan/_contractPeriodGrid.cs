@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DailyLoan.Loan
 {
-    public class _paymentPeriodGrid : SMLControl._myGrid
+    public class _contractPeriodGrid : SMLControl._myGrid
     {
-        public _paymentPeriodGrid()
+        public _contractPeriodGrid()
         {
             this.IsEdit = false;
             string numberFormat = SMLControl.Utils._numberUtils.BuildNumberFormat(2);

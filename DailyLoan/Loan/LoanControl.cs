@@ -246,6 +246,7 @@ namespace DailyLoan.Loan
 
         void LoadContract(string contractNo)
         {
+
             Contract contract = contractRepository.FindContractByContractNo(contractNo);
             this._loanScreenTop1.LoadContractData(contract);
 
@@ -260,6 +261,21 @@ namespace DailyLoan.Loan
             decimal totalPaid = 0M;
             decimal totalBalance = totalLoan - totalPaid;
             this.showSummaryLabel(totalLoan, totalPaid, totalBalance);
+            this.ChangeFormMode(false);
+            this._payButton.Enabled = true;
+        }
+
+        private void _payButton_Click(object sender, EventArgs e)
+        {
+            string contractNo = this._loanScreenTop1._getDataStr("contract_no");
+
+            Contract contract = contractRepository.FindContractByContractNo(contractNo);
+
+            PayContractForm form = new PayContractForm();
+            List<PayPeriod> payPeriods = this._paymentPeriodGrid1.PayPeriods;
+            form.LoadContractPeriod(contract);
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.ShowDialog(this);
         }
     }
 }

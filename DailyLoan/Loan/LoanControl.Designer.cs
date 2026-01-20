@@ -37,7 +37,7 @@
             this._payButton = new System.Windows.Forms.ToolStripButton();
             this._saveContractButton = new System.Windows.Forms.ToolStripButton();
             this._discardButton = new System.Windows.Forms.ToolStripButton();
-            this._paymentPeriodGrid1 = new DailyLoan.Loan._paymentPeriodGrid();
+            this._paymentPeriodGrid1 = new DailyLoan.Loan._contractPeriodGrid();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -149,6 +149,7 @@
             this._payButton.Text = "ชำระเงิน";
             this._payButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._payButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._payButton.Click += new System.EventHandler(this._payButton_Click);
             // 
             // _saveContractButton
             // 
@@ -285,7 +286,7 @@
             this.label3.ForeColor = System.Drawing.Color.Red;
             this.label3.Location = new System.Drawing.Point(98, 80);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(175, 29);
+            this.label3.Size = new System.Drawing.Size(118, 19);
             this.label3.TabIndex = 2;
             this.label3.Text = "ยอดค้างชำระ :";
             // 
@@ -296,7 +297,7 @@
             this.label2.ForeColor = System.Drawing.Color.Green;
             this.label2.Location = new System.Drawing.Point(86, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(192, 29);
+            this.label2.Size = new System.Drawing.Size(130, 19);
             this.label2.TabIndex = 1;
             this.label2.Text = "ยอดที่ชำระแล้ว :";
             // 
@@ -307,7 +308,7 @@
             this.label1.ForeColor = System.Drawing.Color.Blue;
             this.label1.Location = new System.Drawing.Point(3, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(316, 29);
+            this.label1.Size = new System.Drawing.Size(213, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "รวมยอดที่ต้องชำระทั้งหมด :";
             // 
@@ -323,7 +324,7 @@
             // 
             // LoanControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.panel1);
@@ -355,7 +356,7 @@
         private System.Windows.Forms.ToolStripButton _newContractButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton _saveContractButton;
-        private _paymentPeriodGrid _paymentPeriodGrid1;
+        private _contractPeriodGrid _paymentPeriodGrid1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;

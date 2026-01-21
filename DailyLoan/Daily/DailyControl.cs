@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using DailyLoan.Data.Models;
 using DailyLoan.Data.Repository;
+using DailyLoan.Domain;
 using DailyLoan.Loan;
 using SMLControl.Utils;
 using System;
@@ -224,6 +225,14 @@ namespace DailyLoan.Daily
                     routePaymentRepository.CreateRoutePayment(payment);
 
                     MessageBox.Show("บันทึกข้อมูลการชำระเงินเรียบร้อยแล้ว", "ชำระเงินสำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    ContractProcess contractProcess = new ContractProcess();
+                    for (int row = 0; row < this._dailyPaymentGrid._rowData.Count; row++)
+                    {
+                        string contractNo = this._dailyPaymentGrid._cellGet(row, "contract_no").ToString();
+                        contractProcess.StartProcessPayment(contractNo);
+                    }
+
                     this.clearPaymentScreen();
 
                 }

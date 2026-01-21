@@ -18,4 +18,21 @@ namespace DailyLoan.Data.Models
 
         public Decimal amount { get; set; }
     }
+
+    public class ContractPeriodBalance : ContractPeriod
+    {
+        public decimal paid_amount { get; set; }
+
+        public decimal over_due_amount { get; set; }
+
+        public decimal balance_amount
+        {
+            get
+            {
+                return amount - paid_amount;
+            }
+        }
+
+
+    }
 }

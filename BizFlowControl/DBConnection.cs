@@ -57,7 +57,7 @@ namespace BizFlowControl
             return true;
         }
 
-        public DataSet QueryData(string query)
+        public DataSet QueryData(string query, ExecuteParams dataParams = null)
         {
             if (!this.Connected)
             {
@@ -67,10 +67,23 @@ namespace BizFlowControl
             DataSet result = new DataSet();
             try
             {
-                using (var da = new NpgsqlDataAdapter(query, this.connection))
+                using (NpgsqlCommand cmd = new NpgsqlCommand(query, this.connection))
                 {
-                    da.Fill(result, "result");
+                    if (dataParams != null)
+                    {
+                        foreach (var param in dataParams)
+                        {
+                            cmd.Parameters.AddWithValue(param.Key, param.Value);
+                        }
+                    }
+
+                    using (var da = new NpgsqlDataAdapter(cmd))
+                    {
+                        da.Fill(result, "result");
+                    }
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -248,5 +261,10 @@ namespace BizFlowControl
     public class ExecuteParams : Dictionary<string, object>
     {
 
+    }
+
+    public class JsonBParameter
+    {
+        public string Value { get; set; }
     }
 }

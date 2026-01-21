@@ -41,7 +41,6 @@ namespace BizFlowControl
 
         public void ExecuteCommand(string query, ExecuteParams dataParams = null)
         {
-
             try
             {
                 using (var cmd = new NpgsqlCommand(query, this.connection, this.transaction))
@@ -50,7 +49,25 @@ namespace BizFlowControl
                     {
                         foreach (var param in dataParams)
                         {
-                            cmd.Parameters.AddWithValue(param.Key, param.Value);
+                            if (param.Value is NpgsqlParameter)
+                            {
+                                var paramCmd = (NpgsqlParameter)param.Value;
+
+                                cmd.Parameters.Add(paramCmd);
+                            }
+                            else if (param.Value is JsonBParameter)
+                            {
+                                var jsonbParam = (JsonBParameter)param.Value;
+                                var paramCmd = new NpgsqlParameter(param.Key, NpgsqlTypes.NpgsqlDbType.Jsonb)
+                                {
+                                    Value = jsonbParam.Value
+                                };
+                                cmd.Parameters.Add(paramCmd);
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue(param.Key, param.Value);
+                            }
                         }
                     }
 
@@ -58,7 +75,7 @@ namespace BizFlowControl
                 }
             }
             catch (PostgresException ex)
-            {          
+            {
                 throw new DBException(ex.SqlState, ex.Message);
             }
             catch (Exception ex)

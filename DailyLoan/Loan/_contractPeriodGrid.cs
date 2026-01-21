@@ -36,6 +36,8 @@ namespace DailyLoan.Loan
                 this._cellUpdate(addRowIdx, "period_no", period.PeriodNumber, false);
                 this._cellUpdate(addRowIdx, "due_date", period.PayDueDate, true);
                 this._cellUpdate(addRowIdx, "amount", period.PayAmount, false);
+                this._cellUpdate(addRowIdx, "pay_amount", period.PaidAmount, false);
+                this._cellUpdate(addRowIdx, "over_due_amount", period.OverDueAmount, false);
             }
             this.Invalidate();
         }

@@ -1,6 +1,8 @@
 ﻿using DailyLoan.Data.Models;
+using SMLControl.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +48,40 @@ namespace DailyLoan.Data.Repository
             parameters.Add("@create_by", App.UserId);
 
             this.connecton.ExecuteCommand(sqlInsert, parameters);
+        }
+
+        public List<ContractPay> ListPaymentByContract(string contractNo)
+        {
+            List<ContractPay> list = new List<ContractPay>();
+
+            string query =
+                @"WITH contract_payment as (
+                select id, doc_date, doc_time, doc_no, contract_no, total_amount from txn_payment where contract_no = @contract_no
+                union all
+                select d.id, p.doc_date, p.doc_time, d.doc_no, d.contract_no, d.total_amount from txn_route_payment_detail  as d
+                join txn_route_payment as p on p.doc_no = d.doc_no
+                where d.contract_no = @contract_no
+                )
+                select id, doc_date, doc_time, doc_no, contract_no, total_amount 
+                from contract_payment order by doc_date,doc_time, id";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@contract_no", contractNo);
+            DataSet ds = this.connecton.QueryData(query, parameters);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                ContractPay item = new ContractPay();
+                item.id = Convert.ToInt32(dr["id"]);
+                item.doc_date = Convert.ToDateTime(dr["doc_date"]);
+                item.doc_time = dr["doc_time"].ToString();
+                item.doc_no = dr["doc_no"].ToString();
+                item.contract_no = dr["contract_no"].ToString();
+                item.total_amount = Convert.ToDecimal(dr["total_amount"]);
+
+                list.Add(item);
+            }
+
+            return list;
         }
     }
 }

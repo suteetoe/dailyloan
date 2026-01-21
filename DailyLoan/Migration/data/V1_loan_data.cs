@@ -95,12 +95,14 @@ namespace DailyLoan.Migration.data
 
                 string create_table_txn_contract_period_payment =
                     @"CREATE TABLE IF NOT EXISTS txn_contract_period_payment (
-                      id SERIAL PRIMARY KEY NOT NULL,
+                      id SERIAL,
                       contract_no varchar(100),
                       period_no int4,
-                      pay_doc_no varchar(100),
+                      pay_amount numeric,
                       pay_principal_amount numeric,
-                      pay_interest_amount numeric
+                      pay_interest_amount numeric,
+                      pay_detail jsonb,
+                      PRIMARY KEY (contract_no, period_no)
                     );";
                 transactionConnection.ExecuteCommand(create_table_txn_contract_period_payment);
 
@@ -115,7 +117,6 @@ namespace DailyLoan.Migration.data
                     "fk_txn_contract_customer_code",
                     "ALTER TABLE txn_contract ADD CONSTRAINT fk_txn_contract_customer_code FOREIGN KEY(customer_code) REFERENCES mst_customer(code);");
                 transactionConnection.ExecuteCommand(create_foreign_key_txn_contract_customer_code);
-
 
                 string create_foreign_key_txn_contract_period_code = MigrationDBHelper.DoAddForeintKeyIfNotExists(
                     "txn_contract_period",
@@ -146,9 +147,6 @@ namespace DailyLoan.Migration.data
                     "fk_txn_contract_period_payment_contract_no",
                     "ALTER TABLE txn_contract_period_payment ADD CONSTRAINT fk_txn_contract_period_payment_contract_no FOREIGN KEY(contract_no) REFERENCES txn_contract(contract_no);");
                 transactionConnection.ExecuteCommand(create_foreign_key_txn_contract_period_payment_contract_no);
-
-
-
 
                 transactionConnection.CommitTransaction();
             }

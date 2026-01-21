@@ -88,7 +88,7 @@ namespace DailyLoan.Domain
                         payAmount = this.totalLoan - totalPayAmount;
                     }
                     totalPayAmount += payAmount;
-                    this.payPeriods.Add(new PayPeriod(period, duePayment, payAmount));
+                    this.payPeriods.Add(new PayPeriod(period, duePayment, payAmount, 0, 0));
 
                     period++;
                 }
@@ -142,7 +142,7 @@ namespace DailyLoan.Domain
             if (payDiffAmount != 0 && this.payPeriods.Count > 0)
             {
                 PayPeriod lastPeriod = this.payPeriods[this.payPeriods.Count - 1];
-                this.payPeriods[this.payPeriods.Count - 1] = new PayPeriod(lastPeriod.PeriodNumber, duePayment, lastPeriod.PayAmount + payDiffAmount);
+                this.payPeriods[this.payPeriods.Count - 1] = new PayPeriod(lastPeriod.PeriodNumber, duePayment, lastPeriod.PayAmount + payDiffAmount, 0, 0);
             }
 
         }
@@ -151,19 +151,26 @@ namespace DailyLoan.Domain
     public class PayPeriod
     {
         int periodNumber;
-        decimal payAmount;
         DateTime payDueDate;
+        decimal payAmount;
+        decimal paidAmount;
+        decimal overDueAmount;
 
         public int PeriodNumber { get { return this.periodNumber; } }
+        public DateTime PayDueDate { get { return this.payDueDate; } }
         public decimal PayAmount { get { return this.payAmount; } }
 
-        public DateTime PayDueDate { get { return this.payDueDate; } }
+        public decimal PaidAmount { get { return this.paidAmount; } }
 
-        public PayPeriod(int periodNumber, DateTime payDueDate, decimal payAmount)
+        public decimal OverDueAmount { get { return this.overDueAmount; } }
+
+        public PayPeriod(int periodNumber, DateTime payDueDate, decimal payAmount, decimal paidAmount, decimal overDueAmount)
         {
             this.periodNumber = periodNumber;
             this.payAmount = payAmount;
             this.payDueDate = payDueDate;
+            this.paidAmount = paidAmount;
+            this.overDueAmount = overDueAmount;
         }
     }
 

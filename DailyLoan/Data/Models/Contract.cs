@@ -49,4 +49,31 @@ namespace DailyLoan.Data.Models
 
     }
 
+    public class ContractBalance : Contract
+    {
+        public List<ContractPeriodBalance> ContractPeriodBalances { get; set; }
+
+        public static ContractBalance PhaseFromContract(Contract contract)
+        {
+            ContractBalance contractBalance = new ContractBalance();
+            contractBalance.id = contract.id;
+            contractBalance.contract_no = contract.contract_no;
+            contractBalance.contract_date = contract.contract_date;
+            contractBalance.loan_type = contract.loan_type;
+            contractBalance.route_code = contract.route_code;
+            contractBalance.customer_code = contract.customer_code;
+            contractBalance.description = contract.description;
+            contractBalance.principle_amount = contract.principle_amount;
+            contractBalance.interest_rate = contract.interest_rate;
+            contractBalance.total_interest = contract.total_interest;
+            contractBalance.num_of_period = contract.num_of_period;
+            contractBalance.amount_per_period = contract.amount_per_period;
+            contractBalance.first_period_date = contract.first_period_date;
+            contractBalance.description = contract.description;
+
+
+            return contractBalance;
+        }
+    }
+
 }

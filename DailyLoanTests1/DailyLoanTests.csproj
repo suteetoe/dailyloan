@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Data\AutoRunningTests.cs" />
+    <Compile Include="Domain\LoanPaymentProcessTests.cs" />
     <Compile Include="Domain\LoanPeriodTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

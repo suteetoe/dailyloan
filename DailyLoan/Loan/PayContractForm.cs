@@ -90,6 +90,9 @@ namespace DailyLoan.Loan
 
                 MessageBox.Show("บันทึกข้อมูลเรียบร้อยแล้ว");
 
+                ContractProcess contractProcess = new ContractProcess();
+                contractProcess.StartProcessPayment(this.contract.contract_no);
+
                 this.Close();
             }
             catch (Exception ex)

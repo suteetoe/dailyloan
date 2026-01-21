@@ -1,5 +1,6 @@
 ﻿using BizFlowControl;
 using DailyLoan.Data.Models;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -103,6 +104,61 @@ namespace DailyLoan.Data.Repository
                 return contract;
             }
 
+            return null;
+        }
+
+        public ContractBalance FindContractWithBalanceByContractNo(string contractNo)
+        {
+            string queryGetContract = "SELECT * FROM " + Contract.TABLE_NAME + " WHERE contract_no = \'" + contractNo + "\'";
+
+            var resultContract = this.connecton.QueryData(queryGetContract);
+
+            string queryGetContractPeriod =
+                @"with contract_period_payment as (
+                    select cp.period_no, due_date, amount, coalesce(pay_amount, 0) as pay_amount
+
+                    from txn_contract_period as cp
+
+                    left join txn_contract_period_payment as pay on pay.contract_no = cp.contract_no and cp.period_no = pay.period_no
+
+                    where cp.contract_no = @contract_no
+                )
+                select period_no, due_date, amount, pay_amount
+                , (case when(due_date < date(now()) and ((amount - pay_amount) > 0)) then (amount - pay_amount) else 0 end) as over_due_amount
+
+                from contract_period_payment order by period_no";
+
+            BizFlowControl.ExecuteParams parameters = new ExecuteParams();
+            parameters.Add("@contract_no", contractNo);
+            var resultContractPeriod = this.connecton.QueryData(queryGetContractPeriod, parameters);
+
+            if (resultContract.Tables.Count > 0 && resultContract.Tables[0].Rows.Count > 0)
+            {
+                var c = this.MapFromDataRow(resultContract.Tables[0].Rows[0]);
+
+                var contract = ContractBalance.PhaseFromContract(c);
+
+
+                if (resultContractPeriod.Tables.Count > 0)
+                {
+                    List<ContractPeriodBalance> contractPeriodsBalance = new List<ContractPeriodBalance>();
+
+                    foreach (System.Data.DataRow row in resultContractPeriod.Tables[0].Rows)
+                    {
+                        var contractPeriod = new ContractPeriodBalance();
+                        contractPeriod.period_no = Convert.ToInt32(row["period_no"]);
+                        contractPeriod.due_date = Convert.ToDateTime(row["due_date"]);
+                        contractPeriod.amount = Convert.ToDecimal(row["amount"]);
+                        contractPeriod.paid_amount = Convert.ToDecimal(row["pay_amount"]);
+                        contractPeriod.over_due_amount = Convert.ToDecimal(row["over_due_amount"]);
+                        contractPeriodsBalance.Add(contractPeriod);
+                    }
+
+                    contract.ContractPeriodBalances = contractPeriodsBalance;
+                }
+
+                return contract;
+            }
             return null;
         }
 

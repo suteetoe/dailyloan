@@ -188,6 +188,7 @@ namespace DailyLoan.Loan
 
                     MessageBox.Show("บันทึกข้อมูลสัญญาสินเชื่อเรียบร้อยแล้ว", "บันทึกข้อมูลสำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.ClearData();
+                    ChangeFormMode(false);
                 }
                 catch (Exception ex)
                 {
@@ -247,13 +248,13 @@ namespace DailyLoan.Loan
         void LoadContract(string contractNo)
         {
 
-            Contract contract = contractRepository.FindContractByContractNo(contractNo);
+            ContractBalance contract = contractRepository.FindContractWithBalanceByContractNo(contractNo);
             this._loanScreenTop1.LoadContractData(contract);
 
             List<PayPeriod> payPeriods = new List<PayPeriod>();
-            foreach (var cp in contract.ContractPeriods)
+            foreach (var cp in contract.ContractPeriodBalances)
             {
-                payPeriods.Add(new PayPeriod(cp.period_no, cp.due_date, cp.amount));
+                payPeriods.Add(new PayPeriod(cp.period_no, cp.due_date, cp.amount, cp.paid_amount, cp.over_due_amount));
             }
 
             this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
@@ -276,6 +277,29 @@ namespace DailyLoan.Loan
             form.LoadContractPeriod(contract);
             form.StartPosition = FormStartPosition.CenterScreen;
             form.ShowDialog(this);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Control | Keys.R:
+                    {
+                        this.processContractPayment();
+                    }
+                    return true;
+
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        void processContractPayment()
+        {
+            string contractNo = this._loanScreenTop1._getDataStr("contract_no");
+            ContractProcess contractProcess = new ContractProcess();
+            contractProcess.StartProcessPayment(contractNo);
+            MessageBox.Show("Success");
+
         }
     }
 }

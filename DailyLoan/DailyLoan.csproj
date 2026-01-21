@@ -205,6 +205,14 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Migration\data\V1_loan_data.cs" />
+    <Compile Include="Report\ConditionReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ConditionReportForm.Designer.cs">
+      <DependentUpon>ConditionReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportViewer.cs" />
+    <Compile Include="Report\report_ar_balance.cs" />
     <Compile Include="Screen\Customer\CustomerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -374,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Loan\PayContractForm.resx">
       <DependentUpon>PayContractForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ConditionReportForm.resx">
+      <DependentUpon>ConditionReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screen\Customer\CustomerControl.resx">
       <DependentUpon>CustomerControl.cs</DependentUpon>

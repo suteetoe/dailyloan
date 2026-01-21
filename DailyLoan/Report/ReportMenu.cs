@@ -15,6 +15,66 @@ namespace DailyLoan.Report
         public ReportMenu()
         {
             InitializeComponent();
+            this.listView1.Items.Clear();
+
+            this.listView1.Items.AddRange(new ListViewItem[] {
+                new ListViewItem(report_ar_balance.REPORT_NAME, 0) { Tag = "REPORT_AR_BALANCE" },
+                new ListViewItem("รายงานรับชำระค่างวด", 0) { Tag = "REPORT_AR_PAYMENT" },
+                new ListViewItem("รายงานลูกหนี้ค้างชำระ", 0) { Tag = "REPORT_AR_OVER_DUE" },
+            });
+            // report list
+
+            this.Load += ReportMenu_Load;
+            this.SizeChanged += ReportMenu_SizeChanged;
+            this.listView1.ClientSizeChanged += ListView1_ClientSizeChanged;
+        }
+
+        private void ReportMenu_Load(object sender, EventArgs e)
+        {
+            resizeListView();
+        }
+
+        private void ReportMenu_SizeChanged(object sender, EventArgs e)
+        {
+            resizeListView();
+        }
+
+        private void ListView1_ClientSizeChanged(object sender, EventArgs e)
+        {
+            resizeListView();
+        }
+
+        void resizeListView()
+        {
+            this.listView1.TileSize = new Size(this.listView1.ClientSize.Width, this.listView1.TileSize.Height);
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listView1.SelectedItems[0];
+                string report_name = selectedItem.Text;
+                string report_tag = selectedItem.Tag.ToString();
+                //MessageBox.Show(selectedItem.Tag.ToString());
+
+                // popup report condition
+                switch (report_tag)
+                {
+                    case "REPORT_AR_BALANCE":
+                        {
+                            report_ar_balance ar_balance_report = new report_ar_balance();
+                            ar_balance_report.StartReport();
+                        }
+                        break;
+                    default:
+                        {
+                            MessageBox.Show("ยังไม่สามารถใช้งาน " + report_name + " นี้ได้ในขณะนี้");
+                        }
+                        break;
+                }
+            }
         }
     }
 }

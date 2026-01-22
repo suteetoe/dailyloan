@@ -18,6 +18,15 @@ namespace DailyLoan.Report
         public report_ar_balance()
         {
             this.ReportTitle = REPORT_NAME;
+
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "วันที่", ColumnWidth = 7, DataField = "contract_date" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เลขที่สัญญา", ColumnWidth = 8, DataField = "contract_no" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ลูกค้า", ColumnWidth = 25, DataField = "address" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เบอร์โทร", ColumnWidth = 15, DataField = "address" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เงินต้น", ColumnWidth = 15, DataField = "principle_amount" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ดอกเบี้ย", ColumnWidth = 15, DataField = "total_interest" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ยอดค้างชำระ", ColumnWidth = 15, DataField = "outstanding_amount" });
+
         }
 
         protected override bool ShowCondition()
@@ -61,7 +70,18 @@ namespace DailyLoan.Report
                 DataSet ds = App.DBConnection.QueryData(query, parameters);
                 if (ds.Tables.Count > 0)
                 {
-
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        DataRow dr = ds.Tables[0].Rows[i];
+                        var row = new BizFlowControl.ReportDataRow();
+                        row["contract_no"] = dr["contract_no"];
+                        row["contract_date"] = Convert.ToDateTime(dr["contract_date"]).ToString("dd/MM/yyyy");
+                        row["address"] = string.Format("{0} {1}", dr["customer_code"], dr["name_1"]);
+                        row["principle_amount"] = Convert.ToDecimal(dr["principle_amount"]).ToString("#,##0.00");
+                        row["total_interest"] = Convert.ToDecimal(dr["total_interest"]).ToString("#,##0.00");
+                        row["outstanding_amount"] = Convert.ToDecimal(dr["outstanding_amount"]).ToString("#,##0.00");
+                        this.ReportData.Add(row);
+                    }
                 }
                 return true;
             }
@@ -73,11 +93,7 @@ namespace DailyLoan.Report
         }
 
 
-        protected override void DrawReportPage(Graphics g, PrintPageEventArgs e)
-        {
-
-            e.HasMorePages = false;
-        }
+     
     }
 
     public class report_ar_balance_condition : ConditionReportForm

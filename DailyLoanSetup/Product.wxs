@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<?define DailyLoan_TargetDir=$(var.DailyLoan.TargetDir)?>
+	<Product Id="*" Name="DailyLoan" Language="1033" Version="!(bind.fileVersion.DailyLoan.exe)" Manufacturer="IBizzFlow" UpgradeCode="1a8628fd-6ead-47ea-81b2-effdbf8750bc">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Icon Id="money.ico" SourceFile="$(var.ProjectDir)money.ico" />
+		<Property Id="ARPPRODUCTICON" Value="money.ico" />
+		<Feature Id="ProductFeature" Title="DailyLoanSetup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="ApplicationShortcut" />
+			<ComponentRef Id="ApplicationShortcutDesktop" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="DailyLoan" />
+			</Directory>
+
+			<!-- Start Menu -->
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="ManufacturersProgramFolder" Name="IBizzFlow">
+					<Directory Id="ApplicationProgramsFolder" Name="DailyLoan" />
+
+				</Directory>
+			</Directory>
+
+			<!-- Desktop -->
+			<Directory Id="DesktopFolder" Name="Desktop" />
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<DirectoryRef Id="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcut" Guid="e0aadc25-c32a-4c2f-8e88-d9a432cfd21e">
+				<CreateFolder Directory="ManufacturersProgramFolder" />
+				<Shortcut Id="ApplicationStartMenuShortcut" Name="DailyLoan" Description="DailyLoan" Target="[#DailyLoan.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY" />
+				<RemoveFolder Id="ManufacturersProgramFolder" Directory="ManufacturersProgramFolder" On="uninstall" />
+				<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+				<RegistryValue Root="HKCU" Key="Software\IBizzFlow\DailyLoan" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+			</Component>
+		</DirectoryRef>
+		<DirectoryRef Id="DesktopFolder">
+			<Component Id="ApplicationShortcutDesktop" Guid="f0156ccd-e009-47dd-82cf-35702ee8a766">
+				<Shortcut Id="ApplicationDesktopShortcut" Name="DailyLoan" Description="DailyLoan" Target="[INSTALLFOLDER]DailyLoan.exe" WorkingDirectory="INSTALLFOLDER" />
+				<RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
+				<RegistryValue Root="HKCU" Key="Software\IBizzFlow\DailyLoan" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="money.ico" Guid="c6eb5536-2cb8-4076-8c88-a72fa772398b">
+				<File Id="money.ico" Name="money.ico" Source="$(var.DailyLoan_TargetDir)money.ico" />
+			</Component>
+			<Component Id="BizFlowControl.dll" Guid="13ca9c26-4901-40d3-ba89-e9a286052ab5">
+				<File Id="BizFlowControl.dll" Name="BizFlowControl.dll" Source="$(var.DailyLoan_TargetDir)BizFlowControl.dll" />
+			</Component>
+			<Component Id="ClosedXML.dll" Guid="7fe4223f-b3c2-41db-8d0c-5b2a5b4340e0">
+				<File Id="ClosedXML.dll" Name="ClosedXML.dll" Source="$(var.DailyLoan_TargetDir)ClosedXML.dll" />
+			</Component>
+			<Component Id="ClosedXML.Parser.dll" Guid="ba81284a-d910-4988-8d44-2ded8c820f9d">
+				<File Id="ClosedXML.Parser.dll" Name="ClosedXML.Parser.dll" Source="$(var.DailyLoan_TargetDir)ClosedXML.Parser.dll" />
+			</Component>
+			<Component Id="DocumentFormat.OpenXml.dll" Guid="bf930cc6-7328-46c9-8c4d-eb3d68cee8c9">
+				<File Id="DocumentFormat.OpenXml.dll" Name="DocumentFormat.OpenXml.dll" Source="$(var.DailyLoan_TargetDir)DocumentFormat.OpenXml.dll" />
+			</Component>
+			<Component Id="DocumentFormat.OpenXml.Framework.dll" Guid="bfbe0124-05fe-4f88-92e7-69c409b7647c">
+				<File Id="DocumentFormat.OpenXml.Framework.dll" Name="DocumentFormat.OpenXml.Framework.dll" Source="$(var.DailyLoan_TargetDir)DocumentFormat.OpenXml.Framework.dll" />
+			</Component>
+			<Component Id="ExcelNumberFormat.dll" Guid="85326340-92a0-4630-9197-81308ae7752c">
+				<File Id="ExcelNumberFormat.dll" Name="ExcelNumberFormat.dll" Source="$(var.DailyLoan_TargetDir)ExcelNumberFormat.dll" />
+			</Component>
+			<Component Id="Microsoft.Bcl.AsyncInterfaces.dll" Guid="930a1ed2-92fe-4c80-ac4a-a6003a401cc1">
+				<File Id="Microsoft.Bcl.AsyncInterfaces.dll" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.DailyLoan_TargetDir)Microsoft.Bcl.AsyncInterfaces.dll" />
+			</Component>
+			<Component Id="Microsoft.Bcl.HashCode.dll" Guid="9344e032-1b7c-468d-ac00-eaa127a81747">
+				<File Id="Microsoft.Bcl.HashCode.dll" Name="Microsoft.Bcl.HashCode.dll" Source="$(var.DailyLoan_TargetDir)Microsoft.Bcl.HashCode.dll" />
+			</Component>
+			<Component Id="Newtonsoft.Json.dll" Guid="11400e40-ce51-455b-99f7-4db0fc33a47a">
+				<File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.DailyLoan_TargetDir)Newtonsoft.Json.dll" />
+			</Component>
+			<Component Id="Npgsql.dll" Guid="0879caed-f77a-4839-9caf-6b24304f1e40">
+				<File Id="Npgsql.dll" Name="Npgsql.dll" Source="$(var.DailyLoan_TargetDir)Npgsql.dll" />
+			</Component>
+			<Component Id="RBush.dll" Guid="b636bda5-429f-4404-9d93-f041f7a5b5c9">
+				<File Id="RBush.dll" Name="RBush.dll" Source="$(var.DailyLoan_TargetDir)RBush.dll" />
+			</Component>
+			<Component Id="SixLabors.Fonts.dll" Guid="cbb0460f-5d05-48aa-baac-e02019f69254">
+				<File Id="SixLabors.Fonts.dll" Name="SixLabors.Fonts.dll" Source="$(var.DailyLoan_TargetDir)SixLabors.Fonts.dll" />
+			</Component>
+			<Component Id="SMLControl.dll" Guid="3efb2980-8872-4501-a3e0-b4e63c341fb0">
+				<File Id="SMLControl.dll" Name="SMLControl.dll" Source="$(var.DailyLoan_TargetDir)SMLControl.dll" />
+			</Component>
+			<Component Id="System.Buffers.dll" Guid="5a23cf0e-301a-408d-9086-dac0461d0288">
+				<File Id="System.Buffers.dll" Name="System.Buffers.dll" Source="$(var.DailyLoan_TargetDir)System.Buffers.dll" />
+			</Component>
+			<Component Id="System.Memory.dll" Guid="8faaeef8-d4c4-4e78-b399-70516132949c">
+				<File Id="System.Memory.dll" Name="System.Memory.dll" Source="$(var.DailyLoan_TargetDir)System.Memory.dll" />
+			</Component>
+			<Component Id="System.Numerics.Vectors.dll" Guid="60a4ceb5-d719-4ae0-b000-6eaa756e0592">
+				<File Id="System.Numerics.Vectors.dll" Name="System.Numerics.Vectors.dll" Source="$(var.DailyLoan_TargetDir)System.Numerics.Vectors.dll" />
+			</Component>
+			<Component Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="fbf9578e-dccb-4926-8fc1-6d8915715ab2">
+				<File Id="System.Runtime.CompilerServices.Unsafe.dll" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.DailyLoan_TargetDir)System.Runtime.CompilerServices.Unsafe.dll" />
+			</Component>
+			<Component Id="System.Text.Encodings.Web.dll" Guid="8d764b04-2ac7-4023-8df1-d380cd99ca71">
+				<File Id="System.Text.Encodings.Web.dll" Name="System.Text.Encodings.Web.dll" Source="$(var.DailyLoan_TargetDir)System.Text.Encodings.Web.dll" />
+			</Component>
+			<Component Id="System.Text.Json.dll" Guid="7f7567ba-e2a6-4109-9b0b-425935a729cd">
+				<File Id="System.Text.Json.dll" Name="System.Text.Json.dll" Source="$(var.DailyLoan_TargetDir)System.Text.Json.dll" />
+			</Component>
+			<Component Id="System.Threading.Channels.dll" Guid="24986d42-9553-4b3f-ab4e-96a934d22ff2">
+				<File Id="System.Threading.Channels.dll" Name="System.Threading.Channels.dll" Source="$(var.DailyLoan_TargetDir)System.Threading.Channels.dll" />
+			</Component>
+			<Component Id="System.Threading.Tasks.Extensions.dll" Guid="061db9e4-5cfb-4337-a884-3d172cbe3917">
+				<File Id="System.Threading.Tasks.Extensions.dll" Name="System.Threading.Tasks.Extensions.dll" Source="$(var.DailyLoan_TargetDir)System.Threading.Tasks.Extensions.dll" />
+			</Component>
+			<Component Id="System.ValueTuple.dll" Guid="463a6dd6-b972-4385-95d8-8a5a2a55eacc">
+				<File Id="System.ValueTuple.dll" Name="System.ValueTuple.dll" Source="$(var.DailyLoan_TargetDir)System.ValueTuple.dll" />
+			</Component>
+			<Component Id="DailyLoan.exe.config" Guid="2e24c7d0-dd5b-45a2-86cd-d6bd67905656">
+				<File Id="DailyLoan.exe.config" Name="DailyLoan.exe.config" Source="$(var.DailyLoan_TargetDir)DailyLoan.exe.config" />
+			</Component>
+			<Component Id="DailyLoan.exe" Guid="11c42112-ac4e-4391-b7af-84fb64b8451e">
+				<File Id="DailyLoan.exe" Name="DailyLoan.exe" Source="$(var.DailyLoan_TargetDir)DailyLoan.exe" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

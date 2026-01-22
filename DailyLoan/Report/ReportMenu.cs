@@ -19,7 +19,7 @@ namespace DailyLoan.Report
 
             this.listView1.Items.AddRange(new ListViewItem[] {
                 new ListViewItem(report_ar_balance.REPORT_NAME, 0) { Tag = "REPORT_AR_BALANCE" },
-                new ListViewItem("รายงานรับชำระค่างวด", 0) { Tag = "REPORT_AR_PAYMENT" },
+                new ListViewItem( report_ar_contract_payment.REPORT_NAME, 0) { Tag = "REPORT_AR_CONTRACT_PAYMENT" },
                 new ListViewItem("รายงานลูกหนี้ค้างชำระ", 0) { Tag = "REPORT_AR_OVER_DUE" },
             });
             // report list
@@ -66,6 +66,12 @@ namespace DailyLoan.Report
                         {
                             report_ar_balance ar_balance_report = new report_ar_balance();
                             ar_balance_report.StartReport();
+                        }
+                        break;
+                    case "REPORT_AR_CONTRACT_PAYMENT":
+                        {
+                            report_ar_contract_payment report_ar_contract_payment = new report_ar_contract_payment();
+                            report_ar_contract_payment.StartReport();
                         }
                         break;
                     default:

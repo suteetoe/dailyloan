@@ -213,6 +213,7 @@
     </Compile>
     <Compile Include="Report\ReportViewer.cs" />
     <Compile Include="Report\report_ar_balance.cs" />
+    <Compile Include="Report\report_ar_contract_payment.cs" />
     <Compile Include="Screen\Customer\CustomerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -502,7 +503,9 @@
     <None Include="Resources\disk_blue.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="money.ico" />
+    <Content Include="money.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

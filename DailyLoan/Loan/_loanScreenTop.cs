@@ -48,7 +48,6 @@ namespace DailyLoan.Loan
 
             // build loan type code
 
-
             this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 0, ColumnSpan = 1, FieldCode = "principle_amount", FieldName = "เงินต้น", Required = true });
             this.AddNumberField(new SMLControl.NumberField() { Row = row, Column = 0, FieldCode = "interest_rate", FieldName = "ดอกเบี้ย (%)" });
             this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 1, FieldCode = "total_interest", FieldName = "ดอกเบี้ยรวม", Required = true });
@@ -57,13 +56,16 @@ namespace DailyLoan.Loan
             this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 1, FieldCode = "amount_per_period", FieldName = "งวดละ", Required = true });
             this.AddNumberField(new SMLControl.NumberField() { Row = row++, Column = 0, FieldCode = "income_other", FieldName = "รายได้อื่น ๆ" });
 
-            this.AddDateField(new SMLControl.DateField() { Row = row++, Column = 0, FieldCode = "first_period_date", FieldName = "เริมชำระ/ครบกำหนด", Required = true });
+            this.AddDateField(new SMLControl.DateField() { Row = row, Column = 0, FieldCode = "first_period_date", FieldName = "เริมชำระ", Required = true });
+            this.AddDateField(new SMLControl.DateField() { Row = row++, Column = 1, FieldCode = "last_period_date", FieldName = "ครบกำหนด", Required = true });
 
 
             ((SMLControl._myTextBox)this._getControl("customer_name")).textBox.ReadOnly = true;
             ((SMLControl._myTextBox)this._getControl("customer_code")).textBox.ReadOnly = true;
             ((SMLControl._myTextBox)this._getControl("customer_address")).textBox.ReadOnly = true;
             ((SMLControl._myTextBox)this._getControl("customer_telephone")).textBox.ReadOnly = true;
+
+            this._enabedControl("last_preiod_date", false);
 
             this._textBoxSearch += _loanScreenTop__textBoxSearch;
             this._textBoxChanged += _loanScreenTop__textBoxChanged;
@@ -134,7 +136,9 @@ namespace DailyLoan.Loan
                     this._setDataStr("loan_type", rowData["code"].ToString());
                     searchLoanTypeForm.Close();
                 };
-                searchLoanTypeForm.ShowDialog();
+
+                this.StartSearchForm(searchLoanTypeForm, "loan_type");
+                //searchLoanTypeForm.ShowDialog();
             }
             else if (name.Equals("route_code"))
             {
@@ -144,7 +148,9 @@ namespace DailyLoan.Loan
                     this._setDataStr("route_code", rowData["code"].ToString());
                     searchRouteForm.Close();
                 };
-                searchRouteForm.ShowDialog();
+                this.StartSearchForm(searchRouteForm, "route_code");
+
+                //searchRouteForm.ShowDialog();
             }
         }
 
@@ -158,15 +164,8 @@ namespace DailyLoan.Loan
             set
             {
                 this._isLockScreen = value;
-                foreach (var getControl in this.Controls)
-                {
-                    if (getControl is SMLControl._myTextBox)
-                    {
-                        SMLControl._myTextBox getTextbox = (SMLControl._myTextBox)getControl;
-
-                        getTextbox.textBox.ReadOnly = value;
-                    }
-                }
+                this.ReadOnly = value;
+              
             }
         }
 
@@ -199,7 +198,7 @@ namespace DailyLoan.Loan
             contract.num_of_period = (int)this._getDataNumber("num_of_period");
             contract.amount_per_period = this._getDataNumber("amount_per_period");
             contract.first_period_date = this._getDataDate("first_period_date");
-
+            contract.last_period_date = this._getDataDate("last_period_date");
             return contract;
         }
 
@@ -217,6 +216,7 @@ namespace DailyLoan.Loan
             this._setDataStr("loan_type", contract.loan_type);
             this._setDataStr("route_code", contract.route_code);
             this._setDataStr("customer_code", contract.customer_code);
+            this._setDataDate("last_period_date", contract.last_period_date);
         }
     }
 }

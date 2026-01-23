@@ -28,7 +28,7 @@ namespace SMLControl
         public Boolean _warning { get { return __warningResult; } set { __warningResult = value; } }
         public Boolean _lostFocust { get { return __lostFocustResult; } set { __lostFocustResult = value; } }
 
-        public _myDateBox()
+        public _myDateBox() : base()
         {
             this._iconSearch.Image = Properties.Resources.calendar;
             this._icon = true;
@@ -242,6 +242,9 @@ namespace SMLControl
 
         void IconSearch_Click(object sender, EventArgs e)
         {
+            if (this.ReadOnly)
+                return;
+
             this.Focus();
             this.textBox.Focus();
             this.textBox.SelectAll();

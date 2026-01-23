@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using System.Data.Common;
+using System.Diagnostics.Eventing.Reader;
 
 namespace SMLControl
 {
@@ -29,6 +31,35 @@ namespace SMLControl
         public Boolean _f12 = true;
         public String _recentXmlFileName = "";
 
+
+        private bool _readOnly = false;
+        public bool ReadOnly
+        {
+            get { return _readOnly; }
+            set
+            {
+                _readOnly = value;
+
+                foreach (var getControl in this.Controls)
+                {
+                    if (getControl is SMLControl._myTextBox)
+                    {
+                        SMLControl._myTextBox getTextbox = (SMLControl._myTextBox)getControl;
+                        getTextbox.ReadOnly = value;
+                    }
+                    else if (getControl is SMLControl._myDateBox)
+                    {
+                        SMLControl._myDateBox getDateBox = (SMLControl._myDateBox)getControl;
+                        getDateBox.ReadOnly = value;
+                    }
+                    else if (getControl is SMLControl._myNumberBox)
+                    {
+                        SMLControl._myNumberBox getNumberBox = (SMLControl._myNumberBox)getControl;
+                        getNumberBox.ReadOnly = value;
+                    }
+                }
+            }
+        }
         /// <summary>
         /// ช่องไฟ
         /// </summary>
@@ -60,7 +91,7 @@ namespace SMLControl
         public void AddTextField(TextField field)
         {
             this._addTextBox(field.Row, field.Column, field.RowSpan, 0, field.FieldCode, field.ColumnSpan, field.MaxLength, field.IconNumber, field.ShowLabel, field.IsPassword, !field.Required, field.IsQuery, field.IsGetData, field.IsTabStop, field.FieldName, field.SearchScreenName, field.IsAutoUpper);
-          
+
         }
 
         public void AddDateField(DateField field)
@@ -330,28 +361,28 @@ namespace SMLControl
                     }
                     return true;
                 }
-                if (keyData == Keys.Enter)
-                {
-                    bool __tabKey = true;
-                    if (this._checkKeyDownReturn != null)
-                    {
-                        __tabKey = this._checkKeyDownReturn(_lastControl, keyData);
-                    }
-                    if (__tabKey)
-                    {
-                        try
-                        {
-                            SendKeys.Send("{TAB}");
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    if (__tabKey == true)
-                    {
-                        return true;
-                    }
-                }
+                //if (keyData == Keys.Enter)
+                //{
+                //    bool __tabKey = true;
+                //    if (this._checkKeyDownReturn != null)
+                //    {
+                //        __tabKey = this._checkKeyDownReturn(_lastControl, keyData);
+                //    }
+                //    if (__tabKey)
+                //    {
+                //        try
+                //        {
+                //            SendKeys.Send("{TAB}");
+                //        }
+                //        catch
+                //        {
+                //        }
+                //    }
+                //    if (__tabKey == true)
+                //    {
+                //        return true;
+                //    }
+                //}
                 if (keyData == Keys.Tab)
                 {
                     /*if (_checkKeyDown != null)
@@ -371,6 +402,34 @@ namespace SMLControl
                     if (__tabKey == false)
                     {
                         return true;
+                    }
+                    if (this._lastControl != null)
+                    {
+                        if (this._lastControl is _myTextBox)
+                        {
+                            _myTextBox __textBox = (_myTextBox)this._lastControl;
+                            if (__textBox.textBox.Multiline)
+                            {
+                                return base.ProcessCmdKey(ref msg, keyData);
+                            }
+                            else
+                            {
+                                _nextFocus(__textBox._column, __textBox._row);
+                                return true;
+                            }
+                        }
+                        else if (this._lastControl is _myNumberBox)
+                        {
+                            _myNumberBox __numberBox = (_myNumberBox)this._lastControl;
+                            _nextFocus(__numberBox._column, __numberBox._row);
+                            return true;
+                        }
+                        else if (this._lastControl is _myDateBox)
+                        {
+                            _myDateBox _myDateBox = (_myDateBox)this._lastControl;
+                            _nextFocus(_myDateBox._column, _myDateBox._row);
+                            return true;
+                        }
                     }
                 }
                 else
@@ -2017,6 +2076,9 @@ namespace SMLControl
             __newTextBox._cellSearch += new CellSearchHandler(newTextBox__cellSearch);
             __newTextBox._cellMoveUp += new CellMoveUpHandler(__newTextBox__cellMoveUp);
             __newTextBox._cellMoveDown += new CellMoveDownHandler(__newTextBox__cellMoveDown);
+            __newTextBox._cellMoveRight += new CellMoveRightHandler(__newTextbox__cellMoveRight);
+            __newTextBox._cellMoveLeft += new CellMoveLeftHandler(__newTextbox__cellMoveLeft);
+            __newTextBox._cellMoveNext += new CellMoveNextHandler(__newTextbox__cellMoveNext);
             __newTextBox.TabStop = tabStop;
             __newTextBox._isGetData = isGetData;
             __newTextBox._searchFormat = searchFormat;
@@ -2092,7 +2154,7 @@ namespace SMLControl
                     }
                 }
             }
-            SendKeys.Send("+{TAB}");
+            // SendKeys.Send("+{TAB}");
         }
 
         void _cellMoveDown(int column, int row)
@@ -2148,7 +2210,23 @@ namespace SMLControl
                     }
                 }
             }
-            SendKeys.Send("{TAB}");
+            // SendKeys.Send("{TAB}");
+        }
+
+        void _cellMoveRight(int column, int row)
+        {
+            if (column <= this._maxColumn - 1)
+            {
+                _goToFocus(column + 1, row);
+            }
+        }
+
+        void _cellMoveLeft(int column, int row)
+        {
+            if (column > 0)
+            {
+                _goToFocus(column - 1, row);
+            }
         }
 
         void __newTextBox__cellMoveDown(object sender)
@@ -2163,6 +2241,183 @@ namespace SMLControl
             // ค้นหาตำแหน่งที่ใกล้ที่สุด			
             _myTextBox __sender = (_myTextBox)sender;
             _cellMoveUp(__sender._column, __sender._row);
+        }
+
+        void __newTextbox__cellMoveRight(object sender)
+        {
+            // ค้นหาตำแหน่งที่ใกล้ที่สุด			
+            _myTextBox __sender = (_myTextBox)sender;
+            _cellMoveRight(__sender._column, __sender._row);
+        }
+
+        void __newTextbox__cellMoveLeft(object sender)
+        {
+            // ค้นหาตำแหน่งที่ใกล้ที่สุด			
+            _myTextBox __sender = (_myTextBox)sender;
+            _cellMoveLeft(__sender._column, __sender._row);
+
+        }
+
+        void __newTextbox__cellMoveNext(object sender)
+        {
+            // ค้นหาตำแหน่งที่ใกล้ที่สุด			
+            _myTextBox __sender = (_myTextBox)sender;
+
+            //int maxColumn = 0;
+            //if (__sender._maxColumn > 1)
+            //{
+            //    maxColumn = __sender._maxColumn - 1;
+            //}
+            //_nextFocus(__sender._column + _maxColumn, __sender._row);
+
+            _nextFocus(__sender._column, __sender._row);
+        }
+
+        void _nextFocus(int column, int row)
+        {
+
+
+            //int findRow = row;
+            //int findColumn = column;
+            //if (findColumn == this._maxColumn - 1)
+            //{
+            //    findRow++;
+            //    findColumn = 0;
+            //}
+            //else
+            //{
+            //    findColumn++;
+            //}
+            Size __nextControl = this.NextControl(column, row);
+            _goToFocus(__nextControl.Width, __nextControl.Height);
+        }
+
+        Size NextControl(int column, int row)
+        {
+            bool foundControl = false;
+            Size result = new Size();
+            foreach (Control __getControl in this.Controls)
+            {
+                if (__getControl.GetType() == typeof(_myTextBox))
+                {
+                    _myTextBox __getText = (_myTextBox)__getControl;
+                    if (foundControl == true)
+                    {
+
+                        return new Size(__getText._column, __getText._row);
+                    }
+                    if (__getText._column == column && __getText._row == row)
+                    {
+                        foundControl = true;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myDateBox))
+                {
+                    _myDateBox __getText = (_myDateBox)__getControl;
+                    if (foundControl == true)
+                    {
+                        return new Size(__getText._column, __getText._row);
+                    }
+                    if (__getText._column == column && __getText._row == row)
+                    {
+                        foundControl = true;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myNumberBox))
+                {
+                    _myNumberBox __getText = (_myNumberBox)__getControl;
+                    if (foundControl == true)
+                    {
+                        return new Size(__getText._column, __getText._row);
+                    }
+                    if (__getText._column == column && __getText._row == row)
+                    {
+                        foundControl = true;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myCheckBox))
+                {
+                    _myCheckBox __getData = (_myCheckBox)__getControl;
+                    if (foundControl == true)
+                    {
+                        return new Size(__getData._column, __getData._row);
+                    }
+                    if (__getData._column == column && __getData._row == row)
+                    {
+                        foundControl = true;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myComboBox))
+                {
+                    _myComboBox __getData = (_myComboBox)__getControl;
+                    if (foundControl == true)
+                    {
+                        return new Size(__getData._column, __getData._row);
+                    }
+                    if (__getData._column == column && __getData._row == row)
+                    {
+                        foundControl = true;
+                    }
+                }
+            }
+            return result;
+        }
+
+        void _goToFocus(int column, int row)
+        {
+
+
+            foreach (Control __getControl in this.Controls)
+            {
+                if (__getControl.GetType() == typeof(_myTextBox))
+                {
+                    _myTextBox __getText = (_myTextBox)__getControl;
+                    if (__getText._column >= column && __getText._row >= row)
+                    {
+                        __getText.textBox.Focus();
+                        __getText.textBox.SelectAll();
+                        return;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myDateBox))
+                {
+                    _myDateBox __getText = (_myDateBox)__getControl;
+                    if (__getText._column >= column && __getText._row >= row)
+                    {
+                        __getText.textBox.Focus();
+                        __getText.textBox.SelectAll();
+                        return;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myNumberBox))
+                {
+                    _myNumberBox __getText = (_myNumberBox)__getControl;
+                    if (__getText._column >= column && __getText._row >= row)
+                    {
+                        __getText.textBox.Focus();
+                        __getText.textBox.SelectAll();
+                        return;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myCheckBox))
+                {
+                    _myCheckBox __getData = (_myCheckBox)__getControl;
+                    if (__getData._column >= column && __getData._row >= row)
+                    {
+                        __getData.Focus();
+                        return;
+                    }
+                }
+                else if (__getControl.GetType() == typeof(_myComboBox))
+                {
+                    _myComboBox __getData = (_myComboBox)__getControl;
+                    if (__getData._column >= column && __getData._row >= row)
+                    {
+                        __getData.Focus();
+                        return;
+                    }
+                }
+            }
         }
 
         void textBox_Leave(object sender, EventArgs e)
@@ -2204,7 +2459,7 @@ namespace SMLControl
             {
                 _textBoxSearch(sender, fieldName);
             }
-        }    
+        }
 
         //public void _setTextboxSearchSceen(string fieldName, string searchName, string dataFilter, bool multiSelected = false, int selectedGridWidth = 0)
         //{
@@ -2389,10 +2644,10 @@ namespace SMLControl
         public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName, Boolean isEmtry = true)
         {
             //_addNumberBox(row, column, rowCount, subColumn, fieldName, maxColumn, point, displayLabel, format, isQuery, resourceFieldName, "", true);
-        //}
-       
-        //public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName, string searchFormat, Boolean isEmtry)
-        //{
+            //}
+
+            //public void _addNumberBox(int row, int column, int rowCount, int subColumn, string fieldName, int maxColumn, int point, Boolean displayLabel, string format, Boolean isQuery, string resourceFieldName, string searchFormat, Boolean isEmtry)
+            //{
             string __label_name = "";
             _setHeight(row, rowCount);
             _myNumberBox __newTextBox = new _myNumberBox();
@@ -2419,6 +2674,9 @@ namespace SMLControl
             __newTextBox.textBox.Enter += new EventHandler(textBox_Enter);
             __newTextBox._cellMoveDown += new CellMoveDownHandler(__newTextBox__cellMoveDown);
             __newTextBox._cellMoveUp += new CellMoveUpHandler(__newTextBox__cellMoveUp);
+            __newTextBox._cellMoveRight += new CellMoveRightHandler(__newTextbox__cellMoveRight);
+            __newTextBox._cellMoveLeft += new CellMoveLeftHandler(__newTextbox__cellMoveLeft);
+            __newTextBox._cellMoveNext += new CellMoveNextHandler(__newTextbox__cellMoveNext);
             //newTextBox.textBox.KeyDown += new KeyEventHandler(textBox_KeyDown);
             this.Controls.Add(__newTextBox);
         }
@@ -2450,9 +2708,27 @@ namespace SMLControl
             __newTextBox.textBox.Leave += new EventHandler(textBox_Leave);
             __newTextBox._cellMoveDown += new CellMoveDownHandler(__newTextBox__cellMoveDown);
             __newTextBox._cellMoveUp += new CellMoveUpHandler(__newTextBox__cellMoveUp);
+            __newTextBox._cellMoveRight += new CellMoveRightHandler(__newTextbox__cellMoveRight);
+            __newTextBox._cellMoveLeft += new CellMoveLeftHandler(__newTextbox__cellMoveLeft);
+            __newTextBox._cellMoveNext += new CellMoveNextHandler(__newTextbox__cellMoveNext);
+            __newTextBox._afterSelectCalendar += new AfterSelectCalendarHandler(__newTextBox__afterSelectCalendar);
             this.Controls.Add(__newTextBox);
         }
-      
+
+        private void __newTextBox__afterSelectCalendar(DateTime e)
+        {
+            if (this._lastControl != null)
+            {
+                this._saveLastControl();
+                if (this._lastControl is _myDateBox)
+                {
+                    _myDateBox ___dateBox = (_myDateBox)this._lastControl;
+                    _nextFocus(___dateBox._column, ___dateBox._row);
+                }
+            }
+
+        }
+
 
         /// <summary>
         /// เมื่อกดปุ่ม Save
@@ -2478,7 +2754,7 @@ namespace SMLControl
         }
 
         public event ComboBoxSelectIndexChangedHandler _comboBoxSelectIndexChanged;
-    
+
         // toe override เพื่อ ไม่ให้ get resource ของ list ใน combobox
         public void _addComboBox(int row, int column, string fieldName, int maxColumn, Boolean displayLabel, string[] listName, Boolean addCounter, string resourceFieldName, bool getResourceList, bool isQuery)
         {
@@ -2598,7 +2874,7 @@ namespace SMLControl
             SendKeys.Send("{TAB}");
         }
 
-       
+
         public void _addCheckBox(int row, int column, string fieldName, Boolean displayLabel, Boolean checkBoxName, Boolean isCheck, Boolean _isQuery, string resourceFieldName, Boolean defaultValue)
         {
             _setHeight(row, 1);
@@ -2788,6 +3064,41 @@ namespace SMLControl
         }
 
         #endregion
+
+        public void StartSearchForm(Form searchForm, string startOnField)
+        {
+            Control __getControl = this._getControl(startOnField);
+
+            if (__getControl is _myTextBox)
+            {
+                _myTextBox __getTextbox = (_myTextBox)__getControl;
+                searchForm.Text = __getTextbox._labelName;
+                searchForm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+                {
+                    searchForm.Size = new Size(450, 320);
+                }
+                int __newLocationX = (0 - searchForm.Width) + __getTextbox._iconSearch.Width;
+                int __newLocationY = __getTextbox._iconSearch.Height;
+                Point __newPoint = __getTextbox._iconSearch.PointToScreen(new Point(__newLocationX, __newLocationY));
+                searchForm.DesktopLocation = __newPoint;
+                if (searchForm.DesktopLocation.Y + searchForm.Height + 50 > Screen.PrimaryScreen.Bounds.Height)
+                {
+                    __newLocationY -= (searchForm.Height + __getTextbox.Height);
+                    __newPoint = __getTextbox._iconSearch.PointToScreen(new Point(__newLocationX, __newLocationY));
+                    searchForm.DesktopLocation = __newPoint;
+                }
+                if (__newPoint.X < 5)
+                {
+                    __newPoint.X = 5;
+                    searchForm.DesktopLocation = __newPoint;
+                }
+                searchForm.StartPosition = FormStartPosition.Manual;
+                if (searchForm.Visible == false)
+                {
+                    searchForm.Show(__getTextbox);
+                }
+            }
+        }
     }
 
     public delegate void ButtonClickHandler(object sender, string name);

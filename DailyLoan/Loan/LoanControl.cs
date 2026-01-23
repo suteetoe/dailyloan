@@ -141,6 +141,13 @@ namespace DailyLoan.Loan
                 List<PayPeriod> payPeriods = loanPeriod.PayPeriods.ToList();
 
                 this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
+
+                // set last period to last_due_date 
+                if (payPeriods.Count > 0)
+                {
+                    DateTime lastDueDate = payPeriods[payPeriods.Count - 1].PayDueDate;
+                    this._loanScreenTop1._setDataDate("last_period_date", lastDueDate);
+                }
             }
         }
 

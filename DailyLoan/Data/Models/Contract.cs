@@ -39,6 +39,8 @@ namespace DailyLoan.Data.Models
 
         public DateTime first_period_date { get; set; }
 
+        public DateTime last_period_date { get; set; }
+
         public LoanType loanType { get; set; }
 
         public Route route { get; set; }
@@ -69,6 +71,7 @@ namespace DailyLoan.Data.Models
             contractBalance.num_of_period = contract.num_of_period;
             contractBalance.amount_per_period = contract.amount_per_period;
             contractBalance.first_period_date = contract.first_period_date;
+            contractBalance.last_period_date = contract.last_period_date;
             contractBalance.description = contract.description;
 
 

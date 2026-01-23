@@ -139,6 +139,33 @@ namespace SMLControl
         private PictureBox _buttonAutoRun = new PictureBox();
         // public MyLib._searchDataMasterForm searchDataPointer;
 
+        private bool _readOnly = false;
+        public bool ReadOnly
+        {
+            get
+            {
+                return this._readOnly;
+            }
+            set
+            {
+                this._readOnly = value;
+                this.textBox.ReadOnly = value;
+
+                //if (this._iconSearch != null)
+                //{
+                //    this._iconSearch.Enabled = !value;
+                //}
+                //if (value)
+                //{
+                //    this.textBox.BackColor = SystemColors.Control;
+                //}
+                //else
+                //{
+                //    this.textBox.BackColor = _defaultBackGround;
+                //}
+            }
+        }
+
         public _myTextBox()
         {
             InitializeComponent();
@@ -179,6 +206,7 @@ namespace SMLControl
             this.textBox.KeyDown += new KeyEventHandler(_myTextBox_KeyDown);
             //this.textBox.KeyUp += new KeyEventHandler(textBox_KeyUp);
             this.textBox.Enter += new EventHandler(textBox_Enter);
+            this.textBox.KeyPress += TextBox_KeyPress;
             this.textBox.GotFocus += new EventHandler(textBox_GotFocus);
             this.textBox.LostFocus += new EventHandler(textBox_LostFocus);
             this.textBox.Leave += new EventHandler(textBox_Leave);
@@ -186,6 +214,14 @@ namespace SMLControl
             this.Paint += new PaintEventHandler(_myTextBox_Paint);
             this.SizeChanged += new EventHandler(_myTextBox_SizeChanged);
             //
+        }
+
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                e.Handled = true; // Mark the event as handled
+            }
         }
 
         void textBox_KeyUp(object sender, KeyEventArgs e)
@@ -478,6 +514,10 @@ namespace SMLControl
         /// เมื่อกดปุ่มค้นหา
         /// </summary>
         public event CellSearchHandler _cellSearch;
+        /// <summary>
+        /// เมื่อกด Enter เพื่อไปช่องถัดไป
+        /// </summary>
+        public event CellMoveNextHandler _cellMoveNext;
 
         protected virtual void _cellMoveRightWork()
         {
@@ -519,6 +559,18 @@ namespace SMLControl
             }
         }
 
+        protected virtual void _cellMoveNextWork()
+        {
+            if (_cellMoveNext != null)
+            {
+                _cellMoveNext(this);
+            }
+            else
+            {
+                SendKeys.Send("{TAB}");
+            }
+        }
+
         protected virtual void _cellSearchWork(string data)
         {
             //if (this.searchDataPointer != null)
@@ -532,6 +584,9 @@ namespace SMLControl
 
         void IconSearch_MouseClick(object sender, MouseEventArgs e)
         {
+            if (this._readOnly)
+                return;
+
             this.textBox.Focus();
             _cellSearchWork(this.textBox.Text);
         }
@@ -540,32 +595,30 @@ namespace SMLControl
         {
             TextBox myTextBox = (TextBox)sender;
             this.textBox.Text = myTextBox.Text;
-            if (_enterToTab && e.KeyCode == Keys.Enter && e.Control == false)
+            if (_enterToTab && e.KeyCode == Keys.Return && e.Control == false)
             {
                 if (this.IsUpperCase)
                 {
                     myTextBox.Text = myTextBox.Text.ToUpper();
                 }
-                SendKeys.Send("{TAB}");
+                //SendKeys.Send("{TAB}");
                 e.Handled = true;
+                _cellMoveNextWork();
                 return;
             }
-            else
-                if (e.KeyCode == Keys.Right && myTextBox.SelectionStart == myTextBox.Text.Length)
+            else if (e.KeyCode == Keys.Right && myTextBox.SelectionStart == myTextBox.Text.Length)
             {
                 e.Handled = true;
                 _cellMoveRightWork();
                 return;
             }
-            else
-                    if (e.KeyCode == Keys.Down && this.textBox.Multiline == false)
+            else if (e.KeyCode == Keys.Down && this.textBox.Multiline == false)
             {
                 e.Handled = true;
                 _cellMoveDownWork();
                 return;
             }
-            else
-                        if (e.KeyCode == Keys.Down && this.textBox.Multiline == true)
+            else if (e.KeyCode == Keys.Down && this.textBox.Multiline == true)
             {
                 // ค้นหาตำแหน่งสุดท้ายของบรรทัดแรก
                 int __lastAddr = 0;
@@ -585,15 +638,13 @@ namespace SMLControl
                     return;
                 }
             }
-            else
-                            if (e.KeyCode == Keys.Up && this.textBox.Multiline == false)
+            else if (e.KeyCode == Keys.Up && this.textBox.Multiline == false)
             {
                 e.Handled = true;
                 _cellMoveUpWork();
                 return;
             }
-            else
-                                if (e.KeyCode == Keys.Up && this.textBox.Multiline == true)
+            else if (e.KeyCode == Keys.Up && this.textBox.Multiline == true)
             {
                 // ค้นหาตำแหน่งสุดท้ายของบรรทัดแรก
                 int __lastAddr = this.textBox.Text.IndexOf((Char)10);
@@ -608,15 +659,13 @@ namespace SMLControl
                     return;
                 }
             }
-            else
-                                    if (e.KeyCode == Keys.Left && myTextBox.SelectionStart == 0)
+            else if (e.KeyCode == Keys.Left && myTextBox.SelectionStart == 0)
             {
                 e.Handled = true;
                 _cellMoveLeftWork();
                 return;
             }
-            else
-                                        if (e.KeyCode == Keys.F2)
+            else if (e.KeyCode == Keys.F2)
             {
                 if (this.IsUpperCase)
                 {
@@ -673,5 +722,6 @@ namespace SMLControl
     public delegate void CellMoveDownHandler(object sender);
     public delegate void CellMoveRightHandler(object sender);
     public delegate void CellMoveLeftHandler(object sender);
+    public delegate void CellMoveNextHandler(object sender);
     public delegate void CellSearchHandler(object sender, string e);
 }

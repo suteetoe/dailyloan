@@ -91,9 +91,8 @@ namespace DailyLoan.Report
                 return false;
             }
         }
+        
 
-
-     
     }
 
     public class report_ar_balance_condition : ConditionReportForm

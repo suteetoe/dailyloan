@@ -55,6 +55,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="report_test_render.cs" />
+    <Compile Include="test_grid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="test_sml_screen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +90,10 @@
     <ProjectReference Include="..\BizFlowControl\BizFlowControl.csproj">
       <Project>{fdc82878-b4ac-4c02-b125-ecfad30c9a0f}</Project>
       <Name>BizFlowControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SMLControl\SMLControl.csproj">
+      <Project>{c45b2899-0643-4cb4-96f9-2c17bad5b925}</Project>
+      <Name>SMLControl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -24,8 +24,9 @@ namespace DailyLoan.Data.Repository
             try
             {
                 string sqlInsert =
-                    @"INSERT INTO " + Contract.TABLE_NAME + @" (contract_no, contract_date, loan_type, route_code, customer_code, description, principle_amount, interest_rate, total_interest, num_of_period, amount_per_period, first_period_date, create_by) 
-                  VALUES(@contract_no, @contract_date, @loan_type, @route_code, @customer_code, @description, @principle_amount, @interest_rate, @total_interest, @num_of_period, @amount_per_period, @first_period_date, @create_by); ";
+                    @"INSERT INTO " + Contract.TABLE_NAME +
+                    @" (contract_no, contract_date, loan_type, route_code, customer_code, description, principle_amount, interest_rate, total_interest, num_of_period, amount_per_period, first_period_date, create_by, last_period_date) 
+                  VALUES(@contract_no, @contract_date, @loan_type, @route_code, @customer_code, @description, @principle_amount, @interest_rate, @total_interest, @num_of_period, @amount_per_period, @first_period_date, @create_by, @last_period_date); ";
 
                 var parameters = new BizFlowControl.ExecuteParams();
                 parameters.Add("@contract_no", contract.contract_no);
@@ -42,6 +43,7 @@ namespace DailyLoan.Data.Repository
                 parameters.Add("@amount_per_period", contract.amount_per_period);
                 parameters.Add("@first_period_date", contract.first_period_date);
                 parameters.Add("@create_by", App.UserId);
+                parameters.Add("@last_period_date", contract.last_period_date);
 
                 txn.ExecuteCommand(sqlInsert, parameters);
 
@@ -177,6 +179,7 @@ namespace DailyLoan.Data.Repository
             contract.num_of_period = Convert.ToInt32(row["num_of_period"]);
             contract.amount_per_period = Convert.ToDecimal(row["amount_per_period"]);
             contract.first_period_date = Convert.ToDateTime(row["first_period_date"]);
+            contract.last_period_date = Convert.ToDateTime(row["last_period_date"]);
             return contract;
         }
     }

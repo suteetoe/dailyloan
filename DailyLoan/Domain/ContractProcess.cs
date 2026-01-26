@@ -32,6 +32,15 @@ namespace DailyLoan.Domain
             var processResult = paymentProcess.GetResult();
             contractPeriodPaymentRepository.UpSertContractPeriodPayment(processResult.ToArray());
 
+            if (contract.total_pay_amount.CompareTo(paymentProcess.totalPayAmount) != 0)
+            {
+                contractRepository.UpdateContractTotalPayAmount(contract.contract_no, paymentProcess.totalPayAmount);
+            }
+
+            if (contract.total_contract_amount.CompareTo(paymentProcess.totalPayAmount) == 0)
+            {
+                contractRepository.UpdateContractCloseStatus(contract.contract_no, (int)ContractStatus.Close);
+            }
         }
     }
 }

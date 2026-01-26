@@ -44,6 +44,11 @@ namespace DailyLoan.Control
 
         }
 
+        public string getSortQuery()
+        {
+            return "";
+        }
+
         public event AfterSelectDataEventHandler AfterSelectData;
 
     }

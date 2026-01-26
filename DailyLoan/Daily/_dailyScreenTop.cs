@@ -46,7 +46,8 @@ namespace DailyLoan.Daily
                     this._setDataStr("route", rowData["code"].ToString());
                     searchRouteForm.Close();
                 };
-                searchRouteForm.ShowDialog();
+                //searchRouteForm.ShowDialog();
+                this.StartSearchForm(searchRouteForm, "route");
             }
         }
     }

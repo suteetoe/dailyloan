@@ -18,7 +18,7 @@ namespace DailyLoan.Screen.LoanType
 
         protected override void LoadData()
         {
-            string queryList = "SELECT code, name_1 from mst_loan_type ";
+            string queryList = "SELECT code, name_1 from mst_loan_type order by code";
 
             var result = App.DBConnection.QueryData(queryList);
             if (result.Tables.Count > 0)

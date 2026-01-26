@@ -37,9 +37,15 @@ namespace DailyLoan.Data.Models
 
         public decimal amount_per_period { get; set; }
 
+        public decimal total_contract_amount { get; set; }
+
         public DateTime first_period_date { get; set; }
 
         public DateTime last_period_date { get; set; }
+
+        public decimal total_pay_amount { get; set; }
+
+        public int contract_status { get; set; }
 
         public LoanType loanType { get; set; }
 
@@ -72,11 +78,19 @@ namespace DailyLoan.Data.Models
             contractBalance.amount_per_period = contract.amount_per_period;
             contractBalance.first_period_date = contract.first_period_date;
             contractBalance.last_period_date = contract.last_period_date;
+            contractBalance.total_contract_amount = contract.total_contract_amount;
             contractBalance.description = contract.description;
-
+            contractBalance.total_pay_amount = contract.total_pay_amount;
+            contractBalance.contract_status = contract.contract_status;
 
             return contractBalance;
         }
+    }
+
+    public enum ContractStatus
+    {
+        Normal = 0,
+        Close = 1,
     }
 
 }

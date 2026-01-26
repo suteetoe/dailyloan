@@ -43,6 +43,8 @@ namespace DailyLoan.Migration.data
                       amount_per_period numeric NOT NULL,
                       first_period_date date NOT NULL,
                       last_period_date date NOT NULL,
+                      total_pay_amount numeric DEFAULT 0.0,
+                      contract_status integer DEFAULT 0,
                       create_by int NOT NULL
                     );";
                 transactionConnection.ExecuteCommand(create_table_loan_data);

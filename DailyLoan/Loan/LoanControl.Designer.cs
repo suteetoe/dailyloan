@@ -48,6 +48,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this._changeRouteButton = new System.Windows.Forms.ToolStripButton();
+            this.toolsPanel = new System.Windows.Forms.Panel();
+            this._nplLabel = new System.Windows.Forms.Label();
             this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -56,6 +63,11 @@
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            this.toolsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // _loanScreenTop1
@@ -67,7 +79,8 @@
             this._loanScreenTop1.Location = new System.Drawing.Point(0, 0);
             this._loanScreenTop1.LockScreen = false;
             this._loanScreenTop1.Name = "_loanScreenTop1";
-            this._loanScreenTop1.Size = new System.Drawing.Size(608, 400);
+            this._loanScreenTop1.ReadOnly = false;
+            this._loanScreenTop1.Size = new System.Drawing.Size(608, 380);
             this._loanScreenTop1.TabIndex = 4;
             // 
             // titlePanel1
@@ -86,7 +99,7 @@
             // 
             this.ToolStrip1.AutoSize = false;
             this.ToolStrip1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ToolStrip1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.ToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -96,10 +109,10 @@
             this._payButton,
             this._saveContractButton,
             this._discardButton});
-            this.ToolStrip1.Location = new System.Drawing.Point(0, 615);
+            this.ToolStrip1.Location = new System.Drawing.Point(3, 3);
             this.ToolStrip1.Name = "ToolStrip1";
             this.ToolStrip1.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.ToolStrip1.Size = new System.Drawing.Size(1024, 89);
+            this.ToolStrip1.Size = new System.Drawing.Size(1010, 81);
             this.ToolStrip1.TabIndex = 8;
             this.ToolStrip1.Text = "toolStrip1";
             // 
@@ -135,7 +148,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 89);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 81);
             // 
             // _payButton
             // 
@@ -195,7 +208,7 @@
             this._paymentPeriodGrid1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._paymentPeriodGrid1.Name = "_paymentPeriodGrid1";
             this._paymentPeriodGrid1.ShowTotal = true;
-            this._paymentPeriodGrid1.Size = new System.Drawing.Size(382, 547);
+            this._paymentPeriodGrid1.Size = new System.Drawing.Size(382, 522);
             this._paymentPeriodGrid1.TabIndex = 5;
             this._paymentPeriodGrid1.TabStop = false;
             // 
@@ -213,7 +226,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this._paymentPeriodGrid1);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.splitContainer1.Size = new System.Drawing.Size(1004, 547);
+            this.splitContainer1.Size = new System.Drawing.Size(1004, 522);
             this.splitContainer1.SplitterDistance = 613;
             this.splitContainer1.TabIndex = 6;
             // 
@@ -226,11 +239,12 @@
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.panel3.Size = new System.Drawing.Size(613, 547);
+            this.panel3.Size = new System.Drawing.Size(613, 522);
             this.panel3.TabIndex = 7;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this._nplLabel);
             this.panel2.Controls.Add(this._labelTotalBalance);
             this.panel2.Controls.Add(this._labelTotalPaid);
             this.panel2.Controls.Add(this._labelTotalLoan);
@@ -238,9 +252,9 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 430);
+            this.panel2.Location = new System.Drawing.Point(0, 399);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(608, 117);
+            this.panel2.Size = new System.Drawing.Size(608, 123);
             this.panel2.TabIndex = 6;
             // 
             // _labelTotalBalance
@@ -248,7 +262,7 @@
             this._labelTotalBalance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._labelTotalBalance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._labelTotalBalance.ForeColor = System.Drawing.Color.Red;
-            this._labelTotalBalance.Location = new System.Drawing.Point(404, 80);
+            this._labelTotalBalance.Location = new System.Drawing.Point(404, 96);
             this._labelTotalBalance.Name = "_labelTotalBalance";
             this._labelTotalBalance.Size = new System.Drawing.Size(182, 19);
             this._labelTotalBalance.TabIndex = 5;
@@ -260,7 +274,7 @@
             this._labelTotalPaid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._labelTotalPaid.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._labelTotalPaid.ForeColor = System.Drawing.Color.Green;
-            this._labelTotalPaid.Location = new System.Drawing.Point(404, 47);
+            this._labelTotalPaid.Location = new System.Drawing.Point(404, 67);
             this._labelTotalPaid.Name = "_labelTotalPaid";
             this._labelTotalPaid.Size = new System.Drawing.Size(182, 19);
             this._labelTotalPaid.TabIndex = 4;
@@ -272,7 +286,7 @@
             this._labelTotalLoan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._labelTotalLoan.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this._labelTotalLoan.ForeColor = System.Drawing.Color.Blue;
-            this._labelTotalLoan.Location = new System.Drawing.Point(404, 18);
+            this._labelTotalLoan.Location = new System.Drawing.Point(404, 38);
             this._labelTotalLoan.Name = "_labelTotalLoan";
             this._labelTotalLoan.Size = new System.Drawing.Size(182, 19);
             this._labelTotalLoan.TabIndex = 3;
@@ -284,7 +298,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(98, 80);
+            this.label3.Location = new System.Drawing.Point(98, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(118, 19);
             this.label3.TabIndex = 2;
@@ -295,7 +309,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label2.ForeColor = System.Drawing.Color.Green;
-            this.label2.Location = new System.Drawing.Point(86, 47);
+            this.label2.Location = new System.Drawing.Point(86, 67);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(130, 19);
             this.label2.TabIndex = 1;
@@ -306,7 +320,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label1.ForeColor = System.Drawing.Color.Blue;
-            this.label1.Location = new System.Drawing.Point(3, 18);
+            this.label1.Location = new System.Drawing.Point(3, 38);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(213, 19);
             this.label1.TabIndex = 0;
@@ -319,8 +333,95 @@
             this.panel1.Location = new System.Drawing.Point(0, 48);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(1024, 567);
+            this.panel1.Size = new System.Drawing.Size(1024, 542);
             this.panel1.TabIndex = 9;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1024, 114);
+            this.tabControl1.TabIndex = 6;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.ToolStrip1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1016, 87);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "เครื่องมือ";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.toolStrip2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1016, 87);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "เพิ่มเติม";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.AutoSize = false;
+            this.toolStrip2.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._changeRouteButton});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.toolStrip2.Size = new System.Drawing.Size(1010, 81);
+            this.toolStrip2.TabIndex = 9;
+            this.toolStrip2.Text = "toolStrip1";
+            // 
+            // _changeRouteButton
+            // 
+            this._changeRouteButton.AutoSize = false;
+            this._changeRouteButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._changeRouteButton.Image = global::DailyLoan.Properties.Resources.exchange_32;
+            this._changeRouteButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._changeRouteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._changeRouteButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._changeRouteButton.Name = "_changeRouteButton";
+            this._changeRouteButton.Size = new System.Drawing.Size(87, 87);
+            this._changeRouteButton.Text = "เปลี่ยนสาย";
+            this._changeRouteButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._changeRouteButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._changeRouteButton.Click += new System.EventHandler(this._changeRouteButton_Click);
+            // 
+            // toolsPanel
+            // 
+            this.toolsPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.toolsPanel.Controls.Add(this.tabControl1);
+            this.toolsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolsPanel.Location = new System.Drawing.Point(0, 590);
+            this.toolsPanel.Name = "toolsPanel";
+            this.toolsPanel.Size = new System.Drawing.Size(1024, 114);
+            this.toolsPanel.TabIndex = 7;
+            // 
+            // _nplLabel
+            // 
+            this._nplLabel.AutoSize = true;
+            this._nplLabel.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._nplLabel.ForeColor = System.Drawing.Color.Red;
+            this._nplLabel.Location = new System.Drawing.Point(538, 11);
+            this._nplLabel.Name = "_nplLabel";
+            this._nplLabel.Size = new System.Drawing.Size(48, 23);
+            this._nplLabel.TabIndex = 7;
+            this._nplLabel.Text = "NPL";
+            this._nplLabel.Visible = false;
             // 
             // LoanControl
             // 
@@ -329,7 +430,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.titlePanel1);
-            this.Controls.Add(this.ToolStrip1);
+            this.Controls.Add(this.toolsPanel);
             this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "LoanControl";
@@ -344,6 +445,12 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
+            this.toolsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -369,5 +476,12 @@
         private System.Windows.Forms.Label _labelTotalBalance;
         private System.Windows.Forms.Label _labelTotalPaid;
         private System.Windows.Forms.ToolStripButton _discardButton;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Panel toolsPanel;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton _changeRouteButton;
+        private System.Windows.Forms.Label _nplLabel;
     }
 }

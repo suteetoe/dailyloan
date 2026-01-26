@@ -15,7 +15,7 @@ namespace DailyLoan.Loan
     {
         CustomerRepository CustomerRepository = new CustomerRepository();
         LoanTypeRepository LoanTypeRepository = new LoanTypeRepository();
-        RouteRepository RouteRepository = new RouteRepository();
+        RouteRepository routeRepository = new RouteRepository();
 
         public _loanScreenTop()
         {
@@ -92,23 +92,12 @@ namespace DailyLoan.Loan
             }
             else if (name.Equals("loan_type"))
             {
-                string loanTypeCode = this._getDataStr("loan_type");
-                var loanType = LoanTypeRepository.GetLoanTypeByCode(loanTypeCode);
-                if (loanType != null)
-                {
-                    this._setDataStr("loan_type", loanType.code, loanType.name_1, true);
-
-                }
+                search("loan_type");
             }
             else if (name.Equals("route_code"))
             {
-                string routeCode = this._getDataStr("route_code");
-                var route = RouteRepository.GetRouteByCode(routeCode);
-                if (route != null)
-                {
-                    this._setDataStr("route_code", route.code, route.name_1, true);
 
-                }
+                search("route_code");
             }
         }
 
@@ -154,6 +143,37 @@ namespace DailyLoan.Loan
             }
         }
 
+        void search(string field)
+        {
+            switch (field)
+            {
+                case "route_code":
+                    string routeCode = this._getDataStr("route_code");
+                    var route = this.routeRepository.GetRouteByCode(routeCode);
+                    if (route != null)
+                    {
+                        this._setDataStr("route_code", route.code, route.name_1, true);
+
+                    }
+                    break;
+                case "loan_type":
+                    string loanTypeCode = this._getDataStr("loan_type");
+                    var loanType = LoanTypeRepository.GetLoanTypeByCode(loanTypeCode);
+                    if (loanType != null)
+                    {
+                        this._setDataStr("loan_type", loanType.code, loanType.name_1, true);
+
+                    }
+                    break;
+            }
+        }
+
+        public void SearchAll()
+        {
+            search("route_code");
+            search("loan_type");
+        }
+
         private Boolean _isLockScreen = false;
         public Boolean LockScreen
         {
@@ -165,7 +185,7 @@ namespace DailyLoan.Loan
             {
                 this._isLockScreen = value;
                 this.ReadOnly = value;
-              
+
             }
         }
 
@@ -199,6 +219,7 @@ namespace DailyLoan.Loan
             contract.amount_per_period = this._getDataNumber("amount_per_period");
             contract.first_period_date = this._getDataDate("first_period_date");
             contract.last_period_date = this._getDataDate("last_period_date");
+            contract.total_contract_amount = contract.principle_amount + contract.total_interest;
             return contract;
         }
 

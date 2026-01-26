@@ -33,7 +33,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this._processDailySheetButton = new System.Windows.Forms.ToolStripButton();
             this._exportDailyDataExcel = new System.Windows.Forms.ToolStripButton();
-            this._dailyExportGrid = new DailyLoan.Daily._dailyGrid();
+            this._dailyExportGrid = new DailyLoan.Daily._dailyDueGrid();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -318,7 +318,7 @@
         private _dailyScreenTop _dailyExportScreenTop;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton _exportDailyDataExcel;
-        private _dailyGrid _dailyExportGrid;
+        private _dailyDueGrid _dailyExportGrid;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;

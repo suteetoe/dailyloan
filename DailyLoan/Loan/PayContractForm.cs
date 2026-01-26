@@ -93,7 +93,7 @@ namespace DailyLoan.Loan
                 ContractProcess contractProcess = new ContractProcess();
                 contractProcess.StartProcessPayment(this.contract.contract_no);
 
-                this.Close();
+                this.DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {

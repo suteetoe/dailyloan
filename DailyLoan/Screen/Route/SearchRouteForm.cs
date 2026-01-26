@@ -18,7 +18,7 @@ namespace DailyLoan.Screen.Route
 
         protected override void LoadData()
         {
-            string queryList = "SELECT code, name_1 from mst_route ";
+            string queryList = "SELECT code, name_1 from mst_route order by code ";
 
             var result = App.DBConnection.QueryData(queryList);
             if (result.Tables.Count > 0)

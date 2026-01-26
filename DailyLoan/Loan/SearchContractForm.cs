@@ -20,8 +20,11 @@ namespace DailyLoan.Loan
 
         protected override void LoadData()
         {
+            string sortQuery = this.getSortQuery();
+            
+
             string queryList = "SELECT contract_date, contract_no " +
-                ", (select code || '~' || name_1 from mst_customer where mst_customer.code = txn_contract.customer_code ) as customer  from " + Data.Models.Contract.TABLE_NAME;
+                ", (select code || '~' || name_1 from mst_customer where mst_customer.code = txn_contract.customer_code ) as customer  from " + Data.Models.Contract.TABLE_NAME +  " order by " + ((sortQuery.Length > 0) ? sortQuery : " contract_date, contract_no") ;
 
             var result = App.DBConnection.QueryData(queryList);
             if (result.Tables.Count > 0)

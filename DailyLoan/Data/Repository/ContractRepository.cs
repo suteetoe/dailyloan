@@ -1,12 +1,14 @@
 ﻿using BizFlowControl;
 using DailyLoan.Data.Models;
 using DocumentFormat.OpenXml.Drawing.Charts;
+using SMLControl.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DailyLoan.Data.Repository
 {
@@ -25,8 +27,8 @@ namespace DailyLoan.Data.Repository
             {
                 string sqlInsert =
                     @"INSERT INTO " + Contract.TABLE_NAME +
-                    @" (contract_no, contract_date, loan_type, route_code, customer_code, description, principle_amount, interest_rate, total_interest, num_of_period, amount_per_period, first_period_date, create_by, last_period_date) 
-                  VALUES(@contract_no, @contract_date, @loan_type, @route_code, @customer_code, @description, @principle_amount, @interest_rate, @total_interest, @num_of_period, @amount_per_period, @first_period_date, @create_by, @last_period_date); ";
+                    @" (contract_no, contract_date, loan_type, route_code, customer_code, description, principle_amount, interest_rate, total_interest, num_of_period, amount_per_period, first_period_date, create_by, last_period_date, total_contract_amount) 
+                  VALUES(@contract_no, @contract_date, @loan_type, @route_code, @customer_code, @description, @principle_amount, @interest_rate, @total_interest, @num_of_period, @amount_per_period, @first_period_date, @create_by, @last_period_date, @total_contract_amount); ";
 
                 var parameters = new BizFlowControl.ExecuteParams();
                 parameters.Add("@contract_no", contract.contract_no);
@@ -44,6 +46,7 @@ namespace DailyLoan.Data.Repository
                 parameters.Add("@first_period_date", contract.first_period_date);
                 parameters.Add("@create_by", App.UserId);
                 parameters.Add("@last_period_date", contract.last_period_date);
+                parameters.Add("@total_contract_amount", contract.total_contract_amount);
 
                 txn.ExecuteCommand(sqlInsert, parameters);
 
@@ -164,6 +167,51 @@ namespace DailyLoan.Data.Repository
             return null;
         }
 
+        public void UpdateContractRoute(Contract contract)
+        {
+            string sqlUpdate =
+                @"UPDATE " + Contract.TABLE_NAME + @" 
+                  SET route_code = @route_code
+                  WHERE contract_no = @contract_no; ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@route_code", contract.route_code);
+            parameters.Add("@contract_no", contract.contract_no);
+
+            this.connecton.ExecuteCommand(sqlUpdate, parameters);
+        }
+
+        public void UpdateContractTotalPayAmount(string contractNo, decimal totalPayAmount)
+        {
+            string sqlUpdate =
+                @"UPDATE " + Contract.TABLE_NAME + @" 
+                  SET total_pay_amount = @totalPayment
+                  WHERE contract_no = @contract_no; "
+            ;
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@totalPayment", totalPayAmount);
+            parameters.Add("@contract_no", contractNo);
+
+            this.connecton.ExecuteCommand(sqlUpdate, parameters);
+
+        }
+
+        public void UpdateContractCloseStatus(string contractNo, int status)
+        {
+            string sqlUpdate =
+                @"UPDATE " + Contract.TABLE_NAME + @" 
+                  SET contract_status = @status
+                  WHERE contract_no = @contract_no; ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@status", status);
+            parameters.Add("@contract_no", contractNo);
+
+            this.connecton.ExecuteCommand(sqlUpdate, parameters);
+        }
+
+
         private Contract MapFromDataRow(DataRow row)
         {
             Contract contract = new Contract();
@@ -180,6 +228,10 @@ namespace DailyLoan.Data.Repository
             contract.amount_per_period = Convert.ToDecimal(row["amount_per_period"]);
             contract.first_period_date = Convert.ToDateTime(row["first_period_date"]);
             contract.last_period_date = Convert.ToDateTime(row["last_period_date"]);
+            contract.total_pay_amount = Convert.ToDecimal(row["total_pay_amount"]);
+            contract.total_contract_amount = Convert.ToDecimal(row["total_contract_amount"]);
+            contract.contract_status = Convert.ToInt16(row["contract_status"]);
+
             return contract;
         }
     }

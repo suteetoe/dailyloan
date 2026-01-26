@@ -19,6 +19,7 @@ namespace DailyLoan.Loan
         bool onLoad = false;
         HolidayRepository holidayRepository = new HolidayRepository();
         ContractRepository contractRepository = new ContractRepository();
+        SettingRepository settingRepository = new SettingRepository();
 
         public LoanControl()
         {
@@ -210,6 +211,7 @@ namespace DailyLoan.Loan
         {
             this._loanScreenTop1._clear();
             this._paymentPeriodGrid1._clear();
+            this._nplLabel.Visible = false;
         }
 
 
@@ -245,6 +247,7 @@ namespace DailyLoan.Loan
             searchContractForm.StartPosition = FormStartPosition.CenterParent;
             searchContractForm.AfterSelectData += (data) =>
             {
+                this.ClearData();
                 string contractNo = data["contract_no"].ToString();
                 this.LoadContract(contractNo);
                 searchContractForm.Close();
@@ -254,10 +257,9 @@ namespace DailyLoan.Loan
 
         void LoadContract(string contractNo)
         {
-
             ContractBalance contract = contractRepository.FindContractWithBalanceByContractNo(contractNo);
             this._loanScreenTop1.LoadContractData(contract);
-
+            this._loanScreenTop1.SearchAll();
             List<PayPeriod> payPeriods = new List<PayPeriod>();
             foreach (var cp in contract.ContractPeriodBalances)
             {
@@ -265,12 +267,33 @@ namespace DailyLoan.Loan
             }
 
             this._paymentPeriodGrid1.LoadListPayPeriod(payPeriods);
-            decimal totalLoan = contract.principle_amount + contract.total_interest;
-            decimal totalPaid = 0M;
+            decimal totalLoan = contract.total_contract_amount;
+            decimal totalPaid = contract.total_pay_amount;
             decimal totalBalance = totalLoan - totalPaid;
             this.showSummaryLabel(totalLoan, totalPaid, totalBalance);
             this.ChangeFormMode(false);
             this._payButton.Enabled = true;
+        }
+
+        void CheckNPL(ContractBalance contract)
+        {
+
+            Data.Models.Settings settings = settingRepository.LoadSetting();
+            DateTime toDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+            if (contract.contract_status == 0)
+            {
+                if (contract.last_period_date < toDay)
+                {
+                    int timespan = (toDay - contract.last_period_date).Days;
+
+                    if (timespan >= settings.npl_period)
+                    {
+                        // update contract status to NPL
+                        this._nplLabel.Visible = true;
+                    }
+                }
+            }
         }
 
         private void _payButton_Click(object sender, EventArgs e)
@@ -283,7 +306,11 @@ namespace DailyLoan.Loan
             List<PayPeriod> payPeriods = this._paymentPeriodGrid1.PayPeriods;
             form.LoadContractPeriod(contract);
             form.StartPosition = FormStartPosition.CenterScreen;
-            form.ShowDialog(this);
+            DialogResult payResult = form.ShowDialog(this);
+            if (payResult == DialogResult.OK)
+            {
+                this.LoadContract(contractNo);
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -306,7 +333,35 @@ namespace DailyLoan.Loan
             ContractProcess contractProcess = new ContractProcess();
             contractProcess.StartProcessPayment(contractNo);
             MessageBox.Show("Success");
+            this.LoadContract(contractNo);
 
+        }
+
+        private void _changeRouteButton_Click(object sender, EventArgs e)
+        {
+            string contractNo = this._loanScreenTop1._getDataStr("contract_no");
+            if (contractNo == "")
+            {
+                MessageBox.Show("กรุณาเลือกสัญญาสินเชื่อก่อน");
+                return;
+            }
+
+            Contract findContract = contractRepository.FindContractByContractNo(contractNo);
+
+            if (findContract == null)
+            {
+                MessageBox.Show("ไม่พบข้อมูลสัญญาสินเชื่อที่ระบุ");
+                return;
+            }
+
+            ChangeContractRouteForm changeContractRouteForm = new ChangeContractRouteForm(findContract);
+            changeContractRouteForm.StartPosition = FormStartPosition.CenterParent;
+            DialogResult changeRouteResult = changeContractRouteForm.ShowDialog(this);
+
+            if (changeRouteResult == DialogResult.OK)
+            {
+                this.LoadContract(contractNo);
+            }
         }
     }
 }

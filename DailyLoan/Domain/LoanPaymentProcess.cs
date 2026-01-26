@@ -13,6 +13,16 @@ namespace DailyLoan.Domain
     {
         List<ContractPayPeriod> contractPeriodPayments = new List<ContractPayPeriod>();
         Contract contract;
+        private decimal _totalPayAmount = 0M;
+
+        public decimal totalPayAmount
+        {
+            get
+            {
+                return this._totalPayAmount;
+            }
+        }
+
         public List<ContractPayPeriod> PeriodPayments
         {
             get
@@ -38,6 +48,8 @@ namespace DailyLoan.Domain
 
         public void AddPayment(string doc_do, DateTime doc_date, string doc_time, decimal pay_amount)
         {
+            this._totalPayAmount += pay_amount;
+
             decimal remainingPayAmount = pay_amount;
             for (int i = 0; i < contractPeriodPayments.Count; i++)
             {

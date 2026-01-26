@@ -185,13 +185,21 @@
     <Compile Include="Data\Models\Contract.cs" />
     <Compile Include="Data\Models\RoutePayment.cs" />
     <Compile Include="Data\Models\RoutePaymentDetail.cs" />
+    <Compile Include="Data\Models\Settings.cs" />
     <Compile Include="Data\Repository\ContractPayRepository.cs" />
     <Compile Include="Data\Repository\ContractPeriodPaymentRepository.cs" />
     <Compile Include="Data\Repository\ContractRepository.cs" />
     <Compile Include="Data\Repository\CustomerRepository.cs" />
     <Compile Include="Data\Repository\RoutePaymentRepository.cs" />
+    <Compile Include="Data\Repository\SettingRepository.cs" />
     <Compile Include="Domain\ContractProcess.cs" />
     <Compile Include="Domain\LoanPaymentProcess.cs" />
+    <Compile Include="Loan\ChangeContractRouteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loan\ChangeContractRouteForm.Designer.cs">
+      <DependentUpon>ChangeContractRouteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Loan\PayContractForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +208,9 @@
     </Compile>
     <Compile Include="Loan\SearchContractForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loan\_changeContractRouteScreenTop.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Loan\_payPeriodGrid.cs">
       <SubType>UserControl</SubType>
@@ -381,8 +392,14 @@
     <EmbeddedResource Include="Control\TitlePanel.resx">
       <DependentUpon>TitlePanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Loan\ChangeContractRouteForm.resx">
+      <DependentUpon>ChangeContractRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Loan\PayContractForm.resx">
       <DependentUpon>PayContractForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loan\_payPeriodGrid.resx">
+      <DependentUpon>_payPeriodGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ConditionReportForm.resx">
       <DependentUpon>ConditionReportForm.cs</DependentUpon>

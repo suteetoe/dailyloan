@@ -368,6 +368,12 @@
     <Compile Include="Screen\Route\SearchRouteForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Screen\Users\UserDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\Users\UsersControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Setup\SetupUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -473,6 +479,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Screen\Route\RouteDetailScreen.resx">
       <DependentUpon>RouteDetailScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\Users\UsersControl.resx">
+      <DependentUpon>UsersControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setup\SetupUserControl.resx">
       <DependentUpon>SetupUserControl.cs</DependentUpon>

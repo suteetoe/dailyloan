@@ -60,6 +60,9 @@ namespace DailyLoan
                     case MenuScreen.MENU_DAILY:
                         openScreen = new Daily.DailyControl();
                         break;
+                    case MenuScreen.MENU_SYSTEM_USER:
+                        openScreen = new Screen.Users.UsersControl();
+                        break;
                 }
 
                 if (openScreen != null)
@@ -90,6 +93,7 @@ namespace DailyLoan
         MENU_REPORT,
         MENU_CUSTOMER,
         MENU_DAILY,
+        MENU_SYSTEM_USER,
     }
 
 }

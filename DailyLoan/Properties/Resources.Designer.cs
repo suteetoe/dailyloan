@@ -423,6 +423,16 @@ namespace DailyLoan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap user1_monitor_48 {
+            get {
+                object obj = ResourceManager.GetObject("user1_monitor_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap user3_48 {
             get {
                 object obj = ResourceManager.GetObject("user3_48", resourceCulture);

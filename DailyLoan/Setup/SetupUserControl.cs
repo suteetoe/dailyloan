@@ -17,6 +17,11 @@ namespace DailyLoan.Setup
         public SetupUserControl()
         {
             InitializeComponent();
+
+            if ((int)App.LoggedUser.Role < 1)
+            {
+                this._systemUserButton.Visible = false;
+            }
         }
 
         private void _holidayMenuButton_Click(object sender, EventArgs e)
@@ -52,6 +57,11 @@ namespace DailyLoan.Setup
         {
             OptionForm optionForm = new OptionForm();
             optionForm.ShowDialog();
+        }
+
+        private void _systemUserButton_Click(object sender, EventArgs e)
+        {
+            Router.OpenMenu(MenuScreen.MENU_SYSTEM_USER);
         }
     }
 }

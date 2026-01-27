@@ -36,6 +36,7 @@
             this._companySetup = new System.Windows.Forms.Button();
             this._optionSettingButton = new System.Windows.Forms.Button();
             this._loanTypeMenuButton = new System.Windows.Forms.Button();
+            this._systemUserButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,6 +100,7 @@
             this.flowLayoutPanel1.Controls.Add(this._employeeMenuButton);
             this.flowLayoutPanel1.Controls.Add(this._routeMenuButton);
             this.flowLayoutPanel1.Controls.Add(this._holidayMenuButton);
+            this.flowLayoutPanel1.Controls.Add(this._systemUserButton);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 60);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -147,6 +149,20 @@
             this._loanTypeMenuButton.UseVisualStyleBackColor = true;
             this._loanTypeMenuButton.Click += new System.EventHandler(this._loanTypeMenuButton_Click);
             // 
+            // _systemUserButton
+            // 
+            this._systemUserButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._systemUserButton.Image = global::DailyLoan.Properties.Resources.user1_monitor_48;
+            this._systemUserButton.Location = new System.Drawing.Point(301, 135);
+            this._systemUserButton.Name = "_systemUserButton";
+            this._systemUserButton.Size = new System.Drawing.Size(143, 126);
+            this._systemUserButton.TabIndex = 6;
+            this._systemUserButton.Text = "ผู้ใช้งานระบบ";
+            this._systemUserButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._systemUserButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._systemUserButton.UseVisualStyleBackColor = true;
+            this._systemUserButton.Click += new System.EventHandler(this._systemUserButton_Click);
+            // 
             // SetupUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -171,5 +187,6 @@
         private System.Windows.Forms.Button _loanTypeMenuButton;
         private System.Windows.Forms.Button _companySetup;
         private System.Windows.Forms.Button _optionSettingButton;
+        private System.Windows.Forms.Button _systemUserButton;
     }
 }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SMLControl
 {
-    public class GridIntegerColumn
+    public class GridIntegerColumn : BaseGridColumn
     {
+        public GridIntegerColumn()
+        {
+            this._columnTypeNumber = 2;
+        }
     }
 }

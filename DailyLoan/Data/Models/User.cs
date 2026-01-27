@@ -8,6 +8,8 @@ namespace DailyLoan.Data.Models
 {
     public class User
     {
+        public const string TABLE_NAME = "sys_users";
+
         public int Id { get; set; }
         public String Name { get; set; }
         public String UserCode { get; set; }

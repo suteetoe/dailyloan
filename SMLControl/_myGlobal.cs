@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -48,5 +49,16 @@ namespace SMLControl
             return str;
         }
 
+        public static CultureInfo DisplayCulture = CultureInfo.CurrentCulture;
+        public static CultureInfo SystemCulture = new CultureInfo("en-US");
+
+        public static int DateCultureDiff()
+        {
+            if (DisplayCulture.Calendar != SystemCulture.Calendar)
+            {
+                return 543;
+            }
+            return 0;
+        }
     }
 }

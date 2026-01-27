@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.CodeDom;
 
 namespace DailyLoan
 {
@@ -63,6 +64,9 @@ namespace DailyLoan
                     case MenuScreen.MENU_SYSTEM_USER:
                         openScreen = new Screen.Users.UsersControl();
                         break;
+                    case MenuScreen.MENU_PAYMENT:
+                        openScreen = new Screen.ContractPayment.ContractPaymentControl();
+                        break;
                 }
 
                 if (openScreen != null)
@@ -94,6 +98,7 @@ namespace DailyLoan
         MENU_CUSTOMER,
         MENU_DAILY,
         MENU_SYSTEM_USER,
+        MENU_PAYMENT,
     }
 
 }

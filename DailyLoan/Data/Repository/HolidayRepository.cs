@@ -79,7 +79,7 @@ namespace DailyLoan.Data.Repository
                   WHERE date_holiday = @date_holiday; ";
 
             var parameters = new BizFlowControl.ExecuteParams();
-            parameters.Add("@date_holiday", dateStr);
+            parameters.Add("@date_holiday", date);
 
             connecton.ExecuteCommand(deleteQuery, parameters);
         }

@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -182,6 +183,7 @@ namespace SMLControl
         public Boolean _autoInsertResource = true;
         int _countColumnOver = 0;
 
+        public CultureInfo displayCulture = CultureInfo.CurrentCulture;
 
         #region Helpe rGrid Action Variable
 
@@ -1352,7 +1354,7 @@ namespace SMLControl
 
                                 if (myDataRow[__row][__dataColumn] is DateTime)
                                 {
-                                    __dataStr = ((DateTime)myDataRow[__row][__dataColumn]).ToString("yyyy-MM-dd");
+                                    __dataStr = ((DateTime)myDataRow[__row][__dataColumn]).ToString("yyyy-MM-dd", new CultureInfo("en-US"));
                                 }
                                 string[] __getDate = __dataStr.Split(' ');
                                 DateTime __getDateResult = new DateTime(1000, 1, 1);
@@ -3645,11 +3647,11 @@ namespace SMLControl
                                             string __format3 = __getColumn._format;
                                             if (__format3.Length == 0)
                                             {
-                                                __strDisplay = Utils._dateUtil._convertDateToString(__getDateTime);
+                                                __strDisplay = Utils._dateUtil._convertDateToString(__getDateTime, displayCulture);
                                             }
                                             else
                                             {
-                                                __strDisplay = __getDateTime.ToString(__format3, _myGlobal._cultureInfo());
+                                                __strDisplay = __getDateTime.ToString(__format3, displayCulture);
                                             }
                                         }
                                         catch

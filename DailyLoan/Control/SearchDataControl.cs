@@ -45,6 +45,37 @@ namespace DailyLoan.Control
             }
         }
 
+        public string GetFilterCommand()
+        {
+            string filterValue = this._textSearchTextbox.Text.Trim();
+            if (filterValue.Length == 0)
+            {
+                return "";
+            }
+
+            string[] splitFilterWord = filterValue.Split(' ');
+            List<string> filterCommandList = new List<string>();
+
+            foreach (string filterWord in splitFilterWord)
+            {
+                List<string> columnFilterList = new List<string>();
+                foreach (SMLControl._columnType column in this._searchResultGrid._columnList)
+                {
+                    if (column._type == 1)
+                    {
+                        columnFilterList.Add(string.Format("{0} ILIKE '%{1}%'", column._originalName, filterWord.Replace("'", "''")));
+                    }
+                }
+
+                if (columnFilterList.Count > 0)
+                {
+                    filterCommandList.Add("(" + string.Join(" OR ", columnFilterList.ToArray()) + ")");
+                }
+            }
+
+            return " WHERE " + string.Join(" AND ", filterCommandList.ToArray());
+        }
+
         public event AfterSelectDataEventHandler AfterSelectData;
     }
 

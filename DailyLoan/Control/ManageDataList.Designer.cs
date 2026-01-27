@@ -346,15 +346,15 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton _saveButton;
+        protected System.Windows.Forms.ToolStripButton _saveButton;
         private System.Windows.Forms.Panel panel3;
         protected TitlePanel titlePanel;
         public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton _addButton;
+        protected System.Windows.Forms.ToolStripButton _addButton;
         private System.Windows.Forms.ToolStripLabel _recordCountLabel;
         protected System.Windows.Forms.Timer _dataLoadingTimer;
-        private System.Windows.Forms.ToolStripButton _cancelButton;
-        private System.Windows.Forms.ToolStripButton _deleteButton;
+        protected System.Windows.Forms.ToolStripButton _cancelButton;
+        protected System.Windows.Forms.ToolStripButton _deleteButton;
     }
 }

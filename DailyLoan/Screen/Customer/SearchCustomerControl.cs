@@ -21,19 +21,19 @@ namespace DailyLoan.Screen.Customer
         public void SearchData()
         {
             string filter = "";
-
+            string filterTextbox = this.GetFilterCommand();
 
             int rowPerPage = this._searchResultGrid._rowPerPage;
             int offset = (this._pageNumber - 1) * rowPerPage;
 
             string queryRowCount = "SELECT COUNT(*) FROM mst_customer " + filter;
-            string queryQuery = string.Format("SELECT code, name_1, telephone from mst_customer {0} LIMIT {1} OFFSET {2} ", filter, rowPerPage, offset);
+            string queryQuery = string.Format("SELECT code, name_1, telephone from mst_customer {0} LIMIT {1} OFFSET {2} ", filterTextbox, rowPerPage, offset);
 
-            DataSet result =App.DBConnection.QueryData(queryQuery);
+            DataSet result = App.DBConnection.QueryData(queryQuery);
             if (result.Tables.Count > 0)
             {
                 this._searchResultGrid._loadFromDataTable(result.Tables[0], result.Tables[0].Select());
-            }    
+            }
         }
     }
 }

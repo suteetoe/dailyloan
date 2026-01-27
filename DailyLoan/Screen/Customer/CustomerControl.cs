@@ -23,6 +23,7 @@ namespace DailyLoan.Screen.Customer
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { ColumnName = "โทรศัพท์", ColumnCode = "telephone", WidthPercent = 20 });
             this._dataListGrid._calcPersentWidthToScatter();
 
+            this._customerDataScreen1.ReadOnly = true;
         }
 
         protected override void ClearScreen()
@@ -30,6 +31,12 @@ namespace DailyLoan.Screen.Customer
             this._customerDataScreen1._clear();
             this._customerDataScreen1._enabedControl("code", true);
         }
+
+        protected override void ChangeFormMode(bool isEdit)
+        {
+            this._customerDataScreen1.ReadOnly = !isEdit;
+        }
+
 
         protected override string LoadDataListQuery()
         {

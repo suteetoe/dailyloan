@@ -1,6 +1,8 @@
 ﻿using BizFlowControl;
 using DailyLoan.Data.Models;
 using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Packaging;
+using Microsoft.SqlServer.Server;
 using SMLControl.Utils;
 using System;
 using System.Collections.Generic;
@@ -112,6 +114,45 @@ namespace DailyLoan.Data.Repository
             return null;
         }
 
+        public void DeleteContract(string contractNo)
+        {
+            TransactionConnection txn = this.connecton.CreateTransactionConnection();
+
+
+            try
+            {
+                string queryDeleteContractPeriodPayment = "DELETE FROM txn_contract_period_payment WHERE contract_no = @contract_no ";
+
+                var parametersDeleteContractPeriodPayment = new BizFlowControl.ExecuteParams();
+                parametersDeleteContractPeriodPayment.Add("@contract_no", contractNo);
+                txn.ExecuteCommand(queryDeleteContractPeriodPayment, parametersDeleteContractPeriodPayment);
+
+                string queryDeleteContractPeriod = "DELETE FROM " + ContractPeriod.TABLE_NAME + " WHERE contract_no = @contract_no ";
+
+                var parametersDeleteContractPeriod = new BizFlowControl.ExecuteParams();
+                parametersDeleteContractPeriod.Add("@contract_no", contractNo);
+
+                txn.ExecuteCommand(queryDeleteContractPeriod, parametersDeleteContractPeriod);
+
+                string queryDeleteContract = "DELETE FROM " + Contract.TABLE_NAME + " WHERE contract_no = @contract_no ";
+                var parametersDeleteContract = new BizFlowControl.ExecuteParams();
+                parametersDeleteContract.Add("@contract_no", contractNo);
+                txn.ExecuteCommand(queryDeleteContract, parametersDeleteContract);
+
+                txn.CommitTransaction();
+
+
+            }
+            catch (Exception ex)
+            {
+                txn.RollbackTransaction();
+                throw ex;
+            }
+
+
+
+        }
+
         public ContractBalance FindContractWithBalanceByContractNo(string contractNo)
         {
             string queryGetContract = "SELECT * FROM " + Contract.TABLE_NAME + " WHERE contract_no = \'" + contractNo + "\'";
@@ -181,16 +222,19 @@ namespace DailyLoan.Data.Repository
             this.connecton.ExecuteCommand(sqlUpdate, parameters);
         }
 
-        public void UpdateContractTotalPayAmount(string contractNo, decimal totalPayAmount)
+        public void UpdateContractTotalPayAmount(string contractNo, decimal totalPayAmount, int payCount)
         {
             string sqlUpdate =
                 @"UPDATE " + Contract.TABLE_NAME + @" 
-                  SET total_pay_amount = @totalPayment
+                  SET total_pay_amount = @totalPayment,
+                  pay_count = @pay_count   
+
                   WHERE contract_no = @contract_no; "
             ;
 
             var parameters = new BizFlowControl.ExecuteParams();
             parameters.Add("@totalPayment", totalPayAmount);
+            parameters.Add("@pay_count", payCount);
             parameters.Add("@contract_no", contractNo);
 
             this.connecton.ExecuteCommand(sqlUpdate, parameters);

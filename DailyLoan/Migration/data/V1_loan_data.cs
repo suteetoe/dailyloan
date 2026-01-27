@@ -32,7 +32,6 @@ namespace DailyLoan.Migration.data
                       contract_date date NOT NULL,
                       route_code varchar(100),
                       customer_code varchar(100) NOT NULL,
-                      product_group int NOT NULL,
                       loan_type varchar(100) NOT NULL,
                       description text DEFAULT '',
                       principle_amount numeric NOT NULL,
@@ -44,6 +43,7 @@ namespace DailyLoan.Migration.data
                       first_period_date date NOT NULL,
                       last_period_date date NOT NULL,
                       total_pay_amount numeric DEFAULT 0.0,
+                      total_contract_amount numeric DEFAULT 0.0,
                       contract_status integer DEFAULT 0,
                       create_by int NOT NULL
                     );";

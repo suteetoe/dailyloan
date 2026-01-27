@@ -17,6 +17,13 @@ namespace SMLControl.Utils
             return dateString;
         }
 
+        public static string _convertDateToString(DateTime date, CultureInfo culture)
+        {
+            _dateUtil utils = new _dateUtil(culture);
+            string dateString = utils._convertDateToString(date, "d/M/yyyy");
+            return dateString;
+        }
+
         public static string _convertDateToQuery(DateTime date)
         {
             string __result = "";

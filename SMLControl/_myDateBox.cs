@@ -86,7 +86,7 @@ namespace SMLControl
             IFormatProvider __culture = _myGlobal._cultureInfo();
             if (_dateTime.Year > 1000)
             {
-                this.textBox.Text = _dateTime.ToString("d/M/yyyy", __culture);
+                this.textBox.Text = _dateTime.ToString("d/M/yyyy", _myGlobal.DisplayCulture);
             }
             else
             {
@@ -106,7 +106,7 @@ namespace SMLControl
 
         public void _refresh()
         {
-            this.textBox.Text = _dateUtil._convertDateToString(_dateTime);
+            this.textBox.Text = _dateUtil._convertDateToString(_dateTime, _myGlobal.DisplayCulture);
             this.textBox.Invalidate();
         }
 
@@ -121,7 +121,7 @@ namespace SMLControl
                 {
                     int __day = _myGlobal._workingDate.Day;
                     int __month = _myGlobal._workingDate.Month;
-                    int __year = _myGlobal._workingDate.Year + _myGlobal._year_add;
+                    int __year = _myGlobal._workingDate.Year;
                     /*Debug.Print(this.textBox.Text);
                     Debug.Print(Environment.StackTrace.ToString());*/
                     string __dateBuffer = this.textBox.Text;
@@ -202,7 +202,7 @@ namespace SMLControl
                             }
                         }
                     }
-                    __year = __year - _myGlobal._year_add;
+                    __year = __year - _myGlobal.DateCultureDiff();
                     DateTime __myDate = new DateTime(__year, __month, __day);
                     if (changeText)
                     {
@@ -261,7 +261,8 @@ namespace SMLControl
 
         void myDate__selectedDate(DateTime e)
         {
-            this.textBox.Text = string.Concat(e.Day, "/", e.Month, "/", (e.Year + _myGlobal._year_add));
+            string dateDisplay = _dateUtil._convertDateToString(e, _myGlobal.DisplayCulture);
+            this.textBox.Text = dateDisplay; // string.Concat(e.Day, "/", e.Month, "/", (e.Year + _myGlobal._year_add));
             _checkDate(true, _warning);
             _beforeInput();
             if (_afterSelectCalendar != null)

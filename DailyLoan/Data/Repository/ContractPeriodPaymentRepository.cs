@@ -60,5 +60,6 @@ namespace DailyLoan.Data.Repository
             }
           
         }
+
     }
 }

@@ -163,6 +163,16 @@ namespace DailyLoan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap delete_32 {
+            get {
+                object obj = ResourceManager.GetObject("delete_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete2 {
             get {
                 object obj = ResourceManager.GetObject("delete2", resourceCulture);
@@ -316,6 +326,16 @@ namespace DailyLoan.Properties {
         internal static System.Drawing.Bitmap icons8_microsoft_excel_32 {
             get {
                 object obj = ResourceManager.GetObject("icons8-microsoft-excel-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap money2_24 {
+            get {
+                object obj = ResourceManager.GetObject("money2_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

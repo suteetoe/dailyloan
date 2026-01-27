@@ -28,6 +28,17 @@ namespace DailyLoan.Loan
             this.ChangeFormMode(false);
             this._loanScreenTop1._textBoxChanged += _loanScreenTop1__textBoxChanged;
             this.showSummaryLabel(0, 0, 0);
+
+            if ((int)App.LoggedUser.Role > 0)
+            {
+                this._deleteContractButton.Enabled = true;
+                this._changeRouteButton.Enabled = true;
+            }
+            else
+            {
+                this._deleteContractButton.Enabled = false;
+                this._changeRouteButton.Enabled = false;
+            }
         }
 
         private void _loanScreenTop1__textBoxChanged(object sender, string name)
@@ -272,6 +283,7 @@ namespace DailyLoan.Loan
             decimal totalBalance = totalLoan - totalPaid;
             this.showSummaryLabel(totalLoan, totalPaid, totalBalance);
             this.ChangeFormMode(false);
+            CheckNPL(contract);
             this._payButton.Enabled = true;
         }
 
@@ -281,6 +293,7 @@ namespace DailyLoan.Loan
             Data.Models.Settings settings = settingRepository.LoadSetting();
             DateTime toDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
+            bool showNPLLabel = false;
             if (contract.contract_status == 0)
             {
                 if (contract.last_period_date < toDay)
@@ -290,10 +303,12 @@ namespace DailyLoan.Loan
                     if (timespan >= settings.npl_period)
                     {
                         // update contract status to NPL
-                        this._nplLabel.Visible = true;
+                        showNPLLabel = true;
                     }
                 }
             }
+
+            this._nplLabel.Visible = showNPLLabel;
         }
 
         private void _payButton_Click(object sender, EventArgs e)
@@ -361,6 +376,46 @@ namespace DailyLoan.Loan
             if (changeRouteResult == DialogResult.OK)
             {
                 this.LoadContract(contractNo);
+            }
+        }
+
+        private void _deleteContractButton_Click(object sender, EventArgs e)
+        {
+            string contractNo = this._loanScreenTop1._getDataStr("contract_no");
+            if (contractNo == "")
+            {
+                MessageBox.Show("กรุณาเลือกสัญญาสินเชื่อก่อน");
+                return;
+            }
+
+            Contract findContract = contractRepository.FindContractByContractNo(contractNo);
+
+            if (findContract == null)
+            {
+                MessageBox.Show("ไม่พบข้อมูลสัญญาสินเชื่อที่ระบุ");
+                return;
+            }
+
+            string confirmDeleteMsg = "คุณต้องการลบข้อมูลสัญญาสินเชื่อ ใช่หรือไม่?";
+            var result = MessageBox.Show(confirmDeleteMsg, "ยืนยันการลบข้อมูล", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+
+
+                    contractRepository.DeleteContract(findContract.contract_no);
+                    MessageBox.Show("ลบข้อมูลสัญญาสินเชื่อเรียบร้อยแล้ว", "ลบข้อมูลสำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.ClearData();
+                    ChangeFormMode(false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("เกิดข้อผิดพลาดในการลบข้อมูล \r\n" + ex.Message, "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+                
             }
         }
     }

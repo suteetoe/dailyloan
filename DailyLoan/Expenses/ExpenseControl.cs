@@ -13,11 +13,12 @@ namespace DailyLoan.Expenses
         public ExpenseControl()
         {
             InitializeComponent();
+            string numberFormat = SMLControl.Utils._numberUtils.BuildNumberFormat(2);
 
             this._dataListGrid.AddGridColumn(new SMLControl.GridDateColumn() { WidthPercent = 20, ColumnCode = "doc_date", ColumnName = "วันที่เอกสาร" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "doc_no", ColumnName = "เลขที่เอกสาร" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 40, ColumnCode = "remark", ColumnName = "หมายเหตุ" });
-            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "amount", ColumnName = "จำนวนเงิน" });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "amount", ColumnName = "จำนวนเงิน", Format = numberFormat });
         }
 
         private void InitializeComponent()

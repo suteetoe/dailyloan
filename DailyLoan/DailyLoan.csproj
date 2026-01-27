@@ -225,6 +225,12 @@
     <Compile Include="Report\ReportViewer.cs" />
     <Compile Include="Report\report_ar_balance.cs" />
     <Compile Include="Report\report_ar_contract_payment.cs" />
+    <Compile Include="Screen\ContractPayment\ContractPaymentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\ContractPayment\_contractPaymentDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Screen\Customer\CustomerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -409,6 +415,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ConditionReportForm.resx">
       <DependentUpon>ConditionReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\ContractPayment\ContractPaymentControl.resx">
+      <DependentUpon>ContractPaymentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screen\Customer\CustomerControl.resx">
       <DependentUpon>CustomerControl.cs</DependentUpon>

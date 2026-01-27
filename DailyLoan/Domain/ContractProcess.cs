@@ -16,6 +16,7 @@ namespace DailyLoan.Domain
 
         public ContractProcess()
         {
+
         }
 
         public void StartProcessPayment(string contractNo)
@@ -34,12 +35,16 @@ namespace DailyLoan.Domain
 
             if (contract.total_pay_amount.CompareTo(paymentProcess.totalPayAmount) != 0)
             {
-                contractRepository.UpdateContractTotalPayAmount(contract.contract_no, paymentProcess.totalPayAmount);
+                contractRepository.UpdateContractTotalPayAmount(contract.contract_no, paymentProcess.totalPayAmount, listPayment.Count);
             }
 
             if (contract.total_contract_amount.CompareTo(paymentProcess.totalPayAmount) == 0)
             {
                 contractRepository.UpdateContractCloseStatus(contract.contract_no, (int)ContractStatus.Close);
+            }
+            else if (contract.total_contract_amount.CompareTo(paymentProcess.totalPayAmount) != 0 && contract.contract_status == 1)
+            {
+                contractRepository.UpdateContractCloseStatus(contract.contract_no, (int)ContractStatus.Normal);
             }
         }
     }

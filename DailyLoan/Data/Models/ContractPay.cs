@@ -24,5 +24,7 @@ namespace DailyLoan.Data.Models
 
         public decimal total_amount { get; set; }
 
+        public Contract contract { get; set; }
+
     }
 }

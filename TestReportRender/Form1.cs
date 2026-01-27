@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,11 @@ namespace TestReportRender
         public Form1()
         {
             InitializeComponent();
+
+            CultureInfo defaultCulture = CultureInfo.CurrentCulture;
+
+           Console.WriteLine("CurrentCulture: " + defaultCulture.Name);
+
             this.test_sml_screen1._textBoxChanged += Test_sml_screen1__textBoxChanged;
         }
 

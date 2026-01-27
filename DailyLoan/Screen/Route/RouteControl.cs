@@ -21,6 +21,8 @@ namespace DailyLoan.Screen.Route
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 30, ColumnCode = "code", ColumnName = "รหัสสาย" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 70, ColumnCode = "name_1", ColumnName = "ชื่อสาย" });
             this._dataListGrid.Invalidate();
+
+
         }
 
         private void InitializeComponent()

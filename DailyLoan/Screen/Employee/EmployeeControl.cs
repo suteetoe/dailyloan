@@ -21,6 +21,13 @@ namespace DailyLoan.Screen.Employee
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 30, ColumnCode = "code", ColumnName = "รหัสพนักงาน" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 70, ColumnCode = "name_1", ColumnName = "ชื่อพนักงาน" });
             this._dataListGrid.Invalidate();
+
+            this.employeeDetailScreen1.ReadOnly = true;
+        }
+
+        protected override void ChangeFormMode(bool isEdit)
+        {
+            this.employeeDetailScreen1.ReadOnly = !isEdit;
         }
 
         private void InitializeComponent()

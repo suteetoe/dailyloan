@@ -1,10 +1,12 @@
 ﻿using DailyLoan.Data;
+using DocumentFormat.OpenXml.Office.PowerPoint.Y2021.M06.Main;
 using SMLControl;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,21 @@ namespace DailyLoan.Control
         protected int page = 1;
         protected int pageSize = 10;
         protected FormMode formMode = FormMode.VIEW;
+
+        private Boolean _enableEditMode = true;
+
+        public Boolean EnableEditMode
+        {
+            get
+            {
+                return this._enableEditMode;
+            }
+
+            set
+            {
+                this._enableEditMode = value;
+            }
+        }
 
         public Boolean EditMode
         {
@@ -80,7 +97,7 @@ namespace DailyLoan.Control
                     object dataDate = this._dataListGrid._cellGet(e._row, columnCode);
                     if (dataDate != null)
                     {
-                        cellValue = Convert.ToDateTime(dataDate).ToString("yyyy-MM-dd");
+                        cellValue = Convert.ToDateTime(dataDate).ToString("yyyy-MM-dd", App.SystemCulture);
                     }
                 }
                 else 
@@ -101,6 +118,9 @@ namespace DailyLoan.Control
 
         private void _dataListGrid__mouseDoubleClick(object sender, SMLControl.GridCellEventArgs e)
         {
+            if (this._enableEditMode == false)
+                return;
+
             if (this.isEditMode)
             {
                 bool cancelResult = CancelEditData();
@@ -118,8 +138,22 @@ namespace DailyLoan.Control
                     RowDataSelect selectedRow = new RowDataSelect();
                     foreach (var col in this._dataListGrid._columnList)
                     {
-                        string columnCode = ((SMLControl._columnType)col)._originalName;
-                        string cellValue = this._dataListGrid._cellGet(e._row, columnCode).ToString();
+                        SMLControl._columnType gridColumn = (SMLControl._columnType)col;
+                        string columnCode = gridColumn._originalName; string cellValue = "";
+
+                        if (gridColumn._type == 4)
+                        {
+                            object dataDate = this._dataListGrid._cellGet(e._row, columnCode);
+                            if (dataDate != null)
+                            {
+                                cellValue = Convert.ToDateTime(dataDate).ToString("yyyy-MM-dd", App.SystemCulture);
+                            }
+                        }
+                        else
+                        {
+                            cellValue = this._dataListGrid._cellGet(e._row, columnCode).ToString();
+                        }
+
                         selectedRow[columnCode] = cellValue;
                     }
 
@@ -195,6 +229,16 @@ namespace DailyLoan.Control
         {
             this.isEditMode = isEdit;
             EnableActionButtons(this.isEditMode);
+            if (this.OnChangeEditMode != null)
+            {
+                this.OnChangeEditMode(isEdit);
+            }
+            ChangeFormMode(isEdit);
+        }
+
+        protected virtual void ChangeFormMode(bool isEdit)
+        {
+
         }
 
         protected virtual string LoadDataListQuery()
@@ -349,9 +393,24 @@ namespace DailyLoan.Control
                     RowDataSelect selectedRow = new RowDataSelect();
                     foreach (var col in this._dataListGrid._columnList)
                     {
-                        string columnCode = ((SMLControl._columnType)col)._originalName;
-                        string cellValue = this._dataListGrid._cellGet(this._dataListGrid._selectRow, columnCode).ToString();
+                        SMLControl._columnType gridColumn = (SMLControl._columnType)col;
+                        string columnCode = gridColumn._originalName; string cellValue = "";
+
+                        if (gridColumn._type == 4)
+                        {
+                            object dataDate = this._dataListGrid._cellGet(this._dataListGrid._selectRow, columnCode);
+                            if (dataDate != null)
+                            {
+                                cellValue = Convert.ToDateTime(dataDate).ToString("yyyy-MM-dd", App.SystemCulture);
+                            }
+                        }
+                        else
+                        {
+                            cellValue = this._dataListGrid._cellGet(this._dataListGrid._selectRow, columnCode).ToString();
+                        }
+
                         selectedRow[columnCode] = cellValue;
+
                     }
 
                     bool canDelete = OnDeleteData(selectedRow);
@@ -363,7 +422,11 @@ namespace DailyLoan.Control
                 }
             }
         }
+
+        public event OnChangeEditModeDelegate OnChangeEditMode;
     }
+
+    public delegate void OnChangeEditModeDelegate(bool isEditMode);
 
     public enum FormMode
     {

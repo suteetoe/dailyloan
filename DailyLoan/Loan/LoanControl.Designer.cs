@@ -41,6 +41,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this._nplLabel = new System.Windows.Forms.Label();
             this._labelTotalBalance = new System.Windows.Forms.Label();
             this._labelTotalPaid = new System.Windows.Forms.Label();
             this._labelTotalLoan = new System.Windows.Forms.Label();
@@ -52,9 +53,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this._deleteContractButton = new System.Windows.Forms.ToolStripButton();
             this._changeRouteButton = new System.Windows.Forms.ToolStripButton();
             this.toolsPanel = new System.Windows.Forms.Panel();
-            this._nplLabel = new System.Windows.Forms.Label();
             this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -257,6 +258,18 @@
             this.panel2.Size = new System.Drawing.Size(608, 123);
             this.panel2.TabIndex = 6;
             // 
+            // _nplLabel
+            // 
+            this._nplLabel.AutoSize = true;
+            this._nplLabel.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this._nplLabel.ForeColor = System.Drawing.Color.Red;
+            this._nplLabel.Location = new System.Drawing.Point(538, 11);
+            this._nplLabel.Name = "_nplLabel";
+            this._nplLabel.Size = new System.Drawing.Size(48, 23);
+            this._nplLabel.TabIndex = 7;
+            this._nplLabel.Text = "NPL";
+            this._nplLabel.Visible = false;
+            // 
             // _labelTotalBalance
             // 
             this._labelTotalBalance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -378,13 +391,29 @@
             this.toolStrip2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._changeRouteButton});
+            this._changeRouteButton,
+            this._deleteContractButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStrip2.Size = new System.Drawing.Size(1010, 81);
             this.toolStrip2.TabIndex = 9;
             this.toolStrip2.Text = "toolStrip1";
+            // 
+            // _deleteContractButton
+            // 
+            this._deleteContractButton.AutoSize = false;
+            this._deleteContractButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._deleteContractButton.Image = global::DailyLoan.Properties.Resources.delete_32;
+            this._deleteContractButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._deleteContractButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._deleteContractButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._deleteContractButton.Name = "_deleteContractButton";
+            this._deleteContractButton.Size = new System.Drawing.Size(87, 87);
+            this._deleteContractButton.Text = "ลบสัญญา";
+            this._deleteContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._deleteContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._deleteContractButton.Click += new System.EventHandler(this._deleteContractButton_Click);
             // 
             // _changeRouteButton
             // 
@@ -410,18 +439,6 @@
             this.toolsPanel.Name = "toolsPanel";
             this.toolsPanel.Size = new System.Drawing.Size(1024, 114);
             this.toolsPanel.TabIndex = 7;
-            // 
-            // _nplLabel
-            // 
-            this._nplLabel.AutoSize = true;
-            this._nplLabel.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this._nplLabel.ForeColor = System.Drawing.Color.Red;
-            this._nplLabel.Location = new System.Drawing.Point(538, 11);
-            this._nplLabel.Name = "_nplLabel";
-            this._nplLabel.Size = new System.Drawing.Size(48, 23);
-            this._nplLabel.TabIndex = 7;
-            this._nplLabel.Text = "NPL";
-            this._nplLabel.Visible = false;
             // 
             // LoanControl
             // 
@@ -483,5 +500,6 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton _changeRouteButton;
         private System.Windows.Forms.Label _nplLabel;
+        private System.Windows.Forms.ToolStripButton _deleteContractButton;
     }
 }

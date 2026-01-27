@@ -83,5 +83,55 @@ namespace DailyLoan.Data.Repository
 
             return list;
         }
+
+        public ContractPay GetContractPaymentByDocNo(string docNo)
+        {
+            string query =
+                @"SELECT txn_payment.id, txn_payment.doc_date, txn_payment.doc_time, txn_payment.doc_no, txn_payment.contract_no, txn_payment.total_amount, txn_contract.customer_code, mst_customer.name_1 as cust_name
+                FROM  txn_payment 
+                JOIN txn_contract ON txn_contract.contract_no = txn_payment.contract_no
+                JOIN mst_customer on mst_customer.code = txn_contract.customer_code
+                WHERE txn_payment.doc_no = @doc_no ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@doc_no", docNo);
+
+            DataSet ds = this.connecton.QueryData(query, parameters);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable table = ds.Tables[0];
+                if (table.Rows.Count > 0)
+                {
+                    ContractPay contractPay = new ContractPay();
+                    DataRow dr = table.Rows[0];
+                    contractPay.id = Convert.ToInt32(dr["id"]);
+                    contractPay.doc_date = Convert.ToDateTime(dr["doc_date"]);
+                    contractPay.doc_time = dr["doc_time"].ToString();
+                    contractPay.doc_no = dr["doc_no"].ToString();
+                    contractPay.contract_no = dr["contract_no"].ToString();
+                    contractPay.total_amount = Convert.ToDecimal(dr["total_amount"]);
+                    contractPay.contract = new Contract();
+                    contractPay.contract.customer_code = dr["customer_code"].ToString();
+                    contractPay.contract.customer = new Customer();
+                    contractPay.contract.customer.name_1 = dr["cust_name"].ToString();
+
+
+                    return contractPay;
+                }
+
+            }
+            return null;
+        }
+
+        public void DeletePayment(string docNo)
+        {
+            string deleteQuery = @"DELETE FROM txn_payment WHERE doc_no = @doc_no; ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@doc_no", docNo);
+
+            this.connecton.ExecuteCommand(deleteQuery, parameters);
+
+        }
     }
 }

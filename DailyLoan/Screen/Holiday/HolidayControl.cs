@@ -21,6 +21,12 @@ namespace DailyLoan.Screen.Holiday
             this._dataListGrid.AddGridColumn(new SMLControl.GridDateColumn() { WidthPercent = 20, ColumnCode = "date_holiday", ColumnName = "วันที่" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 80, ColumnCode = "remark", ColumnName = "รายละเอียด" });
             this._dataListGrid.Invalidate();
+            this.holidayDetailScreen.ReadOnly = true;
+        }
+
+        protected override void ChangeFormMode(bool isEdit)
+        {
+            this.holidayDetailScreen.ReadOnly = !isEdit;
         }
 
         private void InitializeComponent()
@@ -62,7 +68,7 @@ namespace DailyLoan.Screen.Holiday
 
         protected override string LoadDataListQuery()
         {
-            string query = "SELECT date_holiday, remark FROM  mst_holiday ";
+            string query = "SELECT date_holiday, remark FROM  mst_holiday order by date_holiday ";
             return query;
         }
 

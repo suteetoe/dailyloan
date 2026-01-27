@@ -37,7 +37,7 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this._loanMenuButton = new System.Windows.Forms.ToolStripButton();
             this._dailyMenuButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this._customerMenuButton = new System.Windows.Forms.ToolStripButton();
             this._expenseMenuButton = new System.Windows.Forms.ToolStripButton();
             this._reportMenuButton = new System.Windows.Forms.ToolStripButton();
             this._setupMenuButton = new System.Windows.Forms.ToolStripButton();
@@ -46,6 +46,7 @@
             this._mainPanel = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this._paymentListMenuButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this._sidebarPanel.SuspendLayout();
             this.toolStrip2.SuspendLayout();
@@ -103,7 +104,8 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._loanMenuButton,
             this._dailyMenuButton,
-            this.toolStripButton1,
+            this._customerMenuButton,
+            this._paymentListMenuButton,
             this._expenseMenuButton,
             this._reportMenuButton,
             this._setupMenuButton,
@@ -141,18 +143,18 @@
             this._dailyMenuButton.Text = "ใบรายวัน";
             this._dailyMenuButton.Click += new System.EventHandler(this._dailyMenuButton_Click);
             // 
-            // toolStripButton1
+            // _customerMenuButton
             // 
-            this.toolStripButton1.Image = global::DailyLoan.Properties.Resources.businessman;
-            this.toolStripButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(10);
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.toolStripButton1.Size = new System.Drawing.Size(178, 48);
-            this.toolStripButton1.Text = "ลูกค้า";
-            this.toolStripButton1.Click += new System.EventHandler(this._customerMenuButton_Click);
+            this._customerMenuButton.Image = global::DailyLoan.Properties.Resources.businessman;
+            this._customerMenuButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this._customerMenuButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._customerMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._customerMenuButton.Margin = new System.Windows.Forms.Padding(10);
+            this._customerMenuButton.Name = "_customerMenuButton";
+            this._customerMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this._customerMenuButton.Size = new System.Drawing.Size(178, 48);
+            this._customerMenuButton.Text = "ลูกค้า";
+            this._customerMenuButton.Click += new System.EventHandler(this._customerMenuButton_Click);
             // 
             // _expenseMenuButton
             // 
@@ -241,6 +243,19 @@
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // _paymentListMenuButton
+            // 
+            this._paymentListMenuButton.Image = global::DailyLoan.Properties.Resources.money2_24;
+            this._paymentListMenuButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this._paymentListMenuButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._paymentListMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._paymentListMenuButton.Margin = new System.Windows.Forms.Padding(10);
+            this._paymentListMenuButton.Name = "_paymentListMenuButton";
+            this._paymentListMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this._paymentListMenuButton.Size = new System.Drawing.Size(178, 48);
+            this._paymentListMenuButton.Text = "การชำระเงิน";
+            this._paymentListMenuButton.Click += new System.EventHandler(this._paymentListMenuButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -285,7 +300,8 @@
         private System.Windows.Forms.ToolStripButton _reportMenuButton;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripButton _setupMenuButton;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton _customerMenuButton;
+        private System.Windows.Forms.ToolStripButton _paymentListMenuButton;
     }
 }
 

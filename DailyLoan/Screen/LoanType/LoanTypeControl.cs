@@ -22,7 +22,15 @@ namespace DailyLoan.Screen.LoanType
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 30, ColumnCode = "code", ColumnName = "รหัส" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 70, ColumnCode = "name_1", ColumnName = "ชื่อ" });
             this._dataListGrid.Invalidate();
+
+            this.loanTypeDetailScreen1.ReadOnly = true;
         }
+
+        protected override void ChangeFormMode(bool isEdit)
+        {
+            this.loanTypeDetailScreen1.ReadOnly = !isEdit;
+        }
+
 
         protected override string LoadDataListQuery()
         {

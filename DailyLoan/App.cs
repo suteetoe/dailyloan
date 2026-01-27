@@ -1,6 +1,7 @@
 ﻿using DailyLoan.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -32,5 +33,9 @@ namespace DailyLoan
             {
             }
         }
+
+        public static CultureInfo SystemCulture = new CultureInfo("en-US");
+
+        public static CultureInfo DisplayCulture = CultureInfo.CurrentCulture;
     }
 }

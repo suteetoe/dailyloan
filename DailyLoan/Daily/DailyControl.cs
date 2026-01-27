@@ -53,22 +53,35 @@ namespace DailyLoan.Daily
             {
                 using (var workbook = new XLWorkbook())
                 {
+                    int colIndex = 0;
                     var worksheet = workbook.Worksheets.Add("DailyData");
-                    worksheet.Cell(1, 1).Value = "วันที่";
-                    worksheet.Cell(1, 2).Value = "สัญญา";
+                    // worksheet.Cell(1, 1).Value = "วันที่";
+                    worksheet.Cell(1, 1).Value = "ลำดับ";
+                    worksheet.Cell(1, 2).Value = "เลขที่สัญญา";
                     worksheet.Cell(1, 3).Value = "ลูกค้า";
-                    worksheet.Cell(1, 4).Value = "จำนวนเงิน";
-                    worksheet.Cell(1, 5).Value = "ยอดค้างชำระ";
-                    worksheet.Cell(1, 6).Value = "ยอดชำระ";
+                    worksheet.Cell(1, 4).Value = "จำนวนงวดที่ส่ง";
+                    worksheet.Cell(1, 5).Value = "ยอดทั้งสิ้น";
+                    worksheet.Cell(1, 6).Value = "ยอดคงเหลือ";
+                    worksheet.Cell(1, 7).Value = "ค้างชำระ";
+                    worksheet.Cell(1, 8).Value = "รายวัน";
+                    worksheet.Cell(1, 9).Value = "ยอดชำระ";
 
-
+                    int rowNumber = 1;
                     for (int i = 0; i < this._dailyExportGrid._rowData.Count; i++)
                     {
-                        worksheet.Cell(i + 2, 1).Value = this._dailyExportScreenTop._getDataDate("contract_date").ToString("yyyy-MM-dd");
+                        colIndex = 0;
+
+                        // worksheet.Cell(i + 2, colIndex++).Value = this._dailyExportScreenTop._getDataDate("contract_date").ToString("yyyy-MM-dd");
+                        worksheet.Cell(i + 2, 1).Value = rowNumber.ToString();
                         worksheet.Cell(i + 2, 2).Value = this._dailyExportGrid._cellGet(i, "contract_no").ToString();
-                        worksheet.Cell(i + 2, 3).Value = this._dailyExportGrid._cellGet(i, "customer").ToString();
-                        worksheet.Cell(i + 2, 4).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "amount"));
-                        worksheet.Cell(i + 2, 5).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "over_due_amount"));
+                        worksheet.Cell(i + 2, 3).Value = this._dailyExportGrid._cellGet(i, "cust_name").ToString();
+                        worksheet.Cell(i + 2, 4).Value = Convert.ToInt16(this._dailyExportGrid._cellGet(i, "pay_count"));
+                        worksheet.Cell(i + 2, 5).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "total_contract_amount"));
+                        worksheet.Cell(i + 2, 6).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "contract_balance"));
+                        worksheet.Cell(i + 2, 7).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "over_due_amount"));
+                        worksheet.Cell(i + 2, 8).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "amount"));
+
+                        rowNumber++;
                     }
 
                     workbook.SaveAs(saveFileDialog.FileName);
@@ -97,9 +110,10 @@ namespace DailyLoan.Daily
 
                         foreach (var row in rows)
                         {
-                            decimal amount = _numberUtils._decimalPhase(row.Cell(4).GetString());
+                            decimal amount = _numberUtils._decimalPhase(row.Cell(8).GetString());
+                            decimal payAmount = _numberUtils._decimalPhase(row.Cell(9).GetString());
+
                             decimal overDueAmount = _numberUtils._decimalPhase(row.Cell(5).GetString());
-                            decimal payAmount = _numberUtils._decimalPhase(row.Cell(6).GetString());
 
                             int addRowIdx = this._dailyPaymentGrid._addRow();
                             this._dailyPaymentGrid._cellUpdate(addRowIdx, "contract_no", row.Cell(2).GetString(), false);
@@ -138,26 +152,75 @@ namespace DailyLoan.Daily
             //    where c.route_code = '" + routeCode + "' and p.due_date = '" + _dateUtil._convertDateToQuery(dueDate) + "' ";
 
 
-            string queryDailyDue = @"with contract_period_with_payment as (
-	select c.contract_no, c.route_code, c.customer_code, cp.period_no, due_date, amount, coalesce(pay_amount, 0) as pay_amount
+            //            string queryDailyDue = @"with contract_period_with_payment as (
+            //	select c.contract_no, c.route_code, c.customer_code, cp.period_no, due_date, amount, coalesce(pay_amount, 0) as pay_amount
+            //	from txn_contract_period as cp
+            //	join txn_contract as c on cp.contract_no = c.contract_no
+            //	left join txn_contract_period_payment as pay on pay.contract_no = cp.contract_no and cp.period_no = pay.period_no
+            //    where c.contract_status = 0 
+            //)
+            //, period_balance as (
+            //select contract_no, route_code, customer_code, period_no, due_date, amount, pay_amount
+            //, (amount - pay_amount) as balance_amount
+            //, (case when (due_date < date(now()) and ((amount - pay_amount) > 0)) then (amount - pay_amount) else 0 end) as over_due_amount 
+
+            //from contract_period_with_payment
+            //)
+
+            //select due_date, contract_no, (customer_code || '~' ||  cust.name_1) as customer, balance_amount as amount  
+            //,(select sum(over_due_amount) from period_balance as ovd where ovd.contract_no = pb.contract_no ) as over_due_amount
+            //from period_balance as pb
+            //join mst_customer as cust on cust.code = pb.customer_code
+            //where route_code = @route_code and due_date = @due_date ";
+
+
+            string queryDailyDue = @"
+
+WITH contract_over_due as (
+	select contract_no, route_code, total_contract_amount, pay_count
+	, total_pay_amount as paid_amount
+	, (total_contract_amount - total_pay_amount) as over_due_amount
+	, amount_per_period as amount
+	, txn_contract.customer_code as cust_code
+	, cust.name_1 as cust_name
+	, (total_contract_amount - total_pay_amount) as contract_balance
+	from txn_contract
+	join mst_customer as cust on cust.code = txn_contract.customer_code
+	where contract_status = 0 and last_period_date < @due_date and route_code = @route_code
+)
+, contract_period_with_payment as (
+	select c.contract_no, cp.period_no, due_date, amount, coalesce(pay_amount, 0) as pay_amount
 	from txn_contract_period as cp
 	join txn_contract as c on cp.contract_no = c.contract_no
 	left join txn_contract_period_payment as pay on pay.contract_no = cp.contract_no and cp.period_no = pay.period_no
-    where c.contract_status = 0 
+    where c.contract_status = 0 and  c.last_period_date >= @due_date
 )
 , period_balance as (
-select contract_no, route_code, customer_code, period_no, due_date, amount, pay_amount
-, (amount - pay_amount) as balance_amount
-, (case when (due_date < date(now()) and ((amount - pay_amount) > 0)) then (amount - pay_amount) else 0 end) as over_due_amount 
-
-from contract_period_with_payment
+	select contract_no, period_no, due_date, amount, pay_amount
+	, (amount - pay_amount) as balance_amount
+	, (case when (due_date < date(now()) and ((amount - pay_amount) > 0)) then (amount - pay_amount) else 0 end) as over_due_amount 
+	from contract_period_with_payment 
 )
-
-select due_date, contract_no, (customer_code || '~' ||  cust.name_1) as customer, balance_amount as amount  
-,(select sum(over_due_amount) from period_balance as ovd where ovd.contract_no = pb.contract_no ) as over_due_amount
-from period_balance as pb
-join mst_customer as cust on cust.code = pb.customer_code
-where route_code = @route_code and due_date = @due_date ";
+, contract_due  as (
+	select pb.contract_no, c.route_code, c.total_contract_amount, c.pay_count
+	, c.total_pay_amount as paid_amount
+	,(select sum(over_due_amount) from period_balance as ovd where ovd.contract_no = pb.contract_no ) as over_due_amount
+	, balance_amount as amount 
+	, c.customer_code as cust_code
+	, cust.name_1 as cust_name
+	, (c.total_contract_amount - c.total_pay_amount) as contract_balance
+	from period_balance as pb
+	join txn_contract as c on c.contract_no = pb.contract_no
+	join mst_customer as cust on cust.code = c.customer_code
+	where route_code = @route_code and due_date = @due_date and balance_amount > 0
+)
+, daily_sheet as (
+select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount from contract_over_due
+union all
+select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount from contract_due
+)
+select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount from daily_sheet order by contract_no
+";
 
             BizFlowControl.ExecuteParams parameters = new BizFlowControl.ExecuteParams();
             parameters.Add("@route_code", routeCode);

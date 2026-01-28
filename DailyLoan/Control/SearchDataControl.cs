@@ -100,11 +100,63 @@ namespace DailyLoan.Control
                 }
             }
 
-            return  string.Join(" AND ", filterCommandList.ToArray());
+            return string.Join(" AND ", filterCommandList.ToArray());
         }
 
         public event AfterSelectDataEventHandler AfterSelectData;
+
+        private void _goFirstPageButton_Click(object sender, EventArgs e)
+        {
+            if (this.OnLoadDataList != null)
+            {
+                if (this._pageNumber != 1)
+                {
+                    this._pageNumber = 1;
+                    this.OnLoadDataList();
+                }
+            }
+
+        }
+
+        private void _prevPageButton_Click(object sender, EventArgs e)
+        {
+            if (this.OnLoadDataList != null)
+            {
+                if (this._pageNumber > 1)
+                {
+                    this._pageNumber--;
+                    this.OnLoadDataList();
+                }
+            }
+        }
+
+        private void _nextPageButton_Click(object sender, EventArgs e)
+        {
+            if (this.OnLoadDataList != null)
+            {
+                if (this._pageNumber < this._totalPage)
+                {
+                    this._pageNumber++;
+                    this.OnLoadDataList();
+                }
+            }
+        }
+
+        private void _goLastPageButton_Click(object sender, EventArgs e)
+        {
+            if (this.OnLoadDataList != null)
+            {
+                if (this._pageNumber != this._totalPage && this._pageNumber <= this._totalPage)
+                {
+                    this._pageNumber = this._totalPage;
+                    this.OnLoadDataList();
+                }
+            }
+        }
+
+        public event LoadDataListEventHandler OnLoadDataList;
     }
 
+    public delegate void LoadDataListEventHandler();
     public delegate void AfterSelectDataEventHandler(SMLControl.GridRowData rowData);
 }

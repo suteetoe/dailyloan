@@ -2,6 +2,7 @@
 using DailyLoan.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,96 @@ namespace DailyLoan.Data.Repository
 
                     txn.ExecuteCommand(sqlInsertPaymentRouteDetail, detailParameters);
                 }
+
+                txn.CommitTransaction();
+            }
+            catch (Exception)
+            {
+                txn.RollbackTransaction();
+                throw;
+            }
+        }
+
+        public RoutePayment GetRoutePaymentByDocNo(string docNo)
+        {
+            string queryRoutePaymentHeader =
+                @"SELECT doc_date, doc_no, txn_route_payment.route_code, mst_route.name_1 as route_name , total_route_amount 
+                FROM txn_route_payment 
+                JOIN mst_route on mst_route.code = txn_route_payment.route_code
+                WHERE doc_no = @doc_no ";
+
+            string queryRoutePaymentDetail =
+                @"SELECT txn_route_payment_detail.contract_no, txn_contract.customer_code, mst_customer.name_1 as customer_name, txn_route_payment_detail.total_amount
+                FROM txn_route_payment_detail
+                JOIN txn_contract on txn_contract.contract_no = txn_route_payment_detail.contract_no
+                JOIN mst_customer on mst_customer.code = txn_contract.customer_code
+                WHERE txn_route_payment_detail.doc_no = @doc_no
+                order by txn_route_payment_detail.line_number
+                ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@doc_no", docNo);
+            var routePayment = this.connecton.QueryData(queryRoutePaymentHeader, parameters);
+            var routePaymentDetails = this.connecton.QueryData(queryRoutePaymentDetail, parameters);
+
+
+            if (routePayment.Tables.Count > 0)
+            {
+                RoutePayment result = new RoutePayment();
+                var headerRow = routePayment.Tables[0].Rows[0];
+                result.doc_no = headerRow["doc_no"].ToString();
+                result.doc_date = Convert.ToDateTime(headerRow["doc_date"]);
+                result.route_code = headerRow["route_code"].ToString();
+                result.route = new Route()
+                {
+                    code = headerRow["route_code"].ToString(),
+                    name_1 = headerRow["route_name"].ToString()
+                };
+                result.total_route_amount = Convert.ToDecimal(headerRow["total_route_amount"]);
+
+                result.Details = new List<RoutePaymentDetail>();
+
+                if (routePaymentDetails.Tables.Count > 0)
+                {
+                    DataTable detailTable = routePaymentDetails.Tables[0];
+                    for (int row = 0; row < detailTable.Rows.Count; row++)
+                    {
+                        result.Details.Add(new RoutePaymentDetail()
+                        {
+                            contract_no = detailTable.Rows[row]["contract_no"].ToString(),
+                            customer_code = detailTable.Rows[row]["customer_code"].ToString(),
+                            customer_name = detailTable.Rows[row]["customer_name"].ToString(),
+                            total_amount = Convert.ToDecimal(detailTable.Rows[row]["total_amount"])
+
+                        });
+                    }
+                }
+
+                return result;
+            }
+
+            return null;
+
+        }
+
+        public void DeleteRoutePayment(string docNo)
+        {
+            TransactionConnection txn = this.connecton.CreateTransactionConnection();
+
+            try
+            {
+                string sqlDeletePaymentRouteDetail =
+                    @"DELETE FROM " + RoutePaymentDetail.TABLE_NAME + @" WHERE doc_no = @doc_no; ";
+
+                var parameters = new BizFlowControl.ExecuteParams();
+                parameters.Add("@doc_no", docNo);
+
+                txn.ExecuteCommand(sqlDeletePaymentRouteDetail, parameters);
+
+                string sqlDeletePaymentRoute =
+                    @"DELETE FROM " + RoutePayment.TABLE_NAME + @" WHERE doc_no = @doc_no; ";
+
+                txn.ExecuteCommand(sqlDeletePaymentRoute, parameters);
 
                 txn.CommitTransaction();
             }

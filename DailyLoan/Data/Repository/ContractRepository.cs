@@ -222,12 +222,14 @@ namespace DailyLoan.Data.Repository
             this.connecton.ExecuteCommand(sqlUpdate, parameters);
         }
 
-        public void UpdateContractTotalPayAmount(string contractNo, decimal totalPayAmount, int payCount)
+        public void UpdateContractTotalPayAmount(string contractNo, decimal totalPayAmount, int payCount, decimal totalPaidPrinciple, decimal totalPaidInterest)
         {
             string sqlUpdate =
                 @"UPDATE " + Contract.TABLE_NAME + @" 
-                  SET total_pay_amount = @totalPayment,
-                  pay_count = @pay_count   
+                  SET total_pay_amount = @totalPayment
+                  , pay_count = @pay_count   
+                  , total_paid_principle = @total_paid_principle
+                  , total_paid_interest = @total_paid_interest
 
                   WHERE contract_no = @contract_no; "
             ;
@@ -236,6 +238,8 @@ namespace DailyLoan.Data.Repository
             parameters.Add("@totalPayment", totalPayAmount);
             parameters.Add("@pay_count", payCount);
             parameters.Add("@contract_no", contractNo);
+            parameters.Add("@total_paid_principle", totalPaidPrinciple);
+            parameters.Add("@total_paid_interest", totalPaidInterest);
 
             this.connecton.ExecuteCommand(sqlUpdate, parameters);
 
@@ -272,9 +276,12 @@ namespace DailyLoan.Data.Repository
             contract.amount_per_period = Convert.ToDecimal(row["amount_per_period"]);
             contract.first_period_date = Convert.ToDateTime(row["first_period_date"]);
             contract.last_period_date = Convert.ToDateTime(row["last_period_date"]);
-            contract.total_pay_amount = Convert.ToDecimal(row["total_pay_amount"]);
             contract.total_contract_amount = Convert.ToDecimal(row["total_contract_amount"]);
             contract.contract_status = Convert.ToInt16(row["contract_status"]);
+            contract.pay_count = Convert.ToInt32(row["pay_count"]);
+            contract.total_pay_amount = Convert.ToDecimal(row["total_pay_amount"]);
+            contract.total_paid_principle = Convert.ToDecimal(row["total_paid_principle"]);
+            contract.total_paid_interest = Convert.ToDecimal(row["total_paid_interest"]);
 
             return contract;
         }

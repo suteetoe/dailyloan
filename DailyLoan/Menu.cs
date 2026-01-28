@@ -67,6 +67,9 @@ namespace DailyLoan
                     case MenuScreen.MENU_PAYMENT:
                         openScreen = new Screen.ContractPayment.ContractPaymentControl();
                         break;
+                    case MenuScreen.MENU_ROUTE_PAYMENT:
+                        openScreen = new Screen.RoutePayment.RoutePaymentControl();
+                        break;
                 }
 
                 if (openScreen != null)
@@ -99,6 +102,7 @@ namespace DailyLoan
         MENU_DAILY,
         MENU_SYSTEM_USER,
         MENU_PAYMENT,
+        MENU_ROUTE_PAYMENT,
     }
 
 }

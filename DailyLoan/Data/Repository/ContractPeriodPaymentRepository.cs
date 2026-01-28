@@ -23,11 +23,15 @@ namespace DailyLoan.Data.Repository
             try
             {
                 string upsertSql = 
-                    "INSERT INTO " + ContractPeriodPayment.TABLE_NAME + 
-                    " (contract_no, period_no, pay_amount, pay_detail) " +
-                    " values(@contract_no, @period_no, @pay_amount, @pay_detail) " +
+                    "INSERT INTO " + ContractPeriodPayment.TABLE_NAME +
+                    " (contract_no, period_no, pay_amount, pay_detail, pay_principal_amount, pay_interest_amount) " +
+                    " values(@contract_no, @period_no, @pay_amount, @pay_detail, @pay_principal_amount, @pay_interest_amount) " +
                     " ON CONFLICT (contract_no, period_no) " +
-                    " DO UPDATE SET pay_amount = EXCLUDED.pay_amount, pay_detail = EXCLUDED.pay_detail; ";
+                    " DO UPDATE SET " +
+                    " pay_amount = EXCLUDED.pay_amount " +
+                    " , pay_detail = EXCLUDED.pay_detail " +
+                    " , pay_principal_amount = EXCLUDED.pay_principal_amount " +
+                    " , pay_interest_amount = EXCLUDED.pay_interest_amount ; ";
 
                 foreach (var contractPeriodPayment in contractPeriodPayments)
                 {
@@ -47,6 +51,8 @@ namespace DailyLoan.Data.Repository
                     {
                         Value = payDetail
                     });
+                    parameters.Add("@pay_principal_amount", contractPeriodPayment.pay_principal_amount);
+                    parameters.Add("@pay_interest_amount", contractPeriodPayment.pay_interest_amount);
 
                     txn.ExecuteCommand(upsertSql, parameters);
                 }

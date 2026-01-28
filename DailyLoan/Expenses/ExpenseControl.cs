@@ -62,6 +62,12 @@ namespace DailyLoan.Expenses
                 {
                     this.expenseDetailScreeen1.SetExpenseData(doc);
                     this.ChangeFormMode(isEdit);
+                    if (isEdit)
+                    {
+                        this.expenseDetailScreeen1._enabedControl("doc_date", false);
+                        this.expenseDetailScreeen1._enabedControl("doc_no", false);
+
+                    }
                     return true;
                 }
 

@@ -32,7 +32,13 @@ namespace DailyLoan.Control
             this.Load += SearchDataForm_Load;
             this.searchDataControl1._textSearchTextbox.KeyPress += _textSearchTextbox_KeyPress;
             this.searchDataControl1._buttonSearch.Click += _buttonSearch_Click;
+            this.searchDataControl1.OnLoadDataList += SearchDataControl1_OnLoadDataList;
             this.searchDataControl1.AfterSelectData += SearchDataControl1_AfterSelectData;
+        }
+
+        private void SearchDataControl1_OnLoadDataList()
+        {
+            this.LoadData();
         }
 
         private void _textSearchTextbox_KeyPress(object sender, KeyPressEventArgs e)

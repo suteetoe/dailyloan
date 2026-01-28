@@ -8,7 +8,7 @@ namespace DailyLoan.Data.Models
 {
     public class Expense
     {
-        public const string TABLE_NAME = "txn_contract";
+        public const string TABLE_NAME = "txn_expense";
 
         public int id { get; set; }
         public DateTime doc_date { get; set; }

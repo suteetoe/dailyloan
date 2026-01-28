@@ -367,6 +367,15 @@
     <Compile Include="Screen\Options\_optionDetailScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Screen\RoutePayment\RoutePaymentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\RoutePayment\_routePaymentDetailGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Screen\RoutePayment\_routePaymentDetailScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Screen\Route\RouteControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -484,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Screen\Options\OptionForm.resx">
       <DependentUpon>OptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screen\RoutePayment\RoutePaymentControl.resx">
+      <DependentUpon>RoutePaymentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Screen\Route\RouteControl.resx">
       <DependentUpon>RouteControl.cs</DependentUpon>

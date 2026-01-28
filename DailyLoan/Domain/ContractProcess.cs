@@ -30,12 +30,20 @@ namespace DailyLoan.Domain
                 paymentProcess.AddPayment(payment.doc_no, payment.doc_date, payment.doc_time, payment.total_amount);
             }
 
+            paymentProcess.CalcPrincipleAndInterest();
+
             var processResult = paymentProcess.GetResult();
             contractPeriodPaymentRepository.UpSertContractPeriodPayment(processResult.ToArray());
+            int paySuccessCount = paymentProcess.PaySuccessPeriodCount();
 
-            if (contract.total_pay_amount.CompareTo(paymentProcess.totalPayAmount) != 0)
+            bool isPayAmountChanged = contract.total_pay_amount.CompareTo(paymentProcess.totalPayAmount) != 0;
+            bool isPayCountChanged = contract.pay_count != paySuccessCount;
+            bool isPayPrincipalChanged = contract.total_paid_principle.CompareTo(paymentProcess.TotalPaidPrincipal) != 0;
+            bool isPayInterestChanged = contract.total_paid_interest.CompareTo(paymentProcess.TotalPaidInterest) != 0;
+
+            if (isPayAmountChanged || isPayCountChanged || isPayPrincipalChanged || isPayInterestChanged)
             {
-                contractRepository.UpdateContractTotalPayAmount(contract.contract_no, paymentProcess.totalPayAmount, listPayment.Count);
+                contractRepository.UpdateContractTotalPayAmount(contract.contract_no, paymentProcess.totalPayAmount, paySuccessCount, paymentProcess.TotalPaidPrincipal, paymentProcess.TotalPaidInterest);
             }
 
             if (contract.total_contract_amount.CompareTo(paymentProcess.totalPayAmount) == 0)

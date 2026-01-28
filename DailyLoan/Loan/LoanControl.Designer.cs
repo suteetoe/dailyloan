@@ -53,9 +53,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this._deleteContractButton = new System.Windows.Forms.ToolStripButton();
             this._changeRouteButton = new System.Windows.Forms.ToolStripButton();
+            this._deleteContractButton = new System.Windows.Forms.ToolStripButton();
             this.toolsPanel = new System.Windows.Forms.Panel();
+            this._recalAllContractButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -392,28 +393,14 @@
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._changeRouteButton,
-            this._deleteContractButton});
+            this._deleteContractButton,
+            this._recalAllContractButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStrip2.Size = new System.Drawing.Size(1010, 81);
             this.toolStrip2.TabIndex = 9;
             this.toolStrip2.Text = "toolStrip1";
-            // 
-            // _deleteContractButton
-            // 
-            this._deleteContractButton.AutoSize = false;
-            this._deleteContractButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._deleteContractButton.Image = global::DailyLoan.Properties.Resources.delete_32;
-            this._deleteContractButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this._deleteContractButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._deleteContractButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
-            this._deleteContractButton.Name = "_deleteContractButton";
-            this._deleteContractButton.Size = new System.Drawing.Size(87, 87);
-            this._deleteContractButton.Text = "ลบสัญญา";
-            this._deleteContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this._deleteContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this._deleteContractButton.Click += new System.EventHandler(this._deleteContractButton_Click);
             // 
             // _changeRouteButton
             // 
@@ -430,6 +417,21 @@
             this._changeRouteButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._changeRouteButton.Click += new System.EventHandler(this._changeRouteButton_Click);
             // 
+            // _deleteContractButton
+            // 
+            this._deleteContractButton.AutoSize = false;
+            this._deleteContractButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._deleteContractButton.Image = global::DailyLoan.Properties.Resources.delete_32;
+            this._deleteContractButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._deleteContractButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._deleteContractButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._deleteContractButton.Name = "_deleteContractButton";
+            this._deleteContractButton.Size = new System.Drawing.Size(87, 87);
+            this._deleteContractButton.Text = "ลบสัญญา";
+            this._deleteContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._deleteContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._deleteContractButton.Click += new System.EventHandler(this._deleteContractButton_Click);
+            // 
             // toolsPanel
             // 
             this.toolsPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
@@ -439,6 +441,21 @@
             this.toolsPanel.Name = "toolsPanel";
             this.toolsPanel.Size = new System.Drawing.Size(1024, 114);
             this.toolsPanel.TabIndex = 7;
+            // 
+            // _recalAllContractButton
+            // 
+            this._recalAllContractButton.AutoSize = false;
+            this._recalAllContractButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._recalAllContractButton.Image = global::DailyLoan.Properties.Resources.flash_32;
+            this._recalAllContractButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._recalAllContractButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._recalAllContractButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._recalAllContractButton.Name = "_recalAllContractButton";
+            this._recalAllContractButton.Size = new System.Drawing.Size(87, 87);
+            this._recalAllContractButton.Text = "ReCal All";
+            this._recalAllContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._recalAllContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._recalAllContractButton.Click += new System.EventHandler(this._recalAllContractButton_Click);
             // 
             // LoanControl
             // 
@@ -501,5 +518,6 @@
         private System.Windows.Forms.ToolStripButton _changeRouteButton;
         private System.Windows.Forms.Label _nplLabel;
         private System.Windows.Forms.ToolStripButton _deleteContractButton;
+        private System.Windows.Forms.ToolStripButton _recalAllContractButton;
     }
 }

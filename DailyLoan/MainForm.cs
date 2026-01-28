@@ -141,5 +141,11 @@ namespace DailyLoan
             Router.OpenMenu(MenuScreen.MENU_PAYMENT);
 
         }
+
+        private void _routePaymentMenuButton_Click(object sender, EventArgs e)
+        {
+            Router.OpenMenu(MenuScreen.MENU_ROUTE_PAYMENT);
+
+        }
     }
 }

@@ -76,7 +76,6 @@ namespace DailyLoan.Screen.ContractPayment
                 if (contractPay != null)
                 {
                     this._contractPaymentDetailScreen1.LoadContractPayData(contractPay);
-
                     return true;
                 }
                 return false;

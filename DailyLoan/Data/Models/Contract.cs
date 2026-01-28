@@ -23,8 +23,6 @@ namespace DailyLoan.Data.Models
 
         public String customer_code { get; set; }
 
-        // public String product_group { get; set; }
-
         public String description { get; set; }
 
         public decimal principle_amount { get; set; }
@@ -37,15 +35,21 @@ namespace DailyLoan.Data.Models
 
         public decimal amount_per_period { get; set; }
 
-        public decimal total_contract_amount { get; set; }
-
         public DateTime first_period_date { get; set; }
 
         public DateTime last_period_date { get; set; }
 
-        public decimal total_pay_amount { get; set; }
+        public decimal total_contract_amount { get; set; }
 
         public int contract_status { get; set; }
+
+        public int pay_count { get; set; }
+
+        public decimal total_pay_amount { get; set; }
+
+        public decimal total_paid_principle { get; set; }
+
+        public decimal total_paid_interest { get; set; }
 
         public LoanType loanType { get; set; }
 
@@ -54,9 +58,6 @@ namespace DailyLoan.Data.Models
         public Customer customer { get; set; }
 
         public List<ContractPeriod> ContractPeriods { get; set; }
-
-        public int pay_count { get; set; }
-
     }
 
     public class ContractBalance : Contract
@@ -81,9 +82,11 @@ namespace DailyLoan.Data.Models
             contractBalance.first_period_date = contract.first_period_date;
             contractBalance.last_period_date = contract.last_period_date;
             contractBalance.total_contract_amount = contract.total_contract_amount;
-            contractBalance.description = contract.description;
-            contractBalance.total_pay_amount = contract.total_pay_amount;
             contractBalance.contract_status = contract.contract_status;
+            contractBalance.pay_count = contract.pay_count;
+            contractBalance.total_pay_amount = contract.total_pay_amount;
+            contractBalance.total_paid_principle = contract.total_paid_principle;
+            contractBalance.total_paid_interest = contract.total_paid_interest;
 
             return contractBalance;
         }

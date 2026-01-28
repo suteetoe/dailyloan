@@ -46,6 +46,8 @@ namespace DailyLoan.Migration.data
                       pay_count integer DEFAULT 0,
                       total_pay_amount numeric DEFAULT 0.0,
                       contract_status integer DEFAULT 0,
+                      total_paid_principle numeric DEFAULT 0.0,
+                      total_paid_interest numeric DEFAULT 0.0,
                       create_by int NOT NULL
                     );";
                 transactionConnection.ExecuteCommand(create_table_loan_data);

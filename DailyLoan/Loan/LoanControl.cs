@@ -418,5 +418,23 @@ namespace DailyLoan.Loan
                 
             }
         }
+
+        private void _recalAllContractButton_Click(object sender, EventArgs e)
+        {
+            string queryGetAllContract = "SELECT contract_no FROM txn_contract order by contract_date, contract_no ";
+            DataSet dataSet = App.DBConnection.QueryData(queryGetAllContract);
+            if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+            {
+                var rows = dataSet.Tables[0].Rows;
+                foreach (DataRow row in rows)
+                {
+                    string contractNo = row["contract_no"].ToString();
+                    ContractProcess contractProcess = new ContractProcess();
+                    contractProcess.StartProcessPayment(contractNo);
+                }
+
+                MessageBox.Show("Recal All Contract Complete");
+            }
+        }
     }
 }

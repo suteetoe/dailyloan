@@ -13,5 +13,9 @@ namespace DailyLoan.Data.Models
         public String contract_no { get; set; }
 
         public decimal total_amount { get; set; }
+
+        public string customer_code { get; set; }
+
+        public string customer_name { get; set; }
     }
 }

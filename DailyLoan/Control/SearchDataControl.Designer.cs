@@ -128,6 +128,7 @@
             this._goFirstPageButton.Name = "_goFirstPageButton";
             this._goFirstPageButton.Size = new System.Drawing.Size(23, 30);
             this._goFirstPageButton.Text = "toolStripButton1";
+            this._goFirstPageButton.Click += new System.EventHandler(this._goFirstPageButton_Click);
             // 
             // _prevPageButton
             // 
@@ -137,6 +138,7 @@
             this._prevPageButton.Name = "_prevPageButton";
             this._prevPageButton.Size = new System.Drawing.Size(23, 30);
             this._prevPageButton.Text = "toolStripButton2";
+            this._prevPageButton.Click += new System.EventHandler(this._prevPageButton_Click);
             // 
             // _nextPageButton
             // 
@@ -146,6 +148,7 @@
             this._nextPageButton.Name = "_nextPageButton";
             this._nextPageButton.Size = new System.Drawing.Size(23, 30);
             this._nextPageButton.Text = "toolStripButton3";
+            this._nextPageButton.Click += new System.EventHandler(this._nextPageButton_Click);
             // 
             // _goLastPageButton
             // 
@@ -155,6 +158,7 @@
             this._goLastPageButton.Name = "_goLastPageButton";
             this._goLastPageButton.Size = new System.Drawing.Size(23, 30);
             this._goLastPageButton.Text = "toolStripButton4";
+            this._goLastPageButton.Click += new System.EventHandler(this._goLastPageButton_Click);
             // 
             // toolStripSeparator1
             // 

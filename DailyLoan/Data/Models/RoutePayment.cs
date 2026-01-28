@@ -20,6 +20,7 @@ namespace DailyLoan.Data.Models
 
         public decimal total_route_amount { get; set; }
 
+        public Route route { get; set; }
         public List<RoutePaymentDetail> Details { get; set; }
     }
 }

@@ -127,7 +127,7 @@
             this._goFirstPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._goFirstPageButton.Name = "_goFirstPageButton";
             this._goFirstPageButton.Size = new System.Drawing.Size(23, 30);
-            this._goFirstPageButton.Text = "toolStripButton1";
+            this._goFirstPageButton.Text = "หน้าแรก";
             this._goFirstPageButton.Click += new System.EventHandler(this._goFirstPageButton_Click);
             // 
             // _prevPageButton
@@ -137,7 +137,7 @@
             this._prevPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._prevPageButton.Name = "_prevPageButton";
             this._prevPageButton.Size = new System.Drawing.Size(23, 30);
-            this._prevPageButton.Text = "toolStripButton2";
+            this._prevPageButton.Text = "หน้าก่อนหน้า";
             this._prevPageButton.Click += new System.EventHandler(this._prevPageButton_Click);
             // 
             // _nextPageButton
@@ -147,7 +147,7 @@
             this._nextPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._nextPageButton.Name = "_nextPageButton";
             this._nextPageButton.Size = new System.Drawing.Size(23, 30);
-            this._nextPageButton.Text = "toolStripButton3";
+            this._nextPageButton.Text = "หน้าถัดไป";
             this._nextPageButton.Click += new System.EventHandler(this._nextPageButton_Click);
             // 
             // _goLastPageButton
@@ -157,7 +157,7 @@
             this._goLastPageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._goLastPageButton.Name = "_goLastPageButton";
             this._goLastPageButton.Size = new System.Drawing.Size(23, 30);
-            this._goLastPageButton.Text = "toolStripButton4";
+            this._goLastPageButton.Text = "หน้าสุดท้าย";
             this._goLastPageButton.Click += new System.EventHandler(this._goLastPageButton_Click);
             // 
             // toolStripSeparator1

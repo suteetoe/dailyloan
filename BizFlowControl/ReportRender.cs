@@ -198,13 +198,26 @@ namespace BizFlowControl
             {
                 ReportColumn column = ReportColumns[i];
 
+                StringFormat format = new StringFormat();
+                if (column.ContentAlignment == ContentAlignment.MiddleRight)
+                {
+                    format.Alignment = StringAlignment.Far;
+                }
+                else if (column.ContentAlignment == ContentAlignment.MiddleCenter)
+                {
+                    format.Alignment = StringAlignment.Center;
+                }
+                else
+                {
+                    format.Alignment = StringAlignment.Near;
+                }
                 string dataText = GetRowDataText(row, column);
 
                 g.DrawString(dataText,
                     detailFont,
                     Brushes.Black,
                     leftMergin + ReportColumns.Take(i).Sum(c => c.ColumnWidth / 100 * printArea.Width),
-                    drawYPoint + 5);
+                    drawYPoint + 5, format);
             }
 
             return drawYPoint;
@@ -305,6 +318,8 @@ namespace BizFlowControl
         public float ColumnWidth { get; set; }
         public string DataField { get; set; }
         public string Format { get; set; }
+
+        public ContentAlignment ContentAlignment { get; set; } = ContentAlignment.MiddleLeft;
     }
 
     public class ReportDataRow : Dictionary<string, object>

@@ -25,12 +25,17 @@ namespace DailyLoan.Screen.Customer
             this.searchCustomerControl1._buttonSearch.Click += _buttonSearch_Click;
             this.searchCustomerControl1._textSearchTextbox.KeyPress += _textSearchTextbox_KeyPress;
             this.searchCustomerControl1.AfterSelectData += SearchCustomerControl1_AfterSelectData;
+            this.searchCustomerControl1.OnLoadDataList += SearchCustomerControl1_OnLoadDataList;
+        }
+
+        private void SearchCustomerControl1_OnLoadDataList()
+        {
+            this.searchCustomerControl1.SearchData();
         }
 
         private void _buttonSearch_Click(object sender, EventArgs e)
         {
             this._loadDataTimer.Stop();
-            this.searchCustomerControl1.SearchData();
         }
 
         private void _textSearchTextbox_KeyPress(object sender, KeyPressEventArgs e)

@@ -166,6 +166,27 @@ namespace DailyLoan.Migration.data
                     );";
                 transactionConnection.ExecuteCommand(create_table_txn_expense);
 
+                string create_view_customer_npl =
+                    @"CREATE OR REPLACE VIEW public.view_customer_npl
+ AS
+ WITH npl_contract AS (
+         SELECT txn_contract.contract_no,
+            txn_contract.route_code,
+            txn_contract.customer_code,
+            txn_contract.last_period_date,
+            date(now()) - txn_contract.last_period_date AS over_due_days,
+            txn_contract.total_contract_amount - txn_contract.total_pay_amount AS balance_amount
+           FROM txn_contract,
+            sys_options
+          WHERE txn_contract.contract_status = 0 AND (txn_contract.total_contract_amount - txn_contract.total_pay_amount) > 0::numeric AND (date(now()) - txn_contract.last_period_date) > sys_options.npl_period
+          ORDER BY txn_contract.last_period_date
+        )
+ SELECT DISTINCT npl_contract.customer_code,
+    1 AS is_npl
+   FROM npl_contract;";
+
+                transactionConnection.ExecuteCommand(create_view_customer_npl);
+
                 transactionConnection.CommitTransaction();
             }
             catch

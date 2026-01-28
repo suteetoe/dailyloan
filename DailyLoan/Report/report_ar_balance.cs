@@ -19,13 +19,16 @@ namespace DailyLoan.Report
         {
             this.ReportTitle = REPORT_NAME;
 
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "วันที่", ColumnWidth = 7, DataField = "contract_date" });
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เลขที่สัญญา", ColumnWidth = 8, DataField = "contract_no" });
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ลูกค้า", ColumnWidth = 25, DataField = "address" });
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เบอร์โทร", ColumnWidth = 15, DataField = "address" });
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เงินต้น", ColumnWidth = 15, DataField = "principle_amount" });
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ดอกเบี้ย", ColumnWidth = 15, DataField = "total_interest" });
-            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ยอดค้างชำระ", ColumnWidth = 15, DataField = "outstanding_amount" });
+            this.detailFont = new System.Drawing.Font("Angsana New", 12);
+
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "วันที่", ColumnWidth = 10, DataField = "contract_date" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เลขที่สัญญา", ColumnWidth = 15, DataField = "contract_no" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ลูกค้า", ColumnWidth = 25, DataField = "customer" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "เงินต้น", ColumnWidth = 10, DataField = "principle_amount", ContentAlignment = ContentAlignment.MiddleRight });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ดอกเบี้ย", ColumnWidth = 10, DataField = "total_interest", ContentAlignment = ContentAlignment.MiddleRight });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "รวม", ColumnWidth = 10, DataField = "total_contract_amount", ContentAlignment = ContentAlignment.MiddleRight });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ชำระแล้ว", ColumnWidth = 10, DataField = "total_pay_amount", ContentAlignment = ContentAlignment.MiddleRight });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "ยอดค้างชำระ", ColumnWidth = 10, DataField = "outstanding_amount", ContentAlignment = ContentAlignment.MiddleRight });
 
         }
 
@@ -56,7 +59,7 @@ namespace DailyLoan.Report
                     route);
 
                 string query =
-                    @"select  ct.contract_no, ct.contract_date, ct.customer_code, cust.name_1, ct.principle_amount, ct.total_interest, 0 as outstanding_amount, ct.route_code
+                    @"select  ct.contract_no, ct.contract_date, ct.customer_code, cust.name_1, ct.principle_amount, ct.total_interest, total_contract_amount, total_pay_amount, (total_contract_amount - total_pay_amount) as outstanding_amount, ct.route_code
                 from txn_contract as ct
                 join mst_customer as cust on cust.code = ct.customer_code
                 where ( ct.contract_date between @from_date and @to_date ) and route_code = @route_code
@@ -70,18 +73,39 @@ namespace DailyLoan.Report
                 DataSet ds = App.DBConnection.QueryData(query, parameters);
                 if (ds.Tables.Count > 0)
                 {
+
+                    decimal totalContractAmount = 0M;
+                    decimal totalPaidAmount = 0M;
+                    decimal totalBalanceAmount = 0M;
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
                         DataRow dr = ds.Tables[0].Rows[i];
                         var row = new BizFlowControl.ReportDataRow();
                         row["contract_no"] = dr["contract_no"];
                         row["contract_date"] = Convert.ToDateTime(dr["contract_date"]).ToString("dd/MM/yyyy");
-                        row["address"] = string.Format("{0} {1}", dr["customer_code"], dr["name_1"]);
+                        row["customer"] = dr["name_1"];//  string.Format("{0} {1}", dr["customer_code"], );
                         row["principle_amount"] = Convert.ToDecimal(dr["principle_amount"]).ToString("#,##0.00");
                         row["total_interest"] = Convert.ToDecimal(dr["total_interest"]).ToString("#,##0.00");
+                        row["total_contract_amount"] = Convert.ToDecimal(dr["total_contract_amount"]).ToString("#,##0.00");
+                        row["total_pay_amount"] = Convert.ToDecimal(dr["total_pay_amount"]).ToString("#,##0.00");
                         row["outstanding_amount"] = Convert.ToDecimal(dr["outstanding_amount"]).ToString("#,##0.00");
+
+                        totalContractAmount += Convert.ToDecimal(dr["total_contract_amount"]);
+                        totalPaidAmount += Convert.ToDecimal(dr["total_pay_amount"]);
+                        totalBalanceAmount += Convert.ToDecimal(dr["outstanding_amount"]);
+
                         this.ReportData.Add(row);
                     }
+
+                    // total row
+                    var totalRow = new BizFlowControl.ReportDataRow();
+                    totalRow.IsTotalRow = true;
+                    totalRow["customer"] = "รวมทั้งสิ้น";
+                    totalRow["total_contract_amount"] = totalContractAmount.ToString("#,##0.00");
+                    totalRow["total_pay_amount"] = totalPaidAmount.ToString("#,##0.00");
+                    totalRow["outstanding_amount"] = totalBalanceAmount.ToString("#,##0.00");
+                    this.ReportData.Add(totalRow);
+
                 }
                 return true;
             }
@@ -91,7 +115,7 @@ namespace DailyLoan.Report
                 return false;
             }
         }
-        
+
 
     }
 

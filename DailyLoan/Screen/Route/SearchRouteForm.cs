@@ -16,15 +16,28 @@ namespace DailyLoan.Screen.Route
 
         }
 
-        protected override void LoadData()
-        {
-            string queryList = "SELECT code, name_1 from mst_route order by code ";
+        //protected override void LoadData()
+        //{
+        //    string queryList = "SELECT code, name_1 from mst_route ";
 
-            var result = App.DBConnection.QueryData(queryList);
-            if (result.Tables.Count > 0)
-            {
-                this.searchDataControl1._searchResultGrid._loadFromDataTable(result.Tables[0], result.Tables[0].Select());
-            }
+        //    var result = App.DBConnection.QueryData(queryList);
+        //    if (result.Tables.Count > 0)
+        //    {
+        //        this.searchDataControl1._searchResultGrid._loadFromDataTable(result.Tables[0], result.Tables[0].Select());
+        //    }
+        //}
+
+        protected override string LoadDataListQuery()
+        {
+            string filter = this.searchDataControl1.GetFilterCommand();
+
+            string queryList = "SELECT code, name_1 from mst_route " + (filter.Length > 0 ? " WHERE " + filter : "");
+            return queryList;
+        }
+
+        protected override string SortField()
+        {
+            return " order by code ";
         }
     }
 }

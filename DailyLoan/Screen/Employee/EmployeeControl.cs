@@ -62,8 +62,15 @@ namespace DailyLoan.Screen.Employee
 
         protected override string LoadDataListQuery()
         {
-            string query = "SELECT code, name_1 from mst_employee ";
+            string filter = this.GetFilterCommand();
+            string query = "SELECT code, name_1 from mst_employee " + (filter.Length > 0 ? " WHERE " + filter : "");
             return query;
+        }
+
+
+        protected override string SortField()
+        {
+            return " order by code ";
         }
 
         protected override void ClearScreen()

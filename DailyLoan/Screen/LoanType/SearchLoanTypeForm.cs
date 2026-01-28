@@ -16,15 +16,33 @@ namespace DailyLoan.Screen.LoanType
 
         }
 
-        protected override void LoadData()
-        {
-            string queryList = "SELECT code, name_1 from mst_loan_type order by code";
+        //protected override void LoadData()
+        //{
 
-            var result = App.DBConnection.QueryData(queryList);
-            if (result.Tables.Count > 0)
-            {
-                this.searchDataControl1._searchResultGrid._loadFromDataTable(result.Tables[0], result.Tables[0].Select());
-            }
+        //    string filter = this.searchDataControl1.GetFilterCommand();
+
+
+        //    string queryList = "SELECT code, name_1 from mst_loan_type order by code";
+
+        //    var result = App.DBConnection.QueryData(queryList);
+        //    if (result.Tables.Count > 0)
+        //    {
+        //        this.searchDataControl1._searchResultGrid._loadFromDataTable(result.Tables[0], result.Tables[0].Select());
+        //    }
+        //}
+
+        protected override string LoadDataListQuery()
+        {
+            string filter = this.searchDataControl1.GetFilterCommand();
+
+            string queryList = "SELECT code, name_1 from mst_loan_type " + (filter.Length > 0 ? " WHERE " + filter : "");
+
+            return queryList;
+        }
+
+        protected override string SortField()
+        {
+            return "order by code";
         }
     }
 }

@@ -40,10 +40,11 @@ namespace DailyLoan.Migration.data
                       income_other numeric DEFAULT 0,
                       num_of_period int NOT NULL,
                       amount_per_period numeric NOT NULL,
+                      total_contract_amount numeric DEFAULT 0.0,
                       first_period_date date NOT NULL,
                       last_period_date date NOT NULL,
+                      pay_count integer DEFAULT 0,
                       total_pay_amount numeric DEFAULT 0.0,
-                      total_contract_amount numeric DEFAULT 0.0,
                       contract_status integer DEFAULT 0,
                       create_by int NOT NULL
                     );";
@@ -150,6 +151,18 @@ namespace DailyLoan.Migration.data
                     "fk_txn_contract_period_payment_contract_no",
                     "ALTER TABLE txn_contract_period_payment ADD CONSTRAINT fk_txn_contract_period_payment_contract_no FOREIGN KEY(contract_no) REFERENCES txn_contract(contract_no);");
                 transactionConnection.ExecuteCommand(create_foreign_key_txn_contract_period_payment_contract_no);
+
+
+                string create_table_txn_expense =
+                    @"CREATE TABLE IF NOT EXISTS txn_expense (
+                      id SERIAL,
+                      doc_no varchar(100) PRIMARY KEY,
+                      doc_date date NOT NULL,
+                      remark text DEFAULT '',
+                      total_amount numeric DEFAULT 0,
+                      create_by int NOT NULL
+                    );";
+                transactionConnection.ExecuteCommand(create_table_txn_expense);
 
                 transactionConnection.CommitTransaction();
             }

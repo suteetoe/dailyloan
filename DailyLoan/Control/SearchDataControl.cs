@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +13,30 @@ namespace DailyLoan.Control
 {
     public partial class SearchDataControl : UserControl
     {
-        protected int _pageNumber = 1;
+        public int _pageNumber = 1;
+        public int _totalPage = 1;
+        public int _pageSize = 15;
+        public int _totalRecord = 0;
+
+        public int TotalRecord
+        {
+            get { return _totalRecord; }
+            set
+            {
+                _totalRecord = value;
+                UpdateRecordLabel();
+            }
+        }
+
+        void UpdateRecordLabel()
+        {
+            int totalPage = (int)Math.Ceiling((double)this._totalRecord / this._pageSize);
+            this._totalPage = totalPage;
+
+            string recordCountText = string.Format("{0} ({1}/{2})", this._totalRecord, this._pageNumber, this._totalPage);
+            this._recordCountLabel.Text = recordCountText;
+        }
+
         public SearchDataControl()
         {
             InitializeComponent();
@@ -61,9 +85,12 @@ namespace DailyLoan.Control
                 List<string> columnFilterList = new List<string>();
                 foreach (SMLControl._columnType column in this._searchResultGrid._columnList)
                 {
-                    if (column._type == 1)
+                    if (column._isQuery)
                     {
-                        columnFilterList.Add(string.Format("{0} ILIKE '%{1}%'", column._originalName, filterWord.Replace("'", "''")));
+                        if (column._type == 1)
+                        {
+                            columnFilterList.Add(string.Format("{0} ILIKE '%{1}%'", column._originalName, filterWord.Replace("'", "''")));
+                        }
                     }
                 }
 
@@ -73,7 +100,7 @@ namespace DailyLoan.Control
                 }
             }
 
-            return " WHERE " + string.Join(" AND ", filterCommandList.ToArray());
+            return  string.Join(" AND ", filterCommandList.ToArray());
         }
 
         public event AfterSelectDataEventHandler AfterSelectData;

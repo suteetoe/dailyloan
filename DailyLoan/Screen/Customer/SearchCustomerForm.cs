@@ -22,7 +22,27 @@ namespace DailyLoan.Screen.Customer
             InitializeComponent();
 
             this.Load += SearchCustomerForm_Load;
+            this.searchCustomerControl1._buttonSearch.Click += _buttonSearch_Click;
+            this.searchCustomerControl1._textSearchTextbox.KeyPress += _textSearchTextbox_KeyPress;
             this.searchCustomerControl1.AfterSelectData += SearchCustomerControl1_AfterSelectData;
+        }
+
+        private void _buttonSearch_Click(object sender, EventArgs e)
+        {
+            this._loadDataTimer.Stop();
+            this.searchCustomerControl1.SearchData();
+        }
+
+        private void _textSearchTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.ReStartLoadTimer();
+        }
+
+        void ReStartLoadTimer()
+        {
+            this._loadDataTimer.Stop();
+            this._loadDataTimer.Start();
+
         }
 
         private void SearchCustomerControl1_AfterSelectData(SMLControl.GridRowData rowData)
@@ -40,8 +60,10 @@ namespace DailyLoan.Screen.Customer
 
         private void _loadDataTimer_Tick(object sender, EventArgs e)
         {
+            this._loadDataTimer.Stop();
             this.searchCustomerControl1.SearchData();
 
+            Console.WriteLine("Load Data");
         }
 
         private void _saveNewCustomerButton_Click(object sender, EventArgs e)

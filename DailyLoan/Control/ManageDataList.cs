@@ -50,6 +50,7 @@ namespace DailyLoan.Control
 
             this.SizeChanged += ManageDataList_SizeChanged;
             this.Load += ManageDataList_Load;
+            this._textSearchTextbox.KeyPress += _textSearchTextbox_KeyPress;
             this._dataListGrid._mouseClick += _dataListGrid__mouseClick;
             this._dataListGrid._mouseDoubleClick += _dataListGrid__mouseDoubleClick;
             this.ParentChanged += ManageDataList_ParentChanged;
@@ -57,22 +58,32 @@ namespace DailyLoan.Control
             OnLoadDataList();
         }
 
+        private void _textSearchTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            RestartLoadingTimer();
+        }
 
         private void ManageDataList_ParentChanged(object sender, EventArgs e)
         {
-            _dataLoadingTimer.Start();
+            RestartLoadingTimer();
         }
 
         private void ManageDataList_SizeChanged(object sender, EventArgs e)
         {
-            _dataLoadingTimer.Start();
+            RestartLoadingTimer();
         }
 
         private void ManageDataList_Load(object sender, EventArgs e)
         {
-            _dataLoadingTimer.Start();
+            RestartLoadingTimer();
         }
 
+
+        void RestartLoadingTimer()
+        {
+            _dataLoadingTimer.Stop();
+            _dataLoadingTimer.Start();
+        }
 
         private void _dataListGrid__mouseClick(object sender, SMLControl.GridCellEventArgs e)
         {
@@ -203,8 +214,9 @@ namespace DailyLoan.Control
                     }
 
                     Paginator paginator = new Paginator(this.page, this.pageSize);
+                    string sortField = this.SortField();
 
-                    string paginatedQuery = loadDataQuery + " " + paginator.GetPaginationQuery();
+                    string paginatedQuery = loadDataQuery + " " + sortField + " " + paginator.GetPaginationQuery();
                     var dataSet = App.DBConnection.QueryData(paginatedQuery);
                     if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
                     {
@@ -246,6 +258,11 @@ namespace DailyLoan.Control
             return "";
         }
 
+        protected virtual string SortField()
+        {
+            return "";
+        }
+
         protected virtual bool LoadDataToScreen(RowDataSelect selectedRow, bool isEdit = false)
         {
             return true;
@@ -274,6 +291,7 @@ namespace DailyLoan.Control
 
         private void _buttonSearch_Click(object sender, EventArgs e)
         {
+            this._dataLoadingTimer.Stop();
             this.OnLoadDataList();
         }
 
@@ -424,6 +442,41 @@ namespace DailyLoan.Control
         }
 
         public event OnChangeEditModeDelegate OnChangeEditMode;
+
+        public string GetFilterCommand()
+        {
+            string filterValue = this._textSearchTextbox.Text.Trim();
+            if (filterValue.Length == 0)
+            {
+                return "";
+            }
+
+            string[] splitFilterWord = filterValue.Split(' ');
+            List<string> filterCommandList = new List<string>();
+
+            foreach (string filterWord in splitFilterWord)
+            {
+                List<string> columnFilterList = new List<string>();
+                foreach (SMLControl._columnType column in this._dataListGrid._columnList)
+                {
+                    if (column._isQuery)
+                    {
+                        if (column._type == 1)
+                        {
+                            columnFilterList.Add(string.Format("{0} ILIKE '%{1}%'", column._originalName, filterWord.Replace("'", "''")));
+                        }
+                    }
+                }
+
+                if (columnFilterList.Count > 0)
+                {
+                    filterCommandList.Add("(" + string.Join(" OR ", columnFilterList.ToArray()) + ")");
+                }
+            }
+
+            return string.Join(" AND ", filterCommandList.ToArray());
+        }
+
     }
 
     public delegate void OnChangeEditModeDelegate(bool isEditMode);

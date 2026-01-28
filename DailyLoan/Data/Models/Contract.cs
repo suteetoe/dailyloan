@@ -55,6 +55,8 @@ namespace DailyLoan.Data.Models
 
         public List<ContractPeriod> ContractPeriods { get; set; }
 
+        public int pay_count { get; set; }
+
     }
 
     public class ContractBalance : Contract

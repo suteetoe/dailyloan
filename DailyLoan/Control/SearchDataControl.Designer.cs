@@ -38,6 +38,8 @@
             this._prevPageButton = new System.Windows.Forms.ToolStripButton();
             this._nextPageButton = new System.Windows.Forms.ToolStripButton();
             this._goLastPageButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this._recordCountLabel = new System.Windows.Forms.ToolStripLabel();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -109,7 +111,9 @@
             this._goFirstPageButton,
             this._prevPageButton,
             this._nextPageButton,
-            this._goLastPageButton});
+            this._goLastPageButton,
+            this.toolStripSeparator1,
+            this._recordCountLabel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 523);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(650, 33);
@@ -152,6 +156,17 @@
             this._goLastPageButton.Size = new System.Drawing.Size(23, 30);
             this._goLastPageButton.Text = "toolStripButton4";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 33);
+            // 
+            // _recordCountLabel
+            // 
+            this._recordCountLabel.Name = "_recordCountLabel";
+            this._recordCountLabel.Size = new System.Drawing.Size(41, 30);
+            this._recordCountLabel.Text = "0 (0/0)";
+            // 
             // SearchDataControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -172,7 +187,7 @@
 
         #endregion
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button _buttonSearch;
+        public System.Windows.Forms.Button _buttonSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton _goFirstPageButton;
@@ -181,5 +196,7 @@
         private System.Windows.Forms.ToolStripButton _goLastPageButton;
         public SMLControl._myGrid _searchResultGrid;
         public System.Windows.Forms.TextBox _textSearchTextbox;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel _recordCountLabel;
     }
 }

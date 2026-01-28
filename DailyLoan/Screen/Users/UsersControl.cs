@@ -41,8 +41,15 @@ namespace DailyLoan.Screen.Users
 
         protected override string LoadDataListQuery()
         {
-            string query = "SELECT id, user_code, name_1, user_password from " + Data.Models.User.TABLE_NAME;
+            string filter = this.GetFilterCommand();
+
+            string query = "SELECT id, user_code, name_1, user_password from " + Data.Models.User.TABLE_NAME + " " + (filter.Length > 0 ? " WHERE " + filter: "") ;
             return query;
+        }
+
+        protected override string SortField()
+        {
+            return " order by user_code";
         }
 
         protected override bool LoadDataToScreen(RowDataSelect selectedRow, bool isEdit = false)
@@ -65,7 +72,7 @@ namespace DailyLoan.Screen.Users
 
         protected override bool OnSaveData()
         {
-           string requiredField = this.userDetailScreen1._checkEmtryField();
+            string requiredField = this.userDetailScreen1._checkEmtryField();
 
             if (requiredField != "")
             {

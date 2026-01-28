@@ -63,8 +63,14 @@ namespace DailyLoan.Screen.Route
 
         protected override string LoadDataListQuery()
         {
-            string query = "SELECT code, name_1 from mst_route ";
+            string filter = this.GetFilterCommand();
+            string query = "SELECT code, name_1 from mst_route " + (filter.Length > 0 ? " WHERE " + filter : "");
             return query;
+        }
+
+        protected override string SortField()
+        {
+            return " order by code";
         }
 
         protected override bool LoadDataToScreen(RowDataSelect selectedRow, bool isEdit = false)

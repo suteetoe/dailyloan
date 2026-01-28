@@ -1,5 +1,6 @@
 ﻿using DailyLoan.Control;
 using DailyLoan.Data.Repository;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +41,16 @@ namespace DailyLoan.Screen.Customer
 
         protected override string LoadDataListQuery()
         {
-            string query = "SELECT code, name_1, telephone from mst_customer";
+            string filter = this.GetFilterCommand();
+            string query = "SELECT code, name_1, telephone from mst_customer " + (filter.Length > 0 ? " WHERE " + filter : "");
             return query;
+        }
+
+        protected override string SortField()
+        {
+            string sort = " order by code";
+            return sort;
+
         }
 
         protected override bool LoadDataToScreen(RowDataSelect selectedRow, bool isEdit = false)

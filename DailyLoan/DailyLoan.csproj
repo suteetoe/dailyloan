@@ -183,6 +183,7 @@
     <Compile Include="Data\Models\ContractPeriodPaymentDetail.cs" />
     <Compile Include="Data\Models\Customer.cs" />
     <Compile Include="Data\Models\Contract.cs" />
+    <Compile Include="Data\Models\Expense.cs" />
     <Compile Include="Data\Models\RoutePayment.cs" />
     <Compile Include="Data\Models\RoutePaymentDetail.cs" />
     <Compile Include="Data\Models\Settings.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Data\Repository\ContractPeriodPaymentRepository.cs" />
     <Compile Include="Data\Repository\ContractRepository.cs" />
     <Compile Include="Data\Repository\CustomerRepository.cs" />
+    <Compile Include="Data\Repository\ExpenseRepository.cs" />
     <Compile Include="Data\Repository\RoutePaymentRepository.cs" />
     <Compile Include="Data\Repository\SettingRepository.cs" />
     <Compile Include="Domain\ContractProcess.cs" />

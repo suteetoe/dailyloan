@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyLoan.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -20,14 +21,16 @@ namespace DailyLoan.Screen.Customer
 
         public void SearchData()
         {
-            string filter = "";
-            string filterTextbox = this.GetFilterCommand();
+            string filter = this.GetFilterCommand();
 
             int rowPerPage = this._searchResultGrid._rowPerPage;
             int offset = (this._pageNumber - 1) * rowPerPage;
 
-            string queryRowCount = "SELECT COUNT(*) FROM mst_customer " + filter;
-            string queryQuery = string.Format("SELECT code, name_1, telephone from mst_customer {0} LIMIT {1} OFFSET {2} ", filterTextbox, rowPerPage, offset);
+            Paginator paginator = new Paginator(this._pageNumber, this._pageSize);
+
+
+            string queryRowCount = "SELECT COUNT(*) FROM mst_customer " + (filter.Length > 0 ? " WHERE " + filter : "");
+            string queryQuery ="SELECT code, name_1, telephone from mst_customer " + (filter.Length > 0 ? " WHERE " + filter : "") + paginator.GetPaginationQuery();
 
             DataSet result = App.DBConnection.QueryData(queryQuery);
             if (result.Tables.Count > 0)

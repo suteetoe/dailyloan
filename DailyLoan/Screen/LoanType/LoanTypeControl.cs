@@ -34,7 +34,13 @@ namespace DailyLoan.Screen.LoanType
 
         protected override string LoadDataListQuery()
         {
-            return "select * from mst_loan_type ";
+            string filter = this.GetFilterCommand();
+            return "select * from mst_loan_type " + (filter.Length > 0 ? " WHERE " + filter : "");
+        }
+
+        protected override string SortField()
+        {
+            return " order by code";
         }
 
         protected override void ClearScreen()

@@ -22,9 +22,14 @@ namespace DailyLoan.Screen.ContractPayment
 
             this._dataListGrid.AddGridColumn(new SMLControl.GridDateColumn() { WidthPercent = 15, ColumnCode = "doc_date", ColumnName = "วันที่เอกสาร" });
             this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "doc_no", ColumnName = "เลขที่เอกสาร" });
-            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "contract_no", ColumnName = "สัญญา" });
-            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 40, ColumnCode = "customer", ColumnName = "ลูกค้า" });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 20, ColumnCode = "contract_no", ColumnName = "สัญญา", IsQuery = false });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { WidthPercent = 40, ColumnCode = "customer", ColumnName = "ลูกค้า", IsQuery = false });
             this._dataListGrid.AddGridColumn(new SMLControl.GridDecimalColumn() { WidthPercent = 15, ColumnCode = "total_amount", ColumnName = "จำนวนเงิน", Format = numberFormat });
+
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { ColumnName = "รหัสลูกค้า", ColumnCode = "cp.contract_no", WidthPercent = 0, IsHide = true });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { ColumnName = "รหัสลูกค้า", ColumnCode = "mst_customer.code", WidthPercent = 0, IsHide = true });
+            this._dataListGrid.AddGridColumn(new SMLControl.GridTextColumn() { ColumnName = "ชื่อลูกค้า", ColumnCode = "mst_customer.name_1", WidthPercent = 0, IsHide = true });
+
             this._dataListGrid._calcPersentWidthToScatter();
             this._dataListGrid.Invalidate();
 
@@ -43,13 +48,22 @@ namespace DailyLoan.Screen.ContractPayment
 
         protected override string LoadDataListQuery()
         {
+            string filter = this.GetFilterCommand();
+
             string query =
                 @"SELECT cp.doc_date, cp.doc_no, cp.contract_no, cp.total_amount, (cc.customer_code || '~' || mst_customer.name_1 ) as customer 
+                , mst_customer.code
+                , mst_customer.name_1
                 FROM txn_payment AS cp 
                 JOIN txn_contract AS cc on cc.contract_no = cp.contract_no 
                 JOIN mst_customer on mst_customer.code = cc.customer_code 
-                order by doc_date ";
+                " + (filter.Length > 0 ? " WHERE " + filter : "");
             return query;
+        }
+
+        protected override string SortField()
+        {
+            return "order by doc_date  ";
         }
 
         protected override bool LoadDataToScreen(RowDataSelect selectedRow, bool isEdit = false)
@@ -80,7 +94,7 @@ namespace DailyLoan.Screen.ContractPayment
             try
             {
                 string doc_no = rowSelected["doc_no"];
-               var payment = contractPayRepository.GetContractPaymentByDocNo(doc_no);
+                var payment = contractPayRepository.GetContractPaymentByDocNo(doc_no);
                 if (payment == null)
                 {
                     MessageBox.Show("ไม่พบข้อมูลที่ต้องการลบ", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

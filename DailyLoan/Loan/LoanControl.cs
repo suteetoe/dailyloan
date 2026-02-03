@@ -29,6 +29,15 @@ namespace DailyLoan.Loan
             this._loanScreenTop1._textBoxChanged += _loanScreenTop1__textBoxChanged;
             this.showSummaryLabel(0, 0, 0);
 
+            if ((int)App.LoggedUser.Role == 2)
+            {
+                this._recalAllContractButton.Visible = true;
+            }
+            else
+            {
+                this._recalAllContractButton.Visible = false;
+            }
+
             if ((int)App.LoggedUser.Role > 0)
             {
                 this._deleteContractButton.Enabled = true;

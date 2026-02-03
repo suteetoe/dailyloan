@@ -20,13 +20,23 @@ namespace DailyLoan.Report
             this.listView1.Items.AddRange(new ListViewItem[] {
                 new ListViewItem(report_ar_balance.REPORT_NAME, 0) { Tag = "REPORT_AR_BALANCE" },
                 new ListViewItem( report_ar_contract_payment.REPORT_NAME, 0) { Tag = "REPORT_AR_CONTRACT_PAYMENT" },
-                new ListViewItem("รายงานลูกหนี้ค้างชำระ", 0) { Tag = "REPORT_AR_OVER_DUE" },
+                new ListViewItem(report_sale_summary.REPORT_NAME, 0) { Tag = "REPORT_SALE_SUMMARY" },
+                new ListViewItem(report_contract_npl.REPORT_NAME, 0) { Tag = "REPORT_CONTRACT_NPL" },
+                new ListViewItem(report_business_performance.REPORT_NAME, 0) { Tag = "REPORT_BUSINESS_PERFORMANCE" },
             });
             // report list
 
             this.Load += ReportMenu_Load;
             this.SizeChanged += ReportMenu_SizeChanged;
             this.listView1.ClientSizeChanged += ListView1_ClientSizeChanged;
+
+            // this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.ItemActivate += ListView1_ItemActivate;
+        }
+
+        private void ListView1_ItemActivate(object sender, EventArgs e)
+        {
+            listView1_SelectedIndexChanged(sender, null);
         }
 
         private void ReportMenu_Load(object sender, EventArgs e)
@@ -74,6 +84,24 @@ namespace DailyLoan.Report
                             report_ar_contract_payment.StartReport();
                         }
                         break;
+                    case "REPORT_SALE_SUMMARY":
+                        {
+                            report_sale_summary report_sale_summary = new report_sale_summary();
+                            report_sale_summary.StartReport();
+                        }
+                        break;
+                    case "REPORT_CONTRACT_NPL":
+                        {
+                            report_contract_npl report_contract_npl = new report_contract_npl();
+                            report_contract_npl.StartReport();
+                        }
+                        break;
+                    case "REPORT_BUSINESS_PERFORMANCE":
+                        {
+                            report_business_performance report_business_performance = new report_business_performance();
+                            report_business_performance.StartReport();
+                        }
+                        break;
                     default:
                         {
                             MessageBox.Show("ยังไม่สามารถใช้งาน " + report_name + " นี้ได้ในขณะนี้");
@@ -81,6 +109,7 @@ namespace DailyLoan.Report
                         break;
                 }
             }
+
         }
     }
 }

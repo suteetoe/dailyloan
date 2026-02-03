@@ -227,6 +227,9 @@
     <Compile Include="Report\ReportViewer.cs" />
     <Compile Include="Report\report_ar_balance.cs" />
     <Compile Include="Report\report_ar_contract_payment.cs" />
+    <Compile Include="Report\report_business_performance.cs" />
+    <Compile Include="Report\report_contract_npl.cs" />
+    <Compile Include="Report\report_sale_summary.cs" />
     <Compile Include="Screen\ContractPayment\ContractPaymentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

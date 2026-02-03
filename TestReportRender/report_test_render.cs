@@ -17,6 +17,8 @@ namespace TestReportRender
             this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "Name", ColumnWidth = 25, DataField = "name" });
             this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "Address", ColumnWidth = 40, DataField = "address" });
             this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "Telephone", ColumnWidth = 20, DataField = "telephonse" });
+            this.ReportColumns.Add(new BizFlowControl.ReportColumn() { HeaderText = "Amount", ColumnWidth = 20, DataField = "telephonse", ContentAlignment = System.Drawing.ContentAlignment.MiddleRight });
+
         }
 
         protected override bool ShowCondition()
@@ -38,6 +40,7 @@ namespace TestReportRender
                     row["name"] = "Customer " + i;
                     row["address"] = "Address of Customer " + i;
                     row["telephonse"] = "012-345-6789";
+                    row["amount"] = (i * 100).ToString("N2");
                     this.ReportData.Add(row);
                 }
 

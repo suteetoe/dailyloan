@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Policy;
 
 namespace BizFlowControl
 {
     public class ReportRender
     {
-        protected PrintDocument reportDocument;
+        protected PrintDocument reportDocument = new PrintDocument();
 
         protected int page = 0;
         protected int paperWidth = 850;
@@ -33,9 +34,26 @@ namespace BizFlowControl
 
         protected int dataRowIndex = -1;
 
+        private bool landscape = false;
+        public bool Landscape
+        {
+            get { return landscape; }
+            set
+            {
+                landscape = value;
+                if (landscape)
+                {
+                    this.reportDocument.DefaultPageSettings.Landscape = true;
+                }
+                else
+                {
+                    this.reportDocument.DefaultPageSettings.Landscape = false;
+                }
+            }
+        }
+
         public ReportRender()
         {
-            this.reportDocument = new PrintDocument();
             this.reportDocument.BeginPrint += ReportDocument_BeginPrint;
             this.reportDocument.PrintPage += ReportDocument_PrintPage;
 
@@ -127,7 +145,7 @@ namespace BizFlowControl
                 float rowHeight = MeasureRowHeight(row, e.Graphics);
 
                 if (currentYPoint + rowHeight > maxYPoint)
-                {                    
+                {
                     nextPage = true;
                     break;
                 }
@@ -140,7 +158,7 @@ namespace BizFlowControl
                     // next row
                     dataRowIndex++;
                 }
-               
+
             }
 
             // draw last line
@@ -170,13 +188,36 @@ namespace BizFlowControl
                     headerHeight = headerSize.Height;
                 }
 
+                StringFormat format = new StringFormat();
+                if (column.ContentAlignment == ContentAlignment.MiddleRight)
+                {
+                    format.Alignment = StringAlignment.Far;
+                }
+                else if (column.ContentAlignment == ContentAlignment.MiddleCenter)
+                {
+                    format.Alignment = StringAlignment.Center;
+                }
+                else
+                {
+                    format.Alignment = StringAlignment.Near;
+                }
+
+                float xPoint = leftMergin + ReportColumns.Take(i).Sum(c => c.columeWidthActual);
+                if (column.ContentAlignment == ContentAlignment.MiddleRight)
+                {
+                    xPoint += column.columeWidthActual;
+                }
+                float yPoint = drawYPoint + 5;
+
                 g.DrawString(column.HeaderText,
                     detailFont,
                     Brushes.Black,
-                    leftMergin + ReportColumns.Take(i).Sum(c => c.ColumnWidth / 100 * printArea.Width),
-                    drawYPoint + 5);
+                    xPoint,
+                    yPoint, format);
 
             }
+
+
 
             g.DrawLine(linePenDashDot, leftMergin, drawYPoint + headerHeight + 5, paperWidth - rightMergin, drawYPoint + headerHeight + 5);
 
@@ -211,13 +252,28 @@ namespace BizFlowControl
                 {
                     format.Alignment = StringAlignment.Near;
                 }
+
                 string dataText = GetRowDataText(row, column);
+
+                float width = column.columeWidthActual; //column.ColumnWidth / 100 * printArea.Width;
+                float height = 0f;
+
+                float xPoint = leftMergin + ReportColumns.Take(i).Sum(c => c.columeWidthActual);
+                if (column.ContentAlignment == ContentAlignment.MiddleRight)
+                {
+                    xPoint += column.columeWidthActual;
+                }
+                float yPoint = drawYPoint + 5;
+
+                // RectangleF drawRect = new RectangleF(xPoint, yPoint, width, height);
+
+                // Console.WriteLine("Draw : " + dataText + ":" + string.Format("col: {0}, x: {1}, y: {2}", i, xPoint, yPoint));
 
                 g.DrawString(dataText,
                     detailFont,
                     Brushes.Black,
-                    leftMergin + ReportColumns.Take(i).Sum(c => c.ColumnWidth / 100 * printArea.Width),
-                    drawYPoint + 5, format);
+                   xPoint,
+                    yPoint, format);
             }
 
             return drawYPoint;
@@ -272,7 +328,7 @@ namespace BizFlowControl
         }
 
 
-     
+
 
         protected virtual bool ShowCondition()
         {
@@ -303,6 +359,20 @@ namespace BizFlowControl
                 return;
             }
 
+            float totalWidth = 0f;
+            float paperWidth = this.landscape ? this.reportDocument.DefaultPageSettings.PaperSize.Height : this.reportDocument.DefaultPageSettings.PaperSize.Width;
+            // calc colume actual width
+            foreach (var col in ReportColumns)
+            {
+                totalWidth += col.ColumnWidth;
+            }
+
+            for (int col = 0; col < ReportColumns.Count; col++)
+            {
+                float actualWidth = (ReportColumns[col].ColumnWidth / totalWidth) * (paperWidth - (this.leftMergin + this.rightMergin));
+                ReportColumns[col].columeWidthActual = actualWidth;
+            }
+
             bool processSuccess = this.StartProcess();
             if (processSuccess)
             {
@@ -320,6 +390,8 @@ namespace BizFlowControl
         public string Format { get; set; }
 
         public ContentAlignment ContentAlignment { get; set; } = ContentAlignment.MiddleLeft;
+
+        public float columeWidthActual { get; set; }
     }
 
     public class ReportDataRow : Dictionary<string, object>

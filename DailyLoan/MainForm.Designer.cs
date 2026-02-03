@@ -39,6 +39,7 @@
             this._dailyMenuButton = new System.Windows.Forms.ToolStripButton();
             this._customerMenuButton = new System.Windows.Forms.ToolStripButton();
             this._paymentListMenuButton = new System.Windows.Forms.ToolStripButton();
+            this._routePaymentMenuButton = new System.Windows.Forms.ToolStripButton();
             this._expenseMenuButton = new System.Windows.Forms.ToolStripButton();
             this._reportMenuButton = new System.Windows.Forms.ToolStripButton();
             this._setupMenuButton = new System.Windows.Forms.ToolStripButton();
@@ -47,10 +48,11 @@
             this._mainPanel = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this._routePaymentMenuButton = new System.Windows.Forms.ToolStripButton();
+            this._versionLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this._sidebarPanel.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -171,6 +173,19 @@
             this._paymentListMenuButton.Text = "การชำระเงิน";
             this._paymentListMenuButton.Click += new System.EventHandler(this._paymentListMenuButton_Click);
             // 
+            // _routePaymentMenuButton
+            // 
+            this._routePaymentMenuButton.Image = global::DailyLoan.Properties.Resources.note_view_24;
+            this._routePaymentMenuButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this._routePaymentMenuButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._routePaymentMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._routePaymentMenuButton.Margin = new System.Windows.Forms.Padding(10);
+            this._routePaymentMenuButton.Name = "_routePaymentMenuButton";
+            this._routePaymentMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this._routePaymentMenuButton.Size = new System.Drawing.Size(178, 48);
+            this._routePaymentMenuButton.Text = "การชำระเงิน(สาย)";
+            this._routePaymentMenuButton.Click += new System.EventHandler(this._routePaymentMenuButton_Click);
+            // 
             // _expenseMenuButton
             // 
             this._expenseMenuButton.Image = global::DailyLoan.Properties.Resources.form_yellow;
@@ -252,24 +267,21 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._versionLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 808);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1506, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // _routePaymentMenuButton
+            // _versionLabel
             // 
-            this._routePaymentMenuButton.Image = global::DailyLoan.Properties.Resources.note_view_24;
-            this._routePaymentMenuButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this._routePaymentMenuButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this._routePaymentMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this._routePaymentMenuButton.Margin = new System.Windows.Forms.Padding(10);
-            this._routePaymentMenuButton.Name = "_routePaymentMenuButton";
-            this._routePaymentMenuButton.Padding = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this._routePaymentMenuButton.Size = new System.Drawing.Size(178, 48);
-            this._routePaymentMenuButton.Text = "การชำระเงิน(สาย)";
-            this._routePaymentMenuButton.Click += new System.EventHandler(this._routePaymentMenuButton_Click);
+            this._versionLabel.AutoSize = false;
+            this._versionLabel.Name = "_versionLabel";
+            this._versionLabel.Size = new System.Drawing.Size(150, 17);
+            this._versionLabel.Text = "Version: ";
+            this._versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
@@ -293,6 +305,8 @@
             this._sidebarPanel.ResumeLayout(false);
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,6 +332,7 @@
         private System.Windows.Forms.ToolStripButton _customerMenuButton;
         private System.Windows.Forms.ToolStripButton _paymentListMenuButton;
         private System.Windows.Forms.ToolStripButton _routePaymentMenuButton;
+        private System.Windows.Forms.ToolStripStatusLabel _versionLabel;
     }
 }
 

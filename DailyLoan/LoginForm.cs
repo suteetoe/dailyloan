@@ -16,6 +16,7 @@ namespace DailyLoan
         public LoginForm()
         {
             InitializeComponent();
+            this._versionLabel.Text = "Version: " + App.AppVersion;
         }
 
         private void _loginButton_Click(object sender, EventArgs e)

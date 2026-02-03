@@ -16,6 +16,7 @@ namespace DailyLoan
         public static int UserId = -1;
         public static User LoggedUser = null;
         public static AppConfig AppConfig;
+        public static string AppVersion = "";
 
         public static void InitDBConnection()
         {

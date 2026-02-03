@@ -36,6 +36,7 @@
             this.passwordTextbox = new System.Windows.Forms.TextBox();
             this._loginButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this._versionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,11 +111,21 @@
             this.label3.Text = "Daily Loan";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // _versionLabel
+            // 
+            this._versionLabel.Location = new System.Drawing.Point(328, 197);
+            this._versionLabel.Name = "_versionLabel";
+            this._versionLabel.Size = new System.Drawing.Size(155, 17);
+            this._versionLabel.TabIndex = 8;
+            this._versionLabel.Text = "Version :";
+            this._versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(489, 219);
+            this.Controls.Add(this._versionLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this._loginButton);
             this.Controls.Add(this.passwordTextbox);
@@ -145,5 +156,6 @@
         private System.Windows.Forms.TextBox passwordTextbox;
         private System.Windows.Forms.Button _loginButton;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label _versionLabel;
     }
 }

@@ -24,7 +24,8 @@ namespace DailyLoan
 
             Router.OpenMenu(MenuScreen.MENU_WELCOME);
 
-            this.Text = "โปรแกรมบริหารจัดการเงินกู้รายวัน v1.0";
+            this.Text = "โปรแกรมบริหารจัดการเงินกู้รายวัน"; //  (Version: " + App.AppVersion + ")
+            this._versionLabel.Text = "Version: " + App.AppVersion;
             this.FormClosing += MainForm_FormClosing;
         }
 

@@ -182,7 +182,7 @@ namespace SMLControl
                         __year = Convert.ToInt32(__dateSplit[2]);
                     }
                     // ดึงวันเดือนปีปรกติ ถ้าในกรณีป้อนไม่ครบ ก็ประกอบร่างใหม่ เช่น ป้อนเฉพาะวันที่
-                    if (_myGlobal._year_type == 1)
+                    if (_myGlobal.YearType == 1)
                     {
                         if (__year < 2500)
                         {

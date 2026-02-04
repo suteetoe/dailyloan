@@ -28,10 +28,26 @@ namespace SMLControl
 
         public static int _year_type = 0;
 
+        public static int YearType
+        {
+            get
+            {
+                string yearCheck = DateTime.Now.ToString("yyyy", DisplayCulture);
+                int yearNum = Convert.ToInt32(yearCheck);
+                if (yearNum > 2400)
+                {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
         public static int _year_add
         {
             get
             {
+
+
                 if (_year_type == 1)
                     return 543;
 
@@ -54,7 +70,7 @@ namespace SMLControl
 
         public static int DateCultureDiff()
         {
-            if (DisplayCulture.Calendar != SystemCulture.Calendar)
+            if (YearType == 1)
             {
                 return 543;
             }

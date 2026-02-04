@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyLoan.Screen.Route;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -140,6 +141,23 @@ namespace DailyLoan.Report
             this._conditionScreen._maxColumn = 2;
             this._conditionScreen.AddTextField(new SMLControl.TextField() { Row = 0, Column = 0, ColumnSpan = 2, FieldCode = "route_code", FieldName = "สาย", IsSearch = true, IsAutoUpper = true });
 
+            this._conditionScreen._textBoxSearch += _conditionScreen__textBoxSearch;
+
+        }
+
+        private void _conditionScreen__textBoxSearch(object sender, string name)
+        {
+            if (name.Equals("route_code"))
+            {
+                SearchRouteForm searchRouteForm = new SearchRouteForm();
+                searchRouteForm.AfterSelectData += (rowData) =>
+                {
+                    this._conditionScreen._setDataStr("route_code", rowData["code"].ToString());
+
+                    searchRouteForm.Close();
+                };
+                this._conditionScreen.StartSearchForm(searchRouteForm, "route_code");
+            }
         }
 
     }

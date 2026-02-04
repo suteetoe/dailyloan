@@ -60,22 +60,33 @@ namespace DailyLoan.Report
                 DateTime to_date = this.conditionForm._conditionScreen._getDataDate("to_date");
                 string route = this.conditionForm._conditionScreen._getDataStr("route_code");
 
-                this.ConditionText = string.Format("จากวันที่ทำสัญญา {0} ถึงวันที่ทำสัญญา {1} สาย {2}",
-                    from_date.ToString("dd/MM/yyyy"),
-                    to_date.ToString("dd/MM/yyyy"),
-                    route);
+                string contractDateConditionText = "";
+                string contractDateFilter = "";
+                if (from_date.Year > 1900 && to_date.Year > 1900)
+                {
+                    contractDateConditionText = string.Format(
+                        "จากวันที่ทำสัญญา {0} ถึงวันที่ทำสัญญา {1} ", 
+                        from_date.ToString("dd/MM/yyyy"),
+                        to_date.ToString("dd/MM/yyyy"));
+
+                    contractDateFilter = " AND ( ct.contract_date between @from_date and @to_date ) ";
+                }
+                this.ConditionText = contractDateConditionText + string.Format("สาย {0}", route);
 
                 string query =
                     @"select  ct.contract_no, ct.contract_date, ct.customer_code, cust.name_1, ct.principle_amount, ct.total_interest, total_contract_amount, total_pay_amount, (total_contract_amount - total_pay_amount) as outstanding_amount, ct.route_code
                 from txn_contract as ct
                 join mst_customer as cust on cust.code = ct.customer_code
-                where ( ct.contract_date between @from_date and @to_date ) and route_code = @route_code
+                where route_code = @route_code " + contractDateFilter + @"
                 order by ct.contract_date, ct.contract_no
                 ";
 
                 BizFlowControl.ExecuteParams parameters = new BizFlowControl.ExecuteParams();
-                parameters.Add("@from_date", from_date);
-                parameters.Add("@to_date", to_date);
+                if (from_date.Year > 1900 && to_date.Year > 1900)
+                {
+                    parameters.Add("@from_date", from_date);
+                    parameters.Add("@to_date", to_date);
+                }
                 parameters.Add("@route_code", route);
 
                 DataSet ds = App.DBConnection.QueryData(query, parameters);
@@ -133,15 +144,15 @@ namespace DailyLoan.Report
         {
             this.titlePanel1.Title = report_ar_balance.REPORT_NAME;
             this._conditionScreen._maxColumn = 2;
-            this._conditionScreen.AddDateField(new SMLControl.DateField() { Row = 0, Column = 0, FieldCode = "from_date", FieldName = "จากวันที่ทำสัญญา", Required = true });
-            this._conditionScreen.AddDateField(new SMLControl.DateField() { Row = 0, Column = 1, FieldCode = "to_date", FieldName = "ถึงวันที่ทำสัญญา", Required = true });
+            this._conditionScreen.AddDateField(new SMLControl.DateField() { Row = 0, Column = 0, FieldCode = "from_date", FieldName = "จากวันที่ทำสัญญา" });
+            this._conditionScreen.AddDateField(new SMLControl.DateField() { Row = 0, Column = 1, FieldCode = "to_date", FieldName = "ถึงวันที่ทำสัญญา" });
             this._conditionScreen.AddTextField(new SMLControl.TextField() { Row = 1, Column = 0, ColumnSpan = 2, FieldCode = "route_code", FieldName = "สาย", IsSearch = true, IsAutoUpper = true, Required = true });
 
-            DateTime firstDateMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            this._conditionScreen._setDataDate("from_date", firstDateMonth);
+            //DateTime firstDateMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            //this._conditionScreen._setDataDate("from_date", firstDateMonth);
 
-            DateTime endDateMonth = firstDateMonth.AddMonths(1).AddDays(-1);
-            this._conditionScreen._setDataDate("to_date", endDateMonth);
+            //DateTime endDateMonth = firstDateMonth.AddMonths(1).AddDays(-1);
+            //this._conditionScreen._setDataDate("to_date", endDateMonth);
 
             this._conditionScreen._textBoxSearch += _conditionScreen__textBoxSearch;
         }

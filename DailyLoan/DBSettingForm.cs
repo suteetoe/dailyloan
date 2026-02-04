@@ -80,6 +80,8 @@ namespace DailyLoan
                     if (isDatabaseExists)
                     {
                         App.AppConfig.ChangeConfig(host, port, user, password, databaseName);
+                        App.AppConfig.WriteTempConfig();
+
                         MessageBox.Show("Save connection success", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -107,6 +109,11 @@ namespace DailyLoan
             {
                 userRepo.CreateDefaultAdminUser();
             }
+        }
+
+        void WriteConfig()
+        {
+
         }
     }
 }

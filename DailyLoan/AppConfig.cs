@@ -6,41 +6,44 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.SqlServer.Server;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace DailyLoan
 {
     public class AppConfig
     {
-        private string _dbHost = "";
-        private string _dbPort = "";
-        private string _dbUser = "";
-        private string _dbPassword = "";
-        private string _dbName = "";
 
         public AppConfig()
         {
 
         }
 
-        public string DBHost { get { return this._dbHost; } }
-        public string DBPort { get { return this._dbPort; } }
-        public string DBUsername { get { return this._dbUser; } }
-        public string DBPassword { get { return this._dbPassword; } }
-        public string DBDatabaseName { get { return this._dbName; } }
+        public string DBHost { get; set; }
+        public string DBPort { get; set; }
+        public string DBUsername { get; set; }
+        public string DBPassword { get; set; }
+        public string DBDatabaseName { get; set; }
 
 
         public void LoadConfig()
         {
-            this._dbHost = System.Configuration.ConfigurationManager.AppSettings["DBHost"];
-            this._dbPort = System.Configuration.ConfigurationManager.AppSettings["DBPort"];
-            this._dbUser = System.Configuration.ConfigurationManager.AppSettings["DBUsername"];
-            this._dbPassword = System.Configuration.ConfigurationManager.AppSettings["DBPassword"];
-            this._dbName = System.Configuration.ConfigurationManager.AppSettings["DBDatabaesName"];
+            if (this.findTempConfig())
+            {
+                this.LoadTempConfig();
+                return;
+            }
+
+            this.DBHost = System.Configuration.ConfigurationManager.AppSettings["DBHost"];
+            this.DBPort = System.Configuration.ConfigurationManager.AppSettings["DBPort"];
+            this.DBUsername = System.Configuration.ConfigurationManager.AppSettings["DBUsername"];
+            this.DBPassword = System.Configuration.ConfigurationManager.AppSettings["DBPassword"];
+            this.DBDatabaseName = System.Configuration.ConfigurationManager.AppSettings["DBDatabaesName"];
+
         }
 
         public String GetConnectionString()
         {
-            return this.GetConnectionString(this._dbHost, this._dbPort, this._dbUser, this._dbPassword, this._dbName);
+            return this.GetConnectionString(this.DBHost, this.DBPort, this.DBUsername, this.DBPassword, this.DBDatabaseName);
         }
 
         public string GetConnectionString(string host, string port, string user, string password, string databaseName)
@@ -58,13 +61,58 @@ namespace DailyLoan
 
         public void ChangeConfig(string dbHost, string dbPort, string dbUser, string dbPassword, string dbName)
         {
-            this._dbHost = dbHost;
-            this._dbPort = dbPort;
-            this._dbUser = dbUser;
-            this._dbPassword = dbPassword;
-            this._dbName = dbName;
+            this.DBHost = dbHost;
+            this.DBPort = dbPort;
+            this.DBUsername = dbUser;
+            this.DBPassword = dbPassword;
+            this.DBDatabaseName = dbName;
         }
 
-    
+        bool findTempConfig()
+        {
+            string tempPath = System.IO.Path.GetTempPath();
+            string configFilePath = System.IO.Path.Combine(tempPath, "DailyLoan.config");
+            bool isConfigExists = System.IO.File.Exists(configFilePath);
+            return isConfigExists;
+        }
+
+
+        public void WriteTempConfig()
+        {
+            string configContent = JsonConvert.SerializeObject(this, Formatting.Indented);
+
+            // serialize this object to temp dir
+            string tempPath = System.IO.Path.GetTempPath();
+            string configFilePath = System.IO.Path.Combine(tempPath, "DailyLoan.config");
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(configFilePath, false, Encoding.UTF8);
+            writer.Write(configContent);
+            writer.Close();
+
+
+        }
+
+        void LoadTempConfig()
+        {
+            // deserialize this object from temp dir
+            string tempPath = System.IO.Path.GetTempPath();
+            string configFilePath = System.IO.Path.Combine(tempPath, "DailyLoan.config");
+
+            if (System.IO.File.Exists(configFilePath))
+            {
+                System.IO.StreamReader reader = new System.IO.StreamReader(configFilePath, Encoding.UTF8);
+
+                string content = reader.ReadToEnd();
+                AppConfig tempConfig = JsonConvert.DeserializeObject<AppConfig>(content);
+                this.DBHost = tempConfig.DBHost;
+                this.DBPort = tempConfig.DBPort;
+                this.DBUsername = tempConfig.DBUsername;
+                this.DBPassword = tempConfig.DBPassword;
+                this.DBDatabaseName = tempConfig.DBDatabaseName;
+
+                reader.Close();
+
+            }
+
+        }
     }
 }

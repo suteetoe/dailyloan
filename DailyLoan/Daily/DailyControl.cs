@@ -205,21 +205,22 @@ WITH contract_over_due as (
 	select pb.contract_no, c.route_code, c.total_contract_amount, c.pay_count
 	, c.total_pay_amount as paid_amount
 	,(select sum(over_due_amount) from period_balance as ovd where ovd.contract_no = pb.contract_no ) as over_due_amount
-	, balance_amount as amount 
+    , balance_amount as due_amount
+	, (case when balance_amount = 0 then c.amount_per_period else balance_amount end) as amount 
 	, c.customer_code as cust_code
 	, cust.name_1 as cust_name
 	, (c.total_contract_amount - c.total_pay_amount) as contract_balance
 	from period_balance as pb
 	join txn_contract as c on c.contract_no = pb.contract_no
 	join mst_customer as cust on cust.code = c.customer_code
-	where route_code = @route_code and due_date = @due_date and balance_amount > 0
+	where route_code = @route_code and due_date = @due_date  
 )
 , daily_sheet as (
-select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount from contract_over_due
+select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, amount as due_amount from contract_over_due
 union all
-select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount from contract_due
+select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, due_amount from contract_due
 )
-select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount from daily_sheet order by contract_no
+select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, due_amount from daily_sheet order by contract_no
 ";
 
             BizFlowControl.ExecuteParams parameters = new BizFlowControl.ExecuteParams();

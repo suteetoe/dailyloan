@@ -23,6 +23,7 @@ namespace DailyLoan.Report
                 new ListViewItem(report_sale_summary.REPORT_NAME, 0) { Tag = "REPORT_SALE_SUMMARY" },
                 new ListViewItem(report_contract_npl.REPORT_NAME, 0) { Tag = "REPORT_CONTRACT_NPL" },
                 new ListViewItem(report_business_performance.REPORT_NAME, 0) { Tag = "REPORT_BUSINESS_PERFORMANCE" },
+                new ListViewItem(report_contract_payment.REPORT_NAME, 0) { Tag = "REPORT_CONTRACT_PAYMENT" }
             });
             // report list
 
@@ -100,6 +101,12 @@ namespace DailyLoan.Report
                         {
                             report_business_performance report_business_performance = new report_business_performance();
                             report_business_performance.StartReport();
+                        }
+                        break;
+                    case "REPORT_CONTRACT_PAYMENT":
+                        {
+                            report_contract_payment report_contract_payment = new report_contract_payment();
+                            report_contract_payment.StartReport();
                         }
                         break;
                     default:

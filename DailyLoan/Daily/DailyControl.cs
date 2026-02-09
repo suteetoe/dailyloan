@@ -206,7 +206,7 @@ WITH contract_over_due as (
 	, c.total_pay_amount as paid_amount
 	,(select sum(over_due_amount) from period_balance as ovd where ovd.contract_no = pb.contract_no ) as over_due_amount
     , balance_amount as due_amount
-	, (case when balance_amount = 0 then c.amount_per_period else balance_amount end) as amount 
+	, (case when c.amount_per_period >  (c.total_contract_amount - c.total_pay_amount) then  (c.total_contract_amount - c.total_pay_amount) else c.amount_per_period end) as amount 
 	, c.customer_code as cust_code
 	, cust.name_1 as cust_name
 	, (c.total_contract_amount - c.total_pay_amount) as contract_balance

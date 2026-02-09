@@ -30,10 +30,24 @@ namespace DailyLoan.Control
             InitializeComponent();
 
             this.Load += SearchDataForm_Load;
-            this.searchDataControl1._textSearchTextbox.KeyPress += _textSearchTextbox_KeyPress;
+            //this.searchDataControl1._textSearchTextbox.KeyPress += _textSearchTextbox_KeyPress;
+            this.searchDataControl1._textSearchTextbox.KeyDown += _textSearchTextbox_KeyDown;
             this.searchDataControl1._buttonSearch.Click += _buttonSearch_Click;
             this.searchDataControl1.OnLoadDataList += SearchDataControl1_OnLoadDataList;
             this.searchDataControl1.AfterSelectData += SearchDataControl1_AfterSelectData;
+        }
+
+        private void _textSearchTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                StartLoadData();
+
+            }
+            else
+            {
+                ReStartLoadTimer();
+            }
         }
 
         private void SearchDataControl1_OnLoadDataList()

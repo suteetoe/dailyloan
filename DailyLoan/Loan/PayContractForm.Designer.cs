@@ -105,7 +105,7 @@
             0});
             this._payAmountTextbox._name = null;
             this._payAmountTextbox._point = new decimal(new int[] {
-            0,
+            2,
             0,
             0,
             0});
@@ -122,6 +122,7 @@
             this._payAmountTextbox.Margin = new System.Windows.Forms.Padding(0);
             this._payAmountTextbox.MaxLength = 0;
             this._payAmountTextbox.Name = "_payAmountTextbox";
+            this._payAmountTextbox.ReadOnly = false;
             this._payAmountTextbox.ShowIcon = false;
             this._payAmountTextbox.Size = new System.Drawing.Size(563, 46);
             this._payAmountTextbox.TabIndex = 2;

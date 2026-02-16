@@ -13,6 +13,7 @@ namespace DailyLoan.Domain
         ContractRepository contractRepository = new ContractRepository();
         ContractPayRepository contractPayRepository = new ContractPayRepository();
         ContractPeriodPaymentRepository contractPeriodPaymentRepository = new ContractPeriodPaymentRepository();
+        HolidayRepository holidayRepository = new HolidayRepository();
 
         public ContractProcess()
         {
@@ -55,5 +56,72 @@ namespace DailyLoan.Domain
                 contractRepository.UpdateContractCloseStatus(contract.contract_no, (int)ContractStatus.Normal);
             }
         }
+
+        public void CheckLoadPeriodInrdinaryHoliday()
+        {
+            string queryCheckPeriodInrdinaryHoliday = @"
+select distinct txn_contract_period.contract_no, mst_loan_type.working_holiday_type
+from txn_contract_period 
+join txn_contract on txn_contract.contract_no = txn_contract_period.contract_no 
+join mst_loan_type on mst_loan_type.code = txn_contract.loan_type
+where txn_contract.contract_status = 0
+and (
+(mst_loan_type.working_holiday_type = 1 and ((extract (DOW from due_date)) in (0,6) ))
+or (mst_loan_type.working_holiday_type = 1 and ((extract (DOW from due_date)) in (0) ))
+or (exists (select date_holiday from mst_holiday where mst_holiday.date_holiday=txn_contract_period.due_date))
+)
+";
+
+            var ds = App.DBConnection.QueryData(queryCheckPeriodInrdinaryHoliday);
+
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                List<Holiday> holidays = holidayRepository.ListHoliday(new DateTime());
+                List<DateTime> Dateholidays = holidays.Select(h => h.holiday_date).ToList();
+
+
+                for (int row = 0; row < ds.Tables[0].Rows.Count; row++)
+                {
+                    string contractNo = ds.Tables[0].Rows[row][0].ToString();
+                    int workingHolidayType = Convert.ToInt32(ds.Tables[0].Rows[row][1]);
+
+                    var contract = contractRepository.FindContractByContractNo(contractNo);
+
+                    if (contract != null)
+                    {
+
+                        LoanPeriod newPeriodProcess = new LoanPeriod(contract.total_contract_amount, contract.num_of_period, contract.amount_per_period, contract.first_period_date, 0);
+                        newPeriodProcess.ProcessDay = (ProcessDay)workingHolidayType;
+                        newPeriodProcess.AddHolidays(Dateholidays.ToArray());
+                        newPeriodProcess.CalcPeriodAmount();
+                        List<PayPeriod> payPeriods = newPeriodProcess.PayPeriods.ToList();
+
+                        // diff period date
+                        //foreach (var period in contract.ContractPeriods)
+                        //{
+                        //    var newPeriod = payPeriods.Where(p => p.PeriodNumber == period.period_no).FirstOrDefault();
+                        //    if (newPeriod != null && newPeriod.PayDueDate.Date.CompareTo(period.due_date.Date) != 0)
+                        //    {
+                        //        contractRepository.UpdateContractPeriodDueDate(contractNo, period.period_no, newPeriod.PayDueDate);
+                        //    }
+                        //}
+
+                        var diffPeriod = newPeriodProcess.DiffContractPeriodDate(contract.ContractPeriods.ToArray());
+                        if (diffPeriod.Count > 0)
+                        {
+                            foreach (var period in diffPeriod)
+                            {
+                                contractRepository.UpdateContractPeriodDueDate(contractNo, period.PeriodNumber, period.PayDueDate);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+
+
     }
 }

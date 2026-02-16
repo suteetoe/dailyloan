@@ -311,5 +311,31 @@ namespace DailyLoan.Domain.Tests
             Assert.AreEqual("#7", payments[9].Details[0].doc_no, msg);
             Assert.AreEqual(1000M, payments[9].Details[0].amount, msg);
         }
+
+        [TestMethod()]
+        public void TestLoadPaymentWithDigit()
+        {
+            Contract contract = new Contract();
+            contract.ContractPeriods = new List<ContractPeriod>();
+            contract.ContractPeriods.Add(new ContractPeriod() { period_no = 1, amount = 333.33M, due_date = new DateTime(2026, 1, 15), });
+            contract.ContractPeriods.Add(new ContractPeriod() { period_no = 2, amount = 333.33M, due_date = new DateTime(2026, 1, 16), });
+            contract.ContractPeriods.Add(new ContractPeriod() { period_no = 3, amount = 333.34M, due_date = new DateTime(2026, 1, 17), });
+
+            // create loan payment process
+            LoanPaymentProcess paymentProcess = new LoanPaymentProcess(contract);
+
+            paymentProcess.AddPayment("#1", new DateTime(2026, 1, 15), "09:00", 333.33M);
+            Assert.AreEqual(333.33M, paymentProcess.totalPayAmount, "Shoule be Pay : 333.33");
+
+
+            paymentProcess.AddPayment("#2", new DateTime(2026, 1, 16), "09:00", 333.33M);
+            Assert.AreEqual(666.66M, paymentProcess.totalPayAmount, "Shoule be Pay : 666.66");
+
+            paymentProcess.AddPayment("#3", new DateTime(2026, 1, 17), "09:00", 333.34M);
+            Assert.AreEqual(1000M, paymentProcess.totalPayAmount, "Shoule be Pay : 1000.00");
+
+
+        }
+
     }
 }

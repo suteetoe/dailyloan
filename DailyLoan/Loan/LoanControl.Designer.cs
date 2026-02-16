@@ -55,8 +55,9 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this._changeRouteButton = new System.Windows.Forms.ToolStripButton();
             this._deleteContractButton = new System.Windows.Forms.ToolStripButton();
-            this.toolsPanel = new System.Windows.Forms.Panel();
             this._recalAllContractButton = new System.Windows.Forms.ToolStripButton();
+            this._recheckContractHoliday = new System.Windows.Forms.ToolStripButton();
+            this.toolsPanel = new System.Windows.Forms.Panel();
             this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -394,7 +395,8 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._changeRouteButton,
             this._deleteContractButton,
-            this._recalAllContractButton});
+            this._recalAllContractButton,
+            this._recheckContractHoliday});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
@@ -432,16 +434,6 @@
             this._deleteContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._deleteContractButton.Click += new System.EventHandler(this._deleteContractButton_Click);
             // 
-            // toolsPanel
-            // 
-            this.toolsPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.toolsPanel.Controls.Add(this.tabControl1);
-            this.toolsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolsPanel.Location = new System.Drawing.Point(0, 590);
-            this.toolsPanel.Name = "toolsPanel";
-            this.toolsPanel.Size = new System.Drawing.Size(1024, 114);
-            this.toolsPanel.TabIndex = 7;
-            // 
             // _recalAllContractButton
             // 
             this._recalAllContractButton.AutoSize = false;
@@ -456,6 +448,32 @@
             this._recalAllContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._recalAllContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this._recalAllContractButton.Click += new System.EventHandler(this._recalAllContractButton_Click);
+            // 
+            // _recheckContractHoliday
+            // 
+            this._recheckContractHoliday.AutoSize = false;
+            this._recheckContractHoliday.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._recheckContractHoliday.Image = global::DailyLoan.Properties.Resources.flash_32;
+            this._recheckContractHoliday.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._recheckContractHoliday.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._recheckContractHoliday.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._recheckContractHoliday.Name = "_recheckContractHoliday";
+            this._recheckContractHoliday.Size = new System.Drawing.Size(87, 87);
+            this._recheckContractHoliday.Text = "ปรับวันหยุด";
+            this._recheckContractHoliday.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._recheckContractHoliday.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._recheckContractHoliday.ToolTipText = "ปรับวันหยุด";
+            this._recheckContractHoliday.Click += new System.EventHandler(this._recheckContractHoliday_Click);
+            // 
+            // toolsPanel
+            // 
+            this.toolsPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.toolsPanel.Controls.Add(this.tabControl1);
+            this.toolsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolsPanel.Location = new System.Drawing.Point(0, 590);
+            this.toolsPanel.Name = "toolsPanel";
+            this.toolsPanel.Size = new System.Drawing.Size(1024, 114);
+            this.toolsPanel.TabIndex = 7;
             // 
             // LoanControl
             // 
@@ -519,5 +537,6 @@
         private System.Windows.Forms.Label _nplLabel;
         private System.Windows.Forms.ToolStripButton _deleteContractButton;
         private System.Windows.Forms.ToolStripButton _recalAllContractButton;
+        private System.Windows.Forms.ToolStripButton _recheckContractHoliday;
     }
 }

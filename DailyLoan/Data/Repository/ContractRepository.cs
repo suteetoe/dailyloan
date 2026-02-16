@@ -285,5 +285,20 @@ namespace DailyLoan.Data.Repository
 
             return contract;
         }
+
+        public void UpdateContractPeriodDueDate(string contractNo, int periodNo, DateTime dueDate)
+        {
+            string sqlUpdate =
+                @"UPDATE " + ContractPeriod.TABLE_NAME + @" 
+                  SET due_date = @due_date
+                  WHERE contract_no = @contract_no and period_no = @period_no; ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@due_date", dueDate);
+            parameters.Add("@contract_no", contractNo);
+            parameters.Add("@period_no", periodNo);
+
+            this.connecton.ExecuteCommand(sqlUpdate, parameters);
+        }
     }
 }

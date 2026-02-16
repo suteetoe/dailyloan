@@ -32,10 +32,12 @@ namespace DailyLoan.Loan
             if ((int)App.LoggedUser.Role == 2)
             {
                 this._recalAllContractButton.Visible = true;
+                this._recheckContractHoliday.Visible = true;
             }
             else
             {
                 this._recalAllContractButton.Visible = false;
+                this._recheckContractHoliday.Visible = false;
             }
 
             if ((int)App.LoggedUser.Role > 0)
@@ -443,6 +445,22 @@ namespace DailyLoan.Loan
                 }
 
                 MessageBox.Show("Recal All Contract Complete");
+            }
+        }
+
+        private void _recheckContractHoliday_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ContractProcess process = new ContractProcess();
+                process.CheckLoadPeriodInrdinaryHoliday();
+
+                MessageBox.Show("ตรวจสอบวันหยุดเรียบร้อยแล้ว");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("เกิดข้อผิดพลาดในการตรวจสอบวันหยุด \r\n" + ex.Message, "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
     }

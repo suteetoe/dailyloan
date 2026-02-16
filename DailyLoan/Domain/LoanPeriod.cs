@@ -1,5 +1,8 @@
-﻿using System;
+﻿using DailyLoan.Data.Models;
+using DailyLoan.Data.Repository;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -145,6 +148,22 @@ namespace DailyLoan.Domain
                 this.payPeriods[this.payPeriods.Count - 1] = new PayPeriod(lastPeriod.PeriodNumber, duePayment, lastPeriod.PayAmount + payDiffAmount, 0, 0);
             }
 
+        }
+
+        public List<PayPeriod> DiffContractPeriodDate(ContractPeriod[] contractPeriods)
+        {
+            List<PayPeriod> diff = new List<PayPeriod>();
+
+            foreach (var period in contractPeriods)
+            {
+                var newPeriod = payPeriods.Where(p => p.PeriodNumber == period.period_no).FirstOrDefault();
+                if (newPeriod != null && newPeriod.PayDueDate.Date.CompareTo(period.due_date.Date) != 0)
+                {
+                    diff.Add(new PayPeriod(period.period_no, newPeriod.PayDueDate, newPeriod.PayAmount, 0, 0));
+                }
+            }
+
+            return diff;
         }
     }
 

@@ -56,15 +56,15 @@ namespace DailyLoan.Data.Repository
 
         public void UpdateHoliday(Holiday holiday)
         {
-            String dateStr = SMLControl.Utils._dateUtil._convertDateToQuery(holiday.holiday_date);
-
+            // String dateStr = SMLControl.Utils._dateUtil._convertDateToQuery(holiday.holiday_date);
+            DateTime holidayDate = new DateTime(holiday.holiday_date.Year, holiday.holiday_date.Month, holiday.holiday_date.Day);
             string updateQuery =
                 @"UPDATE " + Holiday.TABLE_NAME + @" 
                   SET remark = @remark
                   WHERE date_holiday = @date_holiday; ";
 
             var parameters = new BizFlowControl.ExecuteParams();
-            parameters.Add("@date_holiday", dateStr);
+            parameters.Add("@date_holiday", holidayDate.Date);
             parameters.Add("@remark", holiday.remark);
 
             connecton.ExecuteCommand(updateQuery, parameters);

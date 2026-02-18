@@ -106,7 +106,7 @@ namespace DailyLoan.Expenses
         {
             try
             {
-                expenseRepository.DeleteExpense(rowSelected["code"]);
+                expenseRepository.DeleteExpense(rowSelected["doc_no"]);
 
                 MessageBox.Show("ลบข้อมูลเรียบร้อยแล้ว", "ลบข้อมูล", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;

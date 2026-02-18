@@ -198,7 +198,7 @@ WITH contract_over_due as (
 , period_balance as (
 	select contract_no, period_no, due_date, amount, pay_amount
 	, (amount - pay_amount) as balance_amount
-	, (case when (due_date < date(now()) and ((amount - pay_amount) > 0)) then (amount - pay_amount) else 0 end) as over_due_amount 
+	, (case when (due_date < date(@due_date) and ((amount - pay_amount) > 0)) then (amount - pay_amount) else 0 end) as over_due_amount 
 	from contract_period_with_payment 
 )
 , contract_due  as (

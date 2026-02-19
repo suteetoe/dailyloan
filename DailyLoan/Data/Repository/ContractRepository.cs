@@ -259,6 +259,22 @@ namespace DailyLoan.Data.Repository
             this.connecton.ExecuteCommand(sqlUpdate, parameters);
         }
 
+        public void UpdateContractFirstPeriodDue(string contractNo, DateTime firstDueDate, DateTime lastDueDate)
+        {
+            string sqlUpdate =
+                @"UPDATE " + Contract.TABLE_NAME + @" 
+                SET first_period_date = @first_period_date,
+                last_period_date = @last_period_date    
+                WHERE contract_no = @contract_no; ";
+
+            var parameters = new BizFlowControl.ExecuteParams();
+            parameters.Add("@first_period_date", firstDueDate.Date);
+            parameters.Add("@last_period_date", lastDueDate.Date);
+            parameters.Add("@contract_no", contractNo);
+
+            this.connecton.ExecuteCommand(sqlUpdate, parameters);
+
+        }
 
         private Contract MapFromDataRow(DataRow row)
         {

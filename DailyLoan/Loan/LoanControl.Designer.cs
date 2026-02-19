@@ -58,6 +58,7 @@
             this._recalAllContractButton = new System.Windows.Forms.ToolStripButton();
             this._recheckContractHoliday = new System.Windows.Forms.ToolStripButton();
             this.toolsPanel = new System.Windows.Forms.Panel();
+            this._chageContractStartDateButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -394,6 +395,7 @@
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._changeRouteButton,
+            this._chageContractStartDateButton,
             this._deleteContractButton,
             this._recalAllContractButton,
             this._recheckContractHoliday});
@@ -432,7 +434,6 @@
             this._deleteContractButton.Text = "ลบสัญญา";
             this._deleteContractButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this._deleteContractButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this._deleteContractButton.Click += new System.EventHandler(this._deleteContractButton_Click);
             // 
             // _recalAllContractButton
             // 
@@ -474,6 +475,21 @@
             this.toolsPanel.Name = "toolsPanel";
             this.toolsPanel.Size = new System.Drawing.Size(1024, 114);
             this.toolsPanel.TabIndex = 7;
+            // 
+            // _chageContractStartDateButton
+            // 
+            this._chageContractStartDateButton.AutoSize = false;
+            this._chageContractStartDateButton.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._chageContractStartDateButton.Image = global::DailyLoan.Properties.Resources.exchange_32;
+            this._chageContractStartDateButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this._chageContractStartDateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._chageContractStartDateButton.Margin = new System.Windows.Forms.Padding(10, 1, 10, 2);
+            this._chageContractStartDateButton.Name = "_chageContractStartDateButton";
+            this._chageContractStartDateButton.Size = new System.Drawing.Size(128, 87);
+            this._chageContractStartDateButton.Text = "เปลี่ยนวันเริ่มชำระ";
+            this._chageContractStartDateButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this._chageContractStartDateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this._chageContractStartDateButton.Click += new System.EventHandler(this._chageContractStartDateButton_Click);
             // 
             // LoanControl
             // 
@@ -538,5 +554,6 @@
         private System.Windows.Forms.ToolStripButton _deleteContractButton;
         private System.Windows.Forms.ToolStripButton _recalAllContractButton;
         private System.Windows.Forms.ToolStripButton _recheckContractHoliday;
+        private System.Windows.Forms.ToolStripButton _chageContractStartDateButton;
     }
 }

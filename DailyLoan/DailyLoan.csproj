@@ -202,6 +202,12 @@
     <Compile Include="Loan\ChangeContractRouteForm.Designer.cs">
       <DependentUpon>ChangeContractRouteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Loan\ChangeContractStartDateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loan\ChangeContractStartDateForm.Designer.cs">
+      <DependentUpon>ChangeContractStartDateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Loan\PayContractForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +218,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Loan\_changeContractRouteScreenTop.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Loan\_changeContractStartDateGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Loan\_changeContractStartDateScreenTop.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Loan\_payPeriodGrid.cs">
@@ -421,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Loan\ChangeContractRouteForm.resx">
       <DependentUpon>ChangeContractRouteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loan\ChangeContractStartDateForm.resx">
+      <DependentUpon>ChangeContractStartDateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Loan\PayContractForm.resx">
       <DependentUpon>PayContractForm.cs</DependentUpon>

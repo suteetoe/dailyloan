@@ -44,11 +44,13 @@ namespace DailyLoan.Loan
             {
                 this._deleteContractButton.Enabled = true;
                 this._changeRouteButton.Enabled = true;
+                this._chageContractStartDateButton.Enabled = true;
             }
             else
             {
                 this._deleteContractButton.Enabled = false;
                 this._changeRouteButton.Enabled = false;
+                this._chageContractStartDateButton.Enabled = false;
             }
         }
 
@@ -461,6 +463,26 @@ namespace DailyLoan.Loan
             {
                 MessageBox.Show("เกิดข้อผิดพลาดในการตรวจสอบวันหยุด \r\n" + ex.Message, "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+        }
+
+        private void _chageContractStartDateButton_Click(object sender, EventArgs e)
+        {
+            string contractNo = this._loanScreenTop1._getDataStr("contract_no");
+            if (contractNo == "")
+            {
+                MessageBox.Show("กรุณาเลือกสัญญาสินเชื่อก่อน");
+                return;
+            }
+
+            ChangeContractStartDateForm changeContractStartDateForm = new ChangeContractStartDateForm(contractNo);
+            changeContractStartDateForm.StartPosition = FormStartPosition.CenterParent;
+            DialogResult changeStartDateResult = changeContractStartDateForm.ShowDialog(this);
+
+            if (changeStartDateResult == DialogResult.OK)
+            {
+                MessageBox.Show("เปลี่ยนวันที่เริ่มชำระเรียบร้อยแล้ว");
+                this.LoadContract(contractNo);
             }
         }
     }

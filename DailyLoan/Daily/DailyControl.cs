@@ -113,16 +113,15 @@ namespace DailyLoan.Daily
 
                         int contractNoCol = 2;
                         int customerCol = 3;
+                        int overDueAmountCol = 7;
                         int amountCol = 8;
-                        int overDueAmountCol = 5;
                         int payAmountCol = 9;
 
                         // if col 4 = telephone then shift left 1 column
                         if (getHeaderRow.Cell(4).GetString().Trim() == "เบอร์โทร")
                         {
-                            customerCol = 4;
+                            overDueAmountCol = 8;
                             amountCol = 9;
-                            overDueAmountCol = 6;
                             payAmountCol = 10;
                         }
 

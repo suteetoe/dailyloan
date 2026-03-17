@@ -56,16 +56,16 @@ namespace DailyLoan.Daily
                     int colIndex = 0;
                     var worksheet = workbook.Worksheets.Add("DailyData");
                     // worksheet.Cell(1, 1).Value = "วันที่";
-                    worksheet.Cell(1, 1).Value = "ลำดับ";
-                    worksheet.Cell(1, 2).Value = "เลขที่สัญญา";
-                    worksheet.Cell(1, 3).Value = "ลูกค้า";
-                    worksheet.Cell(1, 3).Value = "เบอร์โทร";
-                    worksheet.Cell(1, 4).Value = "จำนวนงวดที่ส่ง";
-                    worksheet.Cell(1, 5).Value = "ยอดทั้งสิ้น";
-                    worksheet.Cell(1, 6).Value = "ยอดคงเหลือ";
-                    worksheet.Cell(1, 7).Value = "ค้างชำระ";
-                    worksheet.Cell(1, 8).Value = "รายวัน";
-                    worksheet.Cell(1, 9).Value = "ยอดชำระ";
+                    worksheet.Cell(1, ++colIndex).Value = "ลำดับ";
+                    worksheet.Cell(1, ++colIndex).Value = "เลขที่สัญญา";
+                    worksheet.Cell(1, ++colIndex).Value = "ลูกค้า";
+                    worksheet.Cell(1, ++colIndex).Value = "เบอร์โทร";
+                    worksheet.Cell(1, ++colIndex).Value = "จำนวนงวดที่ส่ง";
+                    worksheet.Cell(1, ++colIndex).Value = "ยอดทั้งสิ้น";
+                    worksheet.Cell(1, ++colIndex).Value = "ยอดคงเหลือ";
+                    worksheet.Cell(1, ++colIndex).Value = "ค้างชำระ";
+                    worksheet.Cell(1, ++colIndex).Value = "รายวัน";
+                    worksheet.Cell(1, ++colIndex).Value = "ยอดชำระ";
 
                     int rowNumber = 1;
                     for (int i = 0; i < this._dailyExportGrid._rowData.Count; i++)

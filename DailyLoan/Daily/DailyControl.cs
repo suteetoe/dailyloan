@@ -59,6 +59,7 @@ namespace DailyLoan.Daily
                     worksheet.Cell(1, 1).Value = "ลำดับ";
                     worksheet.Cell(1, 2).Value = "เลขที่สัญญา";
                     worksheet.Cell(1, 3).Value = "ลูกค้า";
+                    worksheet.Cell(1, 3).Value = "เบอร์โทร";
                     worksheet.Cell(1, 4).Value = "จำนวนงวดที่ส่ง";
                     worksheet.Cell(1, 5).Value = "ยอดทั้งสิ้น";
                     worksheet.Cell(1, 6).Value = "ยอดคงเหลือ";
@@ -72,14 +73,15 @@ namespace DailyLoan.Daily
                         colIndex = 0;
 
                         // worksheet.Cell(i + 2, colIndex++).Value = this._dailyExportScreenTop._getDataDate("contract_date").ToString("yyyy-MM-dd");
-                        worksheet.Cell(i + 2, 1).Value = rowNumber.ToString();
-                        worksheet.Cell(i + 2, 2).Value = this._dailyExportGrid._cellGet(i, "contract_no").ToString();
-                        worksheet.Cell(i + 2, 3).Value = this._dailyExportGrid._cellGet(i, "cust_name").ToString();
-                        worksheet.Cell(i + 2, 4).Value = Convert.ToInt16(this._dailyExportGrid._cellGet(i, "pay_count"));
-                        worksheet.Cell(i + 2, 5).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "total_contract_amount"));
-                        worksheet.Cell(i + 2, 6).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "contract_balance"));
-                        worksheet.Cell(i + 2, 7).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "over_due_amount"));
-                        worksheet.Cell(i + 2, 8).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "amount"));
+                        worksheet.Cell(i + 2, ++colIndex).Value = rowNumber.ToString();
+                        worksheet.Cell(i + 2, ++colIndex).Value = this._dailyExportGrid._cellGet(i, "contract_no").ToString();
+                        worksheet.Cell(i + 2, ++colIndex).Value = this._dailyExportGrid._cellGet(i, "cust_name").ToString();
+                        worksheet.Cell(i + 2, ++colIndex).Value = this._dailyExportGrid._cellGet(i, "telephone").ToString();
+                        worksheet.Cell(i + 2, ++colIndex).Value = Convert.ToInt16(this._dailyExportGrid._cellGet(i, "pay_count"));
+                        worksheet.Cell(i + 2, ++colIndex).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "total_contract_amount"));
+                        worksheet.Cell(i + 2, ++colIndex).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "contract_balance"));
+                        worksheet.Cell(i + 2, ++colIndex).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "over_due_amount"));
+                        worksheet.Cell(i + 2, ++colIndex).Value = Convert.ToDecimal(this._dailyExportGrid._cellGet(i, "amount"));
 
                         rowNumber++;
                     }
@@ -105,19 +107,39 @@ namespace DailyLoan.Daily
                     using (var workbook = new XLWorkbook(openFileDialog.FileName))
                     {
                         var worksheet = workbook.Worksheet(1); // Assuming data is in the first worksheet
+
+
+                        var getHeaderRow = worksheet.Row(1);
+
+                        int contractNoCol = 2;
+                        int customerCol = 3;
+                        int amountCol = 8;
+                        int overDueAmountCol = 5;
+                        int payAmountCol = 9;
+
+                        // if col 4 = telephone then shift left 1 column
+                        if (getHeaderRow.Cell(4).GetString().Trim() == "เบอร์โทร")
+                        {
+                            customerCol = 4;
+                            amountCol = 9;
+                            overDueAmountCol = 6;
+                            payAmountCol = 10;
+                        }
+
+
                         var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // Skip header row
 
 
                         foreach (var row in rows)
                         {
-                            decimal amount = _numberUtils._decimalPhase(row.Cell(8).GetString());
-                            decimal payAmount = _numberUtils._decimalPhase(row.Cell(9).GetString());
+                            decimal amount = _numberUtils._decimalPhase(row.Cell(amountCol).GetString());
+                            decimal payAmount = _numberUtils._decimalPhase(row.Cell(payAmountCol).GetString());
 
-                            decimal overDueAmount = _numberUtils._decimalPhase(row.Cell(5).GetString());
+                            decimal overDueAmount = _numberUtils._decimalPhase(row.Cell(overDueAmountCol).GetString());
 
                             int addRowIdx = this._dailyPaymentGrid._addRow();
-                            this._dailyPaymentGrid._cellUpdate(addRowIdx, "contract_no", row.Cell(2).GetString(), false);
-                            this._dailyPaymentGrid._cellUpdate(addRowIdx, "customer", row.Cell(3).GetString(), false);
+                            this._dailyPaymentGrid._cellUpdate(addRowIdx, "contract_no", row.Cell(contractNoCol).GetString(), false);
+                            this._dailyPaymentGrid._cellUpdate(addRowIdx, "customer", row.Cell(customerCol).GetString(), false);
                             this._dailyPaymentGrid._cellUpdate(addRowIdx, "amount", amount, false);
                             this._dailyPaymentGrid._cellUpdate(addRowIdx, "over_due_amount", overDueAmount, false);
                             this._dailyPaymentGrid._cellUpdate(addRowIdx, "pay_amount", payAmount, true);
@@ -183,6 +205,7 @@ WITH contract_over_due as (
 	, amount_per_period as amount
 	, txn_contract.customer_code as cust_code
 	, cust.name_1 as cust_name
+    , cust.telephone
 	, (total_contract_amount - total_pay_amount) as contract_balance
 	from txn_contract
 	join mst_customer as cust on cust.code = txn_contract.customer_code
@@ -209,6 +232,7 @@ WITH contract_over_due as (
 	, (case when c.amount_per_period >  (c.total_contract_amount - c.total_pay_amount) then  (c.total_contract_amount - c.total_pay_amount) else c.amount_per_period end) as amount 
 	, c.customer_code as cust_code
 	, cust.name_1 as cust_name
+    , cust.telephone
 	, (c.total_contract_amount - c.total_pay_amount) as contract_balance
 	from period_balance as pb
 	join txn_contract as c on c.contract_no = pb.contract_no
@@ -216,11 +240,11 @@ WITH contract_over_due as (
 	where route_code = @route_code and due_date = @due_date  
 )
 , daily_sheet as (
-select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, amount as due_amount from contract_over_due
+select contract_no, cust_code, cust_name, telephone, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, amount as due_amount from contract_over_due
 union all
-select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, due_amount from contract_due
+select contract_no, cust_code, cust_name, telephone, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, due_amount from contract_due
 )
-select contract_no, cust_code, cust_name, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, due_amount from daily_sheet order by contract_no
+select contract_no, cust_code, cust_name, telephone, pay_count, total_contract_amount, contract_balance, over_due_amount, amount, due_amount from daily_sheet order by contract_no
 ";
 
             BizFlowControl.ExecuteParams parameters = new BizFlowControl.ExecuteParams();

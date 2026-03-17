@@ -43,6 +43,7 @@ namespace DailyLoan.Daily
             this.AddGridColumn(new GridTextColumn() { ColumnCode = "contract_no", ColumnName = "สัญญา", WidthPercent = 20 });
             this.AddGridColumn(new GridTextColumn() { ColumnCode = "cust_code", ColumnName = "รหัสลูกค้า", WidthPercent = 15, IsHide = true });
             this.AddGridColumn(new GridTextColumn() { ColumnCode = "cust_name", ColumnName = "ลูกค้า", WidthPercent = 30 });
+            this.AddGridColumn(new GridTextColumn() { ColumnCode = "telephone", ColumnName = "เบอร์โทร", WidthPercent = 15 });
             this.AddGridColumn(new GridIntegerColumn() { ColumnCode = "pay_count", ColumnName = "งวดที่ส่งแล้ว", WidthPercent = 10 });
             this.AddGridColumn(new GridDecimalColumn() { ColumnCode = "total_contract_amount", ColumnName = "ยอดทั้งสิ้น", WidthPercent = 20, Format = numberFormat });
             this.AddGridColumn(new GridDecimalColumn() { ColumnCode = "contract_balance", ColumnName = "คงเหลือ", WidthPercent = 20, Format = numberFormat });

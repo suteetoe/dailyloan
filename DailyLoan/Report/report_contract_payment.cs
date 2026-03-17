@@ -50,7 +50,14 @@ namespace DailyLoan.Report
             try
             {
                 string contract_no = this.conditionForm._conditionScreen._getDataStr("contract_no");
-                this.ConditionText = string.Format("เลขที่สัญญา: {0}", contract_no);
+
+
+
+                string queryGetContract = @"SELECT txn_contract.contract_no, txn_contract.customer_code, mst_customer.name_1 as customer_name
+                    FROM txn_contract 
+                    JOIN mst_customer on mst_customer.code = txn_contract.customer_code
+
+                    WHERE contract_no = @contract_no ";
 
                 string query =
                     @"WITH contract_payment as (
@@ -67,9 +74,14 @@ namespace DailyLoan.Report
                 BizFlowControl.ExecuteParams parameters = new BizFlowControl.ExecuteParams();
                 parameters.Add("@contract_no", contract_no);
 
+                DataSet contractData = App.DBConnection.QueryData(queryGetContract, parameters);
+             
                 DataSet ds = App.DBConnection.QueryData(query, parameters);
-                if (ds.Tables.Count > 0)
+                if (contractData.Tables.Count > 0 && ds.Tables.Count > 0)
                 {
+                    string customer_code = contractData.Tables[0].Rows[0]["customer_name"].ToString();
+                    this.ConditionText = string.Format("เลขที่สัญญา: {0} ลูกค้า: {1}", contract_no, customer_code);
+
                     decimal totalPayAmount = 0;
 
                     DataTable dt = ds.Tables[0];

@@ -281,6 +281,13 @@ select contract_no, cust_code, cust_name, telephone, pay_count, total_contract_a
                 return;
             }
 
+            string routeCode = this._dailyImportScreenTop._getDataStr("route");
+            if (routeCode.Trim() == "")
+            {
+                MessageBox.Show("กรุณาระบุสาย", "ข้อมูลไม่ครบถ้วน", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             string confirmPaymentMessage = "คุณต้องการบันทึกข้อมูลการชำระเงินใช่หรือไม่?";
 
             var result = MessageBox.Show(confirmPaymentMessage, "ยืนยันการชำระเงิน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -289,7 +296,6 @@ select contract_no, cust_code, cust_name, telephone, pay_count, total_contract_a
                 try
                 {
                     DateTime docDate = this._dailyImportScreenTop._getDataDate("contract_date");
-                    string routeCode = this._dailyImportScreenTop._getDataStr("route");
 
                     //for (int row = 0; row < this._dailyPaymentGrid._rowData.Count; row++)
                     //{

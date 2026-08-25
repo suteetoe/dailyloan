@@ -185,6 +185,13 @@ namespace DailyLoan.Loan
                 return;
             }
 
+            String __contractNo = this._loanScreenTop1._getDataStr("contract_no");
+            if (__contractNo.Trim().Length == 0)
+            {
+                MessageBox.Show("กรุณาระบุเลขที่สัญญาสินเชื่อ");
+                return;
+            }
+
             List<PayPeriod> payPeriods = this._paymentPeriodGrid1.PayPeriods;
             if (payPeriods == null || payPeriods.Count == 0)
             {
@@ -427,8 +434,8 @@ namespace DailyLoan.Loan
                     MessageBox.Show("เกิดข้อผิดพลาดในการลบข้อมูล \r\n" + ex.Message, "ข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
-                
+
+
             }
         }
 
